@@ -802,32 +802,32 @@
     });
 
     // Chargement automatique des notifications depuis le localStorage
-    function loadIndexNotifications() {
-      const container = document.getElementById('dynamic-news-container');
-      const savedNotes = JSON.parse(localStorage.getItem('hevenly_notifications')) || [
-        {title: "Création du site web", category: "Mise à jour première version", date: "Aujourd'hui", content: "Le site est actuellement en version bêta. N'hésitez pas à signaler tout bug sur notre Discord."}
-      ];
+function loadIndexNotifications() {
+  const container = document.getElementById('dynamic-news-container');
+  const savedNotes = JSON.parse(localStorage.getItem('hevenly_notifications')) || [
+    { title: "Création du site web", category: "Mise à jour", date: "2026-06-06", color: "text-white", content: "Le site est actuellement en version bêta. N'hésitez pas à signaler tout bug sur notre Discord." }
+  ];
 
-      if (savedNotes.length === 0) {
-        container.innerHTML = '<p class="text-neutral-500 text-center py-4">Aucune notification pour le moment.</p>';
-        return;
-      }
+  if (savedNotes.length === 0) {
+    container.innerHTML = '<p class="text-neutral-500 text-center py-4">Aucune notification pour le moment.</p>';
+    return;
+  }
 
-      container.innerHTML = '';
-      savedNotes.forEach(note => {
-        const div = document.createElement('div');
-        div.className = "p-4 rounded-xl bg-neutral-800/50 border border-neutral-800 space-y-1.5";
-        div.innerHTML = `
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-bold text-brand-light uppercase tracking-wide">${note.category}</span>
-            <span class="text-[11px] text-white font-mono">${note.date}</span>
-          </div>
-          <h4 class="font-bold text-white text-sm">${note.title}</h4>
-          <p class="text-neutral-400">${note.content}</p>
-        `;
-        container.appendChild(div);
-      });
-    }
+  container.innerHTML = '';
+  savedNotes.forEach(note => {
+    const div = document.createElement('div');
+    div.className = "p-4 rounded-xl bg-neutral-800/50 border border-neutral-800 space-y-1.5";
+    div.innerHTML = `
+      <div class="flex items-center justify-between">
+        <span class="text-xs font-bold text-brand-light uppercase tracking-wide">${note.category}</span>
+        <span class="text-[11px] text-white font-mono">${note.date || 'Aujourd\'hui'}</span>
+      </div>
+      <h4 class="font-bold ${note.color || 'text-white'} text-sm">${note.title}</h4>
+      <p class="text-neutral-400">${note.content}</p>
+    `;
+    container.appendChild(div);
+  });
+}
 
     function acceptCookies(consent) {
       localStorage.setItem('hevenly_cookie_consent', consent ? 'accepted' : 'declined');
