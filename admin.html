@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="fr" class="dark">
+<html lang="fr" class="dark scroll-smooth">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hevenly Games — Panel Admin</title>
+  <title>Administration — Hevenly Games</title>
 
   <!-- Favicon Logo -->
   <link rel="icon" type="image/png" href="https://i.imgur.com/BYA0Cs5.png">
@@ -12,8 +12,14 @@
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Plus Jakarta Sans -->
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- SDK Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Font Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
 
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -24,161 +30,189 @@
       theme: {
         extend: {
           colors: {
-            brand: { DEFAULT: '#AA0000', hover: '#880000', light: '#FF2222', dark: '#121212', card: '#161616', border: '#222222' },
+            brand: {
+              DEFAULT: '#AA0000',
+              hover: '#880000',
+              light: '#FF2222',
+              dark: '#121212',
+              card: '#161616',
+              border: '#222222'
+            },
+            mcGreen: {
+              DEFAULT: '#55FF55',
+              glow: 'rgba(85, 255, 85, 0.12)',
+              border: 'rgba(85, 255, 85, 0.35)'
+            }
           },
-          fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] }
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          }
         }
       }
     }
   </script>
+
   <style>
-    body { background-color: #121212; color: #EDEDED; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body {
+      background-color: #121212;
+      color: #EDEDED;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #181818;
+      border-radius: 8px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #333333;
+      border-radius: 8px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #AA0000;
+    }
   </style>
 </head>
 
-<body class="min-h-screen flex flex-col justify-between p-6">
+<body class="bg-brand-dark antialiased min-h-screen flex flex-col justify-between">
 
-  <div class="max-w-2xl mx-auto w-full space-y-8">
-    
-    <!-- En-tête -->
-    <div class="flex items-center justify-between border-b border-neutral-800 pb-6">
+  <!-- Header Admin -->
+  <header class="border-b border-neutral-800 bg-neutral-900/60 backdrop-blur-md px-6 py-4">
+    <div class="max-w-5xl mx-auto flex items-center justify-between">
       <div class="flex items-center space-x-3">
-        <img src="https://i.imgur.com/BYA0Cs5.png" alt="Logo" class="w-10 h-10 object-contain">
+        <img src="https://i.imgur.com/BYA0Cs5.png" alt="Logo" class="w-8 h-8 object-contain">
         <div>
-          <h1 class="text-xl font-black text-white">Panel Admin</h1>
-          <p class="text-xs text-neutral-400">Gestion des notifications du site Hevenly</p>
+          <h1 class="font-extrabold text-white text-base">Hevenly Administration</h1>
+          <p class="text-[11px] text-neutral-400">Gestion des notifications en direct</p>
         </div>
       </div>
-      <a href="index.html" class="px-4 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 text-xs font-semibold text-neutral-300 transition-colors flex items-center space-x-2">
-        <i data-lucide="arrow-left" class="w-4 h-4"></i>
-        <span>Retour au site</span>
-      </a>
+      <div id="admin-user-info" class="hidden items-center space-x-4">
+        <span class="text-xs text-neutral-300">Connecté en tant que <strong id="session-username" class="text-white">admin</strong></span>
+        <button onclick="logout()" class="px-3 py-1.5 rounded-lg bg-neutral-800 hover:bg-red-950/60 text-neutral-300 hover:text-red-400 text-xs font-semibold transition-colors flex items-center space-x-1.5">
+          <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
+          <span>Déconnexion</span>
+        </button>
+      </div>
     </div>
+  </header>
 
-    <!-- SECTION 1 : ÉCRAN DE CONNEXION -->
-    <div id="login-section" class="bg-neutral-900/90 border border-neutral-800 rounded-2xl p-8 shadow-2xl space-y-6 max-w-md mx-auto">
-      <div class="text-center space-y-2">
-        <div class="inline-flex p-3 rounded-2xl bg-brand/10 text-brand-light mb-1">
+  <!-- Contenu Principal -->
+  <main class="flex-grow max-w-5xl w-full mx-auto px-4 py-8">
+
+    <!-- Section Connexion (Affichée si non connecté) -->
+    <div id="login-section" class="max-w-md mx-auto bg-neutral-900 border border-neutral-800 rounded-2xl p-8 shadow-2xl my-12">
+      <div class="text-center mb-6">
+        <div class="w-12 h-12 rounded-xl bg-brand/10 text-brand-light flex items-center justify-center mx-auto mb-3">
           <i data-lucide="lock" class="w-6 h-6"></i>
         </div>
-        <h2 class="text-lg font-bold text-white">Connexion Administrateur</h2>
-        <p class="text-xs text-neutral-400">Entrez vos identifiants pour accéder au panel.</p>
+        <h2 class="text-xl font-black text-white">Connexion Administrateur</h2>
+        <p class="text-xs text-neutral-400 mt-1">Accès restreint à l'équipe de direction Hevenly</p>
       </div>
 
       <form id="login-form" class="space-y-4">
         <div>
-          <label class="block text-xs font-semibold text-neutral-400 mb-1">Identifiant</label>
-          <input type="text" id="username" required placeholder="admin"
-            class="w-full px-4 py-2.5 rounded-xl bg-neutral-950 border border-neutral-800 text-white text-xs focus:outline-none focus:border-brand">
+          <label class="block text-xs font-bold text-neutral-300 uppercase mb-1.5">Nom d'utilisateur</label>
+          <input type="text" id="username" required class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-brand">
         </div>
-
         <div>
-          <label class="block text-xs font-semibold text-neutral-400 mb-1">Mot de passe</label>
-          <input type="password" id="password" required placeholder="••••••••"
-            class="w-full px-4 py-2.5 rounded-xl bg-neutral-950 border border-neutral-800 text-white text-xs focus:outline-none focus:border-brand">
+          <label class="block text-xs font-bold text-neutral-300 uppercase mb-1.5">Mot de passe</label>
+          <input type="password" id="password" required class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-brand">
         </div>
-
-        <p id="login-error" class="text-xs text-red-500 font-semibold text-center hidden">Identifiant ou mot de passe incorrect.</p>
-
-        <button type="submit"
-          class="w-full py-3 rounded-xl bg-brand hover:bg-brand-hover text-white font-bold text-xs transition-all shadow-lg shadow-brand/30 flex items-center justify-center space-x-2">
-          <i data-lucide="log-in" class="w-4 h-4"></i>
-          <span>Se connecter</span>
+        <p id="login-error" class="text-xs text-red-500 font-medium hidden">Identifiant ou mot de passe incorrect.</p>
+        <button type="submit" class="w-full py-3 rounded-xl bg-brand hover:bg-brand-hover text-white font-bold text-xs transition-colors shadow-lg shadow-brand/20">
+          Se connecter
         </button>
       </form>
     </div>
 
-    <!-- SECTION 2 : DASHBOARD ADMIN -->
-    <div id="admin-dashboard" class="space-y-8 hidden">
-      
-      <!-- Barre d'infos de session -->
-      <div class="flex items-center justify-between bg-neutral-900 border border-neutral-800 px-4 py-3 rounded-xl text-xs">
-        <div class="flex items-center space-x-2 text-neutral-300">
-          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span>Connecté en tant que : <strong id="session-username" class="text-white">Admin</strong></span>
-        </div>
-        <button onclick="logout()" class="text-red-400 hover:text-red-300 transition-colors flex items-center gap-1 font-semibold">
-          <i data-lucide="log-out" class="w-3.5 h-3.5"></i> Déconnexion
-        </button>
-      </div>
+    <!-- Dashboard Admin (Affiché une fois connecté) -->
+    <div id="admin-dashboard" class="hidden space-y-10">
 
-      <!-- Formulaire d'ajout / modification -->
-      <div class="bg-neutral-900/90 border border-neutral-800 rounded-2xl p-6 shadow-2xl space-y-4">
-        <div class="flex items-center justify-between">
-          <h2 id="form-title" class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+      <!-- Formulaire d'Ajout / Modification -->
+      <div class="bg-neutral-900 border border-neutral-800 rounded-2xl p-6 md:p-8 shadow-xl">
+        <div class="flex items-center justify-between mb-6 pb-4 border-b border-neutral-800">
+          <h3 id="form-title" class="text-base font-extrabold text-white flex items-center space-x-2">
             <i data-lucide="plus-circle" class="w-4 h-4 text-brand-light"></i>
             <span>Ajouter une notification</span>
-          </h2>
-          <button id="cancel-edit-btn" onclick="cancelEdit()" class="text-xs text-neutral-400 hover:text-white hidden underline">
+          </h3>
+          <button type="button" id="cancel-edit-btn" onclick="cancelEdit()" class="hidden px-3 py-1.5 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-neutral-300 text-xs font-semibold transition-colors">
             Annuler la modification
           </button>
         </div>
 
-        <form id="notification-form" class="space-y-4">
-          <div>
-            <label class="block text-xs font-semibold text-neutral-400 mb-1">Titre de l'annonce</label>
-            <input type="text" id="notif-title" required placeholder="Ex: Tournoi Bedfight 1v1"
-              class="w-full px-4 py-2.5 rounded-xl bg-neutral-950 border border-neutral-800 text-white text-xs focus:outline-none focus:border-brand">
+        <form id="notification-form" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div class="space-y-1.5">
+            <label class="block text-xs font-bold text-neutral-300 uppercase">Titre de la notif</label>
+            <input type="text" id="notif-title" required placeholder="Ex: Ouverture des candidatures Staff" class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-brand">
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="md:col-span-1">
-              <label class="block text-xs font-semibold text-neutral-400 mb-1">Catégorie / Badge</label>
-              <input type="text" id="notif-category" required placeholder="Ex: Événement"
-                class="w-full px-4 py-2.5 rounded-xl bg-neutral-950 border border-neutral-800 text-white text-xs focus:outline-none focus:border-brand">
-            </div>
-            <div class="md:col-span-1">
-              <label class="block text-xs font-semibold text-neutral-400 mb-1">Date (Calendrier)</label>
-              <input type="date" id="notif-date" required
-                class="w-full px-4 py-2.5 rounded-xl bg-neutral-950 border border-neutral-800 text-white text-xs focus:outline-none focus:border-brand">
-            </div>
-            <div class="md:col-span-1">
-              <label class="block text-xs font-semibold text-neutral-400 mb-1">Couleur du Titre</label>
-              <select id="notif-color" class="w-full px-4 py-2.5 rounded-xl bg-neutral-950 border border-neutral-800 text-white text-xs focus:outline-none focus:border-brand">
-                <option value="text-white">Blanc Classique (Défaut)</option>
-                <option value="text-brand-light">Rouge Hevenly (#FF2222)</option>
-                <option value="text-emerald-400">Vert Minecraft (#55FF55)</option>
-                <option value="text-cyan-400">Cyan / Bleu Clair</option>
-                <option value="text-yellow-400">Jaune Or</option>
-              </select>
-            </div>
+          <div class="space-y-1.5">
+            <label class="block text-xs font-bold text-neutral-300 uppercase">Catégorie (Badge)</label>
+            <input type="text" id="notif-category" required placeholder="Ex: Événement / Mise à jour" class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-brand">
           </div>
 
-          <div>
-            <label class="block text-xs font-semibold text-neutral-400 mb-1">Contenu de la notification</label>
-            <textarea id="notif-content" rows="3" required placeholder="Description détaillée..."
-              class="w-full px-4 py-2.5 rounded-xl bg-neutral-950 border border-neutral-800 text-white text-xs focus:outline-none focus:border-brand resize-none"></textarea>
+          <div class="space-y-1.5">
+            <label class="block text-xs font-bold text-neutral-300 uppercase">Date</label>
+            <input type="date" id="notif-date" required class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-brand">
           </div>
 
-          <button type="submit" id="submit-btn"
-            class="w-full py-3 rounded-xl bg-brand hover:bg-brand-hover text-white font-bold text-xs transition-all shadow-lg shadow-brand/30 flex items-center justify-center space-x-2">
-            <i data-lucide="send" class="w-4 h-4"></i>
-            <span>Publier la notification</span>
-          </button>
+          <div class="space-y-1.5">
+            <label class="block text-xs font-bold text-neutral-300 uppercase">Couleur du Titre</label>
+            <select id="notif-color" class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-brand">
+              <option value="text-white">Blanc (Défaut)</option>
+              <option value="text-red-500">Rouge Minecraft</option>
+              <option value="text-mcGreen">Vert Minecraft</option>
+              <option value="text-cyan-400">Cyan</option>
+              <option value="text-amber-400">Jaune / Or</option>
+            </select>
+          </div>
+
+          <div class="md:col-span-2 space-y-1.5">
+            <label class="block text-xs font-bold text-neutral-300 uppercase">Contenu / Description</label>
+            <textarea id="notif-content" rows="3" required placeholder="Détails de l'information..." class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-brand custom-scrollbar"></textarea>
+          </div>
+
+          <div class="md:col-span-2 pt-2 flex justify-end">
+            <button type="submit" id="submit-btn" class="px-6 py-3 rounded-xl bg-brand hover:bg-brand-hover text-white font-bold text-xs transition-colors shadow-lg shadow-brand/20 flex items-center space-x-2">
+              <i data-lucide="send" class="w-4 h-4"></i>
+              <span>Publier la notification</span>
+            </button>
+          </div>
         </form>
       </div>
 
-      <!-- Liste des notifications existantes -->
-      <div class="space-y-4">
-        <h2 class="text-sm font-bold text-neutral-400 uppercase tracking-wider">Notifications actuelles</h2>
+      <!-- Liste des Notifications Publiées -->
+      <div class="bg-neutral-900 border border-neutral-800 rounded-2xl p-6 md:p-8 shadow-xl space-y-4">
+        <h3 class="text-base font-extrabold text-white flex items-center space-x-2 pb-4 border-b border-neutral-800">
+          <i data-lucide="bell-ring" class="w-4 h-4 text-brand-light"></i>
+          <span>Notifications enregistrées en ligne</span>
+        </h3>
+
         <div id="admin-notifs-list" class="space-y-3">
-          <!-- Rempli par JavaScript -->
+          <!-- Chargé dynamiquement par JS -->
         </div>
       </div>
 
     </div>
 
-  </div>
+  </main>
 
-  <footer class="text-center text-xs text-neutral-600 py-6">
-    © 2026 Hevenly Games — Panel d'administration interne
+  <!-- Footer -->
+  <footer class="border-t border-neutral-800 py-6 text-center text-xs text-neutral-500">
+    <p>© 2026 Hevenly Games — Panel d'administration sécurisé</p>
   </footer>
 
   <script>
     const ADMIN_USER = "admin";
     const ADMIN_PASS = "hevenly2026";
 
-    let editingIndex = null;
+    // Configuration Supabase intégrée
+    const SUPABASE_URL = "https://tawnbphpaaxjzkydeubq.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_g0M5uEmx7p6s9w7LzUID7w_bVDKjw3-";
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    let editingId = null;
     let inactivityTimer = null;
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -227,16 +261,21 @@
       const isLogged = localStorage.getItem('hevenly_admin_logged') === 'true';
       const loginSection = document.getElementById('login-section');
       const dashboard = document.getElementById('admin-dashboard');
+      const userInfo = document.getElementById('admin-user-info');
 
       if (isLogged) {
         loginSection.classList.add('hidden');
         dashboard.classList.remove('hidden');
+        userInfo.classList.remove('hidden');
+        userInfo.classList.add('flex');
         document.getElementById('session-username').innerText = localStorage.getItem('hevenly_admin_user') || ADMIN_USER;
         renderAdminList();
         resetInactivityTimer();
       } else {
         loginSection.classList.remove('hidden');
         dashboard.classList.add('hidden');
+        userInfo.classList.add('hidden');
+        userInfo.classList.remove('flex');
         clearTimeout(inactivityTimer);
       }
       lucide.createIcons();
@@ -248,69 +287,86 @@
       checkAuthStatus();
     }
 
+    // Soumission Formulaire (Ajout ou Modification dans Supabase)
     const form = document.getElementById('notification-form');
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
       const title = document.getElementById('notif-title').value;
       const category = document.getElementById('notif-category').value;
-      const date = document.getElementById('notif-date').value;
+      const notif_date = document.getElementById('notif-date').value;
       const color = document.getElementById('notif-color').value;
       const content = document.getElementById('notif-content').value;
 
-      const notifData = { title, category, date, color, content };
+      if (editingId !== null) {
+        // Modification
+        const { error } = await supabaseClient
+          .from('notifications')
+          .update({ title, category, notif_date, color, content })
+          .eq('id', editingId);
 
-      let notifications = JSON.parse(localStorage.getItem('hevenly_notifications')) || [
-        { title: "Création du site web", category: "Mise à jour", date: "2026-06-06", color: "text-white", content: "Le site est actuellement en version bêta." }
-      ];
+        if (error) {
+          alert('Erreur lors de la modification : ' + error.message);
+          return;
+        }
 
-      if (editingIndex !== null && editingIndex >= 0) {
-        notifications[editingIndex] = notifData;
-        editingIndex = null;
+        editingId = null;
         document.getElementById('form-title').innerHTML = `<i data-lucide="plus-circle" class="w-4 h-4 text-brand-light"></i><span>Ajouter une notification</span>`;
         document.getElementById('submit-btn').innerHTML = `<i data-lucide="send" class="w-4 h-4"></i><span>Publier la notification</span>`;
         document.getElementById('cancel-edit-btn').classList.add('hidden');
         alert('Notification modifiée avec succès !');
       } else {
-        notifications.unshift(notifData);
-        alert('Notification publiée avec succès !');
+        // Ajout
+        const { error } = await supabaseClient
+          .from('notifications')
+          .insert([{ title, category, notif_date, color, content }]);
+
+        if (error) {
+          alert('Erreur lors de l\'ajout : ' + error.message);
+          return;
+        }
+
+        alert('Notification publiée en ligne avec succès !');
       }
 
-      localStorage.setItem('hevenly_notifications', JSON.stringify(notifications));
       form.reset();
       setDefaultDate();
       renderAdminList();
     });
 
-    function renderAdminList() {
+    // Charger la liste dans le panel admin depuis Supabase
+    async function renderAdminList() {
       const listContainer = document.getElementById('admin-notifs-list');
-      let notifications = JSON.parse(localStorage.getItem('hevenly_notifications')) || [
-        { title: "Création du site web", category: "Mise à jour", date: "2026-06-06", color: "text-white", content: "Le site est actuellement en version bêta." }
-      ];
+      listContainer.innerHTML = '<p class="text-xs text-neutral-500 text-center py-4">Chargement des données...</p>';
 
-      if (notifications.length === 0) {
+      const { data: notifications, error } = await supabaseClient
+        .from('notifications')
+        .select('*')
+        .order('id', { ascending: false });
+
+      if (error || !notifications || notifications.length === 0) {
         listContainer.innerHTML = '<p class="text-xs text-neutral-500 text-center py-4">Aucune notification enregistrée.</p>';
         return;
       }
 
       listContainer.innerHTML = '';
-      notifications.forEach((note, index) => {
+      notifications.forEach((note) => {
         const item = document.createElement('div');
-        item.className = "bg-neutral-900 border border-neutral-800 rounded-xl p-4 flex items-center justify-between gap-4";
+        item.className = "bg-neutral-800/50 border border-neutral-800 rounded-xl p-4 flex items-center justify-between gap-4";
         item.innerHTML = `
           <div class="space-y-1">
             <div class="flex items-center space-x-2">
-              <span class="text-[10px] font-bold text-red-400 uppercase">${note.category}</span>
-              <span class="text-[10px] text-neutral-500 font-mono">• ${note.date || 'Aujourd\'hui'}</span>
+              <span class="text-[10px] font-bold text-white uppercase">${note.category}</span>
+              <span class="text-[10px] text-neutral-400 font-mono">• ${note.notif_date || 'Aujourd\'hui'}</span>
             </div>
             <h4 class="text-xs font-bold ${note.color || 'text-white'}">${note.title}</h4>
             <p class="text-xs text-neutral-400 line-clamp-1">${note.content}</p>
           </div>
           <div class="flex items-center space-x-2 shrink-0">
-            <button type="button" onclick="startEdit(${index})" class="p-2 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-neutral-300 transition-colors" title="Modifier">
+            <button type="button" onclick="startEdit(${note.id}, '${encodeURIComponent(note.title)}', '${encodeURIComponent(note.category)}', '${note.notif_date}', '${note.color}', '${encodeURIComponent(note.content)}')" class="p-2 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-neutral-300 transition-colors" title="Modifier">
               <i data-lucide="pencil" class="w-4 h-4"></i>
             </button>
-            <button type="button" onclick="deleteNotification(${index})" class="p-2 rounded-lg bg-neutral-800 hover:bg-red-950 text-neutral-400 hover:text-red-400 transition-colors" title="Supprimer">
+            <button type="button" onclick="deleteNotification(${note.id})" class="p-2 rounded-lg bg-neutral-800 hover:bg-red-950 text-neutral-400 hover:text-red-400 transition-colors" title="Supprimer">
               <i data-lucide="trash-2" class="w-4 h-4"></i>
             </button>
           </div>
@@ -320,19 +376,15 @@
       lucide.createIcons();
     }
 
-    function startEdit(index) {
-      let notifications = JSON.parse(localStorage.getItem('hevenly_notifications')) || [];
-      const note = notifications[index];
-      if (!note) return;
+    function startEdit(id, title, category, date, color, content) {
+      editingId = id;
+      document.getElementById('notif-title').value = decodeURIComponent(title);
+      document.getElementById('notif-category').value = decodeURIComponent(category);
+      document.getElementById('notif-date').value = date || '';
+      document.getElementById('notif-color').value = color || 'text-white';
+      document.getElementById('notif-content').value = decodeURIComponent(content);
 
-      document.getElementById('notif-title').value = note.title;
-      document.getElementById('notif-category').value = note.category;
-      document.getElementById('notif-date').value = note.date || '';
-      document.getElementById('notif-color').value = note.color || 'text-white';
-      document.getElementById('notif-content').value = note.content;
-
-      editingIndex = index;
-      document.getElementById('form-title').innerHTML = `<i data-lucide="pencil" class="w-4 h-4 text-brand-light"></i><span>Modifier la notification #${index + 1}</span>`;
+      document.getElementById('form-title').innerHTML = `<i data-lucide="pencil" class="w-4 h-4 text-brand-light"></i><span>Modifier la notification</span>`;
       document.getElementById('submit-btn').innerHTML = `<i data-lucide="check" class="w-4 h-4"></i><span>Enregistrer les modifications</span>`;
       document.getElementById('cancel-edit-btn').classList.remove('hidden');
 
@@ -341,7 +393,7 @@
     }
 
     function cancelEdit() {
-      editingIndex = null;
+      editingId = null;
       form.reset();
       setDefaultDate();
       document.getElementById('form-title').innerHTML = `<i data-lucide="plus-circle" class="w-4 h-4 text-brand-light"></i><span>Ajouter une notification</span>`;
@@ -350,12 +402,19 @@
       lucide.createIcons();
     }
 
-    function deleteNotification(index) {
-      if (confirm('Voulez-vous vraiment supprimer cette notification ?')) {
-        let notifications = JSON.parse(localStorage.getItem('hevenly_notifications')) || [];
-        notifications.splice(index, 1);
-        localStorage.setItem('hevenly_notifications', JSON.stringify(notifications));
-        if (editingIndex === index) cancelEdit();
+    async function deleteNotification(id) {
+      if (confirm('Voulez-vous vraiment supprimer cette notification de la base de données ?')) {
+        const { error } = await supabaseClient
+          .from('notifications')
+          .delete()
+          .eq('id', id);
+
+        if (error) {
+          alert('Erreur lors de la suppression : ' + error.message);
+          return;
+        }
+
+        if (editingId === id) cancelEdit();
         renderAdminList();
       }
     }
