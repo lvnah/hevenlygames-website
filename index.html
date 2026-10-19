@@ -22,6 +22,9 @@
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
+  <!-- SDK Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <!-- Font Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -698,7 +701,7 @@
         </button>
       </div>
 
-      <!-- Conteneur dynamique relié au localStorage (Panel Admin) -->
+      <!-- Conteneur dynamique relié à Supabase -->
       <div id="dynamic-news-container"
         class="py-6 overflow-y-auto custom-scrollbar space-y-5 text-xs md:text-sm text-neutral-300 leading-relaxed pr-2">
         <!-- Chargé dynamiquement par JS -->
@@ -785,6 +788,11 @@
   </footer>
 
   <script>
+    // Configuration Supabase intégrée
+    const SUPABASE_URL = "https://tawnbphpaaxjzkydeubq.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_g0M5uEmx7p6s9w7LzUID7w_bVDKjw3-";
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
     window.scrollTo(0, 0);
 
     window.addEventListener('DOMContentLoaded', () => {
@@ -801,14 +809,17 @@
       }
     });
 
-    // Chargement automatique des notifications depuis le localStorage (Catégorie en blanc)
-    function loadIndexNotifications() {
+    // Chargement automatique des notifications depuis Supabase
+    async function loadIndexNotifications() {
       const container = document.getElementById('dynamic-news-container');
-      const savedNotes = JSON.parse(localStorage.getItem('hevenly_notifications')) || [
-        { title: "Création du site web", category: "Mise à jour", date: "2026-06-06", color: "text-white", content: "Le site est actuellement en version bêta. N'hésitez pas à signaler tout bug sur notre Discord." }
-      ];
+      container.innerHTML = '<p class="text-neutral-400 text-center py-4">Chargement...</p>';
 
-      if (savedNotes.length === 0) {
+      const { data: savedNotes, error } = await supabaseClient
+        .from('notifications')
+        .select('*')
+        .order('id', { ascending: false });
+
+      if (error || !savedNotes || savedNotes.length === 0) {
         container.innerHTML = '<p class="text-neutral-500 text-center py-4">Aucune notification pour le moment.</p>';
         return;
       }
@@ -820,7 +831,7 @@
         div.innerHTML = `
           <div class="flex items-center justify-between">
             <span class="text-xs font-bold text-white uppercase tracking-wide">${note.category}</span>
-            <span class="text-[11px] text-neutral-400 font-mono">${note.date || 'Aujourd\'hui'}</span>
+            <span class="text-[11px] text-neutral-400 font-mono">${note.notif_date || 'Aujourd\'hui'}</span>
           </div>
           <h4 class="font-bold ${note.color || 'text-white'} text-sm">${note.title}</h4>
           <p class="text-neutral-400">${note.content}</p>
@@ -1005,7 +1016,7 @@
     }
 
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+      entries.refoxforEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('active');
         }
