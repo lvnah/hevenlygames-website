@@ -2,258 +2,263 @@
 <html lang="fr" class="dark">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hevenly Games — Panel Admin</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hevenly Games — Panel Admin</title>
 
-    <!-- Favicon Logo -->
-    <link rel="icon" type="image/png" href="https://i.imgur.com/BYA0Cs5.png">
+  <!-- Favicon Logo -->
+  <link rel="icon" type="image/png" href="https://i.imgur.com/BYA0Cs5.png">
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Plus Jakarta Sans -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
+  <!-- Plus Jakarta Sans -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
 
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {DEFAULT: '#AA0000', hover: '#880000', light: '#FF2222', dark: '#121212', card: '#161616', border: '#222222'},
-                    },
-                    fontFamily: {sans: ['Plus Jakarta Sans', 'sans-serif']}
-                }
-            }
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: { DEFAULT: '#AA0000', hover: '#880000', light: '#FF2222', dark: '#121212', card: '#161616', border: '#222222' },
+          },
+          fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] }
         }
-    </script>
-    <style>
-        body {
-            background-color: #121212;
-            color: #EDEDED;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
-    </style>
+      }
+    }
+  </script>
+  <style>
+    body { background-color: #121212; color: #EDEDED; font-family: 'Plus Jakarta Sans', sans-serif; }
+  </style>
 </head>
 
 <body class="min-h-screen flex flex-col justify-between p-6">
 
-    <div class="max-w-2xl mx-auto w-full space-y-8">
+  <div class="max-w-2xl mx-auto w-full space-y-8">
+    
+    <!-- En-tête -->
+    <div class="flex items-center justify-between border-b border-neutral-800 pb-6">
+      <div class="flex items-center space-x-3">
+        <img src="https://i.imgur.com/BYA0Cs5.png" alt="Logo" class="w-10 h-10 object-contain">
+        <div>
+          <h1 class="text-xl font-black text-white">Panel Admin</h1>
+          <p class="text-xs text-neutral-400">Gestion des notifications du site Hevenly</p>
+        </div>
+      </div>
+      <a href="index.html" class="px-4 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 text-xs font-semibold text-neutral-300 transition-colors flex items-center space-x-2">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+        <span>Retour au site</span>
+      </a>
+    </div>
 
-        <!-- En-tête -->
-        <div class="flex items-center justify-between border-b border-neutral-800 pb-6">
-            <div class="flex items-center space-x-3">
-                <img src="https://i.imgur.com/BYA0Cs5.png" alt="Logo" class="w-10 h-10 object-contain">
-                <div>
-                    <h1 class="text-xl font-black text-white">Panel Admin</h1>
-                    <p class="text-xs text-neutral-400">Gestion des notifications du site Hevenly</p>
-                </div>
-            </div>
-            <a href="index.html"
-                class="px-4 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 text-xs font-semibold text-neutral-300 transition-colors flex items-center space-x-2">
-                <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                <span>Retour au site</span>
-            </a>
+    <!-- SECTION 1 : ÉCRAN DE CONNEXION -->
+    <div id="login-section" class="bg-neutral-900/90 border border-neutral-800 rounded-2xl p-8 shadow-2xl space-y-6 max-w-md mx-auto">
+      <div class="text-center space-y-2">
+        <div class="inline-flex p-3 rounded-2xl bg-brand/10 text-brand-light mb-1">
+          <i data-lucide="lock" class="w-6 h-6"></i>
+        </div>
+        <h2 class="text-lg font-bold text-white">Connexion Administrateur</h2>
+        <p class="text-xs text-neutral-400">Entrez vos identifiants pour accéder au panel.</p>
+      </div>
+
+      <form id="login-form" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-neutral-400 mb-1">Identifiant</label>
+          <input type="text" id="username" required placeholder="admin"
+            class="w-full px-4 py-2.5 rounded-xl bg-neutral-950 border border-neutral-800 text-white text-xs focus:outline-none focus:border-brand">
         </div>
 
-        <!-- SECTION 1 : ÉCRAN DE CONNEXION (Caché si déjà connecté) -->
-        <div id="login-section"
-            class="bg-neutral-900/90 border border-neutral-800 rounded-2xl p-8 shadow-2xl space-y-6 max-w-md mx-auto">
-            <div class="text-center space-y-2">
-                <div class="inline-flex p-3 rounded-2xl bg-brand/10 text-brand-light mb-1">
-                    <i data-lucide="lock" class="w-6 h-6"></i>
-                </div>
-                <h2 class="text-lg font-bold text-white">Connexion Administrateur</h2>
-                <p class="text-xs text-neutral-400">Entrez vos identifiants pour accéder au panel.</p>
-            </div>
-
-            <form id="login-form" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-semibold text-neutral-400 mb-1">Identifiant</label>
-                    <input type="text" id="username" required placeholder="admin"
-                        class="w-full px-4 py-2.5 rounded-xl bg-neutral-950 border border-neutral-800 text-white text-xs focus:outline-none focus:border-brand">
-                </div>
-
-                <div>
-                    <label class="block text-xs font-semibold text-neutral-400 mb-1">Mot de passe</label>
-                    <input type="password" id="password" required placeholder="••••••••"
-                        class="w-full px-4 py-2.5 rounded-xl bg-neutral-950 border border-neutral-800 text-white text-xs focus:outline-none focus:border-brand">
-                </div>
-
-                <p id="login-error" class="text-xs text-red-500 font-semibold text-center hidden">Identifiant ou mot de
-                    passe incorrect.</p>
-
-                <button type="submit"
-                    class="w-full py-3 rounded-xl bg-brand hover:bg-brand-hover text-white font-bold text-xs transition-all shadow-lg shadow-brand/30 flex items-center justify-center space-x-2">
-                    <i data-lucide="log-in" class="w-4 h-4"></i>
-                    <span>Se connecter</span>
-                </button>
-            </form>
+        <div>
+          <label class="block text-xs font-semibold text-neutral-400 mb-1">Mot de passe</label>
+          <input type="password" id="password" required placeholder="••••••••"
+            class="w-full px-4 py-2.5 rounded-xl bg-neutral-950 border border-neutral-800 text-white text-xs focus:outline-none focus:border-brand">
         </div>
 
-        <!-- SECTION 2 : DASHBOARD ADMIN (Caché tant qu'on n'est pas connecté) -->
-        <div id="admin-dashboard" class="space-y-8 hidden">
+        <p id="login-error" class="text-xs text-red-500 font-semibold text-center hidden">Identifiant ou mot de passe incorrect.</p>
 
-            <!-- Formulaire d'ajout -->
-            <div class="bg-neutral-900/90 border border-neutral-800 rounded-2xl p-6 shadow-2xl space-y-4">
-                <h2 class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
-                    <i data-lucide="plus-circle" class="w-4 h-4 text-brand-light"></i>
-                    <span>Ajouter une notification</span>
-                </h2>
+        <button type="submit"
+          class="w-full py-3 rounded-xl bg-brand hover:bg-brand-hover text-white font-bold text-xs transition-all shadow-lg shadow-brand/30 flex items-center justify-center space-x-2">
+          <i data-lucide="log-in" class="w-4 h-4"></i>
+          <span>Se connecter</span>
+        </button>
+      </form>
+    </div>
 
-                <form id="notification-form" class="space-y-4">
-                    <div>
-                        <label class="block text-xs font-semibold text-neutral-400 mb-1">Titre de l'annonce</label>
-                        <input type="text" id="notif-title" required placeholder="Ex: Tournoi Bedfight 1v1"
-                            class="w-full px-4 py-2.5 rounded-xl bg-neutral-950 border border-neutral-800 text-white text-xs focus:outline-none focus:border-brand">
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-semibold text-neutral-400 mb-1">Catégorie / Badge</label>
-                            <input type="text" id="notif-category" required placeholder="Ex: Événement / Mise à jour"
-                                class="w-full px-4 py-2.5 rounded-xl bg-neutral-950 border border-neutral-800 text-white text-xs focus:outline-none focus:border-brand">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-neutral-400 mb-1">Date affichée</label>
-                            <input type="text" id="notif-date" required value="Aujourd'hui"
-                                class="w-full px-4 py-2.5 rounded-xl bg-neutral-950 border border-neutral-800 text-white text-xs focus:outline-none focus:border-brand">
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-semibold text-neutral-400 mb-1">Contenu de la
-                            notification</label>
-                        <textarea id="notif-content" rows="3" required placeholder="Description détaillée..."
-                            class="w-full px-4 py-2.5 rounded-xl bg-neutral-950 border border-neutral-800 text-white text-xs focus:outline-none focus:border-brand resize-none"></textarea>
-                    </div>
-
-                    <button type="submit"
-                        class="w-full py-3 rounded-xl bg-brand hover:bg-brand-hover text-white font-bold text-xs transition-all shadow-lg shadow-brand/30 flex items-center justify-center space-x-2">
-                        <i data-lucide="send" class="w-4 h-4"></i>
-                        <span>Publier la notification</span>
-                    </button>
-                </form>
-            </div>
-
-            <!-- Liste des notifications existantes -->
-            <div class="space-y-4">
-                <div class="flex items-center justify-between">
-                    <h2 class="text-sm font-bold text-neutral-400 uppercase tracking-wider">Notifications actuelles</h2>
-                    <button onclick="logout()"
-                        class="text-xs text-red-400 hover:text-red-300 transition-colors flex items-center gap-1 font-semibold">
-                        <i data-lucide="log-out" class="w-3.5 h-3.5"></i> Déconnexion
-                    </button>
-                </div>
-                <div id="admin-notifs-list" class="space-y-3">
-                    <!-- Rempli par JavaScript -->
-                </div>
-            </div>
-
+    <!-- SECTION 2 : DASHBOARD ADMIN -->
+    <div id="admin-dashboard" class="space-y-8 hidden">
+      
+      <!-- Formulaire d'ajout / modification -->
+      <div class="bg-neutral-900/90 border border-neutral-800 rounded-2xl p-6 shadow-2xl space-y-4">
+        <div class="flex items-center justify-between">
+          <h2 id="form-title" class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+            <i data-lucide="plus-circle" class="w-4 h-4 text-brand-light"></i>
+            <span>Ajouter une notification</span>
+          </h2>
+          <button id="cancel-edit-btn" onclick="cancelEdit()" class="text-xs text-neutral-400 hover:text-white hidden underline">
+            Annuler la modification
+          </button>
         </div>
+
+        <form id="notification-form" class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-neutral-400 mb-1">Titre de l'annonce</label>
+            <input type="text" id="notif-title" required placeholder="Ex: Tournoi Bedfight 1v1"
+              class="w-full px-4 py-2.5 rounded-xl bg-neutral-950 border border-neutral-800 text-white text-xs focus:outline-none focus:border-brand">
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-neutral-400 mb-1">Catégorie / Badge</label>
+              <input type="text" id="notif-category" required placeholder="Ex: Événement / Mise à jour"
+                class="w-full px-4 py-2.5 rounded-xl bg-neutral-950 border border-neutral-800 text-white text-xs focus:outline-none focus:border-brand">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-neutral-400 mb-1">Date affichée</label>
+              <input type="text" id="notif-date" required value="Aujourd'hui"
+                class="w-full px-4 py-2.5 rounded-xl bg-neutral-950 border border-neutral-800 text-white text-xs focus:outline-none focus:border-brand">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-neutral-400 mb-1">Contenu de la notification</label>
+            <textarea id="notif-content" rows="3" required placeholder="Description détaillée..."
+              class="w-full px-4 py-2.5 rounded-xl bg-neutral-950 border border-neutral-800 text-white text-xs focus:outline-none focus:border-brand resize-none"></textarea>
+          </div>
+
+          <button type="submit" id="submit-btn"
+            class="w-full py-3 rounded-xl bg-brand hover:bg-brand-hover text-white font-bold text-xs transition-all shadow-lg shadow-brand/30 flex items-center justify-center space-x-2">
+            <i data-lucide="send" class="w-4 h-4"></i>
+            <span>Publier la notification</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Liste des notifications existantes -->
+      <div class="space-y-4">
+        <div class="flex items-center justify-between">
+          <h2 class="text-sm font-bold text-neutral-400 uppercase tracking-wider">Notifications actuelles</h2>
+          <button onclick="logout()" class="text-xs text-red-400 hover:text-red-300 transition-colors flex items-center gap-1 font-semibold">
+            <i data-lucide="log-out" class="w-3.5 h-3.5"></i> Déconnexion
+          </button>
+        </div>
+        <div id="admin-notifs-list" class="space-y-3">
+          <!-- Rempli par JavaScript -->
+        </div>
+      </div>
 
     </div>
 
-    <footer class="text-center text-xs text-neutral-600 py-6">
-        © 2026 Hevenly Games — Panel d'administration interne
-    </footer>
+  </div>
 
-    <script>
-        // ==========================================
-        // CONFIGURATION DES IDENTIFIANTS ADMIN
-        // ==========================================
-        const ADMIN_USER = "admin";      // Change ici ton identifiant
-        const ADMIN_PASS = "hevenly2026"; // Change ici ton mot de passe
+  <footer class="text-center text-xs text-neutral-600 py-6">
+    © 2026 Hevenly Games — Panel d'administration interne
+  </footer>
 
-        document.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
-            checkAuthStatus();
-        });
+  <script>
+    // Identifiants admin modifiables ici
+    const ADMIN_USER = "admin";
+    const ADMIN_PASS = "hevenly2026";
 
-        // Gestion de la connexion
-        const loginForm = document.getElementById('login-form');
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const u = document.getElementById('username').value;
-            const p = document.getElementById('password').value;
-            const errorMsg = document.getElementById('login-error');
+    let editingIndex = null; // Suivi de l'index en cours de modification
 
-            if (u === ADMIN_USER && p === ADMIN_PASS) {
-                localStorage.setItem('hevenly_admin_logged', 'true');
-                errorMsg.classList.add('hidden');
-                checkAuthStatus();
-            } else {
-                errorMsg.classList.remove('hidden');
-            }
-        });
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      checkAuthStatus();
+    });
 
-        function checkAuthStatus() {
-            const isLogged = localStorage.getItem('hevenly_admin_logged') === 'true';
-            const loginSection = document.getElementById('login-section');
-            const dashboard = document.getElementById('admin-dashboard');
+    const loginForm = document.getElementById('login-form');
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const u = document.getElementById('username').value;
+      const p = document.getElementById('password').value;
+      const errorMsg = document.getElementById('login-error');
 
-            if (isLogged) {
-                loginSection.classList.add('hidden');
-                dashboard.classList.remove('hidden');
-                renderAdminList();
-            } else {
-                loginSection.classList.remove('hidden');
-                dashboard.classList.add('hidden');
-            }
-            lucide.createIcons();
-        }
+      if (u === ADMIN_USER && p === ADMIN_PASS) {
+        localStorage.setItem('hevenly_admin_logged', 'true');
+        errorMsg.classList.add('hidden');
+        checkAuthStatus();
+      } else {
+        errorMsg.classList.remove('hidden');
+      }
+    });
 
-        function logout() {
-            localStorage.removeItem('hevenly_admin_logged');
-            checkAuthStatus();
-        }
+    function checkAuthStatus() {
+      const isLogged = localStorage.getItem('hevenly_admin_logged') === 'true';
+      const loginSection = document.getElementById('login-section');
+      const dashboard = document.getElementById('admin-dashboard');
 
-        // Gestion des notifications
-        const form = document.getElementById('notification-form');
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
+      if (isLogged) {
+        loginSection.classList.add('hidden');
+        dashboard.classList.remove('hidden');
+        renderAdminList();
+      } else {
+        loginSection.classList.remove('hidden');
+        dashboard.classList.add('hidden');
+      }
+      lucide.createIcons();
+    }
 
-            const title = document.getElementById('notif-title').value;
-            const category = document.getElementById('notif-category').value;
-            const date = document.getElementById('notif-date').value;
-            const content = document.getElementById('notif-content').value;
+    function logout() {
+      localStorage.removeItem('hevenly_admin_logged');
+      checkAuthStatus();
+    }
 
-            const newNotif = {title, category, date, content};
+    // Gestion de l'ajout ou de la mise à jour
+    const form = document.getElementById('notification-form');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
 
-            let notifications = JSON.parse(localStorage.getItem('hevenly_notifications')) || [
-                {title: "Création du site web", category: "Mise à jour première version", date: "Aujourd'hui", content: "Le site est actuellement en version bêta. N'hésitez pas à signaler tout bug sur notre Discord."}
-            ];
+      const title = document.getElementById('notif-title').value;
+      const category = document.getElementById('notif-category').value;
+      const date = document.getElementById('notif-date').value;
+      const content = document.getElementById('notif-content').value;
 
-            notifications.unshift(newNotif);
-            localStorage.setItem('hevenly_notifications', JSON.stringify(notifications));
+      const notifData = { title, category, date, content };
 
-            form.reset();
-            document.getElementById('notif-date').value = "Aujourd'hui";
-            renderAdminList();
-            alert('Notification publiée avec succès !');
-        });
+      let notifications = JSON.parse(localStorage.getItem('hevenly_notifications')) || [
+        { title: "Création du site web", category: "Mise à jour première version", date: "Aujourd'hui", content: "Le site est actuellement en version bêta. N'hésitez pas à signaler tout bug sur notre Discord." }
+      ];
 
-        function renderAdminList() {
-            const listContainer = document.getElementById('admin-notifs-list');
-            let notifications = JSON.parse(localStorage.getItem('hevenly_notifications')) || [
-                {title: "Création du site web", category: "Mise à jour première version", date: "Aujourd'hui", content: "Le site est actuellement en version bêta. N'hésitez pas à signaler tout bug sur notre Discord."}
-            ];
+      if (editingIndex !== null) {
+        // Mode modification
+        notifications[editingIndex] = notifData;
+        editingIndex = null;
+        document.getElementById('form-title').innerHTML = `<i data-lucide="plus-circle" class="w-4 h-4 text-brand-light"></i><span>Ajouter une notification</span>`;
+        document.getElementById('submit-btn').innerHTML = `<i data-lucide="send" class="w-4 h-4"></i><span>Publier la notification</span>`;
+        document.getElementById('cancel-edit-btn').classList.add('hidden');
+        alert('Notification modifiée avec succès !');
+      } else {
+        // Mode ajout
+        notifications.unshift(notifData);
+        alert('Notification publiée avec succès !');
+      }
 
-            if (notifications.length === 0) {
-                listContainer.innerHTML = '<p class="text-xs text-neutral-500 text-center py-4">Aucune notification enregistrée.</p>';
-                return;
-            }
+      localStorage.setItem('hevenly_notifications', JSON.stringify(notifications));
+      form.reset();
+      document.getElementById('notif-date').value = "Aujourd'hui";
+      renderAdminList();
+    });
 
-            listContainer.innerHTML = '';
-            notifications.forEach((note, index) => {
-                const item = document.createElement('div');
-                item.className = "bg-neutral-900 border border-neutral-800 rounded-xl p-4 flex items-center justify-between gap-4";
-                item.innerHTML = `
+    function renderAdminList() {
+      const listContainer = document.getElementById('admin-notifs-list');
+      let notifications = JSON.parse(localStorage.getItem('hevenly_notifications')) || [
+        { title: "Création du site web", category: "Mise à jour première version", date: "Aujourd'hui", content: "Le site est actuellement en version bêta. N'hésitez pas à signaler tout bug sur notre Discord." }
+      ];
+
+      if (notifications.length === 0) {
+        listContainer.innerHTML = '<p class="text-xs text-neutral-500 text-center py-4">Aucune notification enregistrée.</p>';
+        return;
+      }
+
+      listContainer.innerHTML = '';
+      notifications.forEach((note, index) => {
+        const item = document.createElement('div');
+        item.className = "bg-neutral-900 border border-neutral-800 rounded-xl p-4 flex items-center justify-between gap-4";
+        item.innerHTML = `
           <div class="space-y-1">
             <div class="flex items-center space-x-2">
               <span class="text-[10px] font-bold text-red-400 uppercase">${note.category}</span>
@@ -262,24 +267,60 @@
             <h4 class="text-xs font-bold text-white">${note.title}</h4>
             <p class="text-xs text-neutral-400 line-clamp-1">${note.content}</p>
           </div>
-          <button onclick="deleteNotification(${index})" class="p-2 rounded-lg bg-neutral-800 hover:bg-red-950 text-neutral-400 hover:text-red-400 transition-colors shrink-0">
-            <i data-lucide="trash-2" class="w-4 h-4"></i>
-          </button>
+          <div class="flex items-center space-x-2 shrink-0">
+            <button onclick="startEdit(${index})" class="p-2 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-neutral-300 transition-colors" title="Modifier">
+              <i data-lucide="pencil" class="w-4 h-4"></i>
+            </button>
+            <button onclick="deleteNotification(${index})" class="p-2 rounded-lg bg-neutral-800 hover:bg-red-950 text-neutral-400 hover:text-red-400 transition-colors" title="Supprimer">
+              <i data-lucide="trash-2" class="w-4 h-4"></i>
+            </button>
+          </div>
         `;
-                listContainer.appendChild(item);
-            });
-            lucide.createIcons();
-        }
+        listContainer.appendChild(item);
+      });
+      lucide.createIcons();
+    }
 
-        function deleteNotification(index) {
-            if (confirm('Voulez-vous vraiment supprimer cette notification ?')) {
-                let notifications = JSON.parse(localStorage.getItem('hevenly_notifications')) || [];
-                notifications.splice(index, 1);
-                localStorage.setItem('hevenly_notifications', JSON.stringify(notifications));
-                renderAdminList();
-            }
-        }
-    </script>
+    function startEdit(index) {
+      let notifications = JSON.parse(localStorage.getItem('hevenly_notifications')) || [];
+      const note = notifications[index];
+      if (!note) return;
+
+      document.getElementById('notif-title').value = note.title;
+      document.getElementById('notif-category').value = note.category;
+      document.getElementById('notif-date').value = note.date;
+      document.getElementById('notif-content').value = note.content;
+
+      editingIndex = index;
+      document.getElementById('form-title').innerHTML = `<i data-lucide="pencil" class="w-4 h-4 text-brand-light"></i><span>Modifier la notification #${index + 1}</span>`;
+      document.getElementById('submit-btn').innerHTML = `<i data-lucide="check" class="w-4 h-4"></i><span>Enregistrer les modifications</span>`;
+      document.getElementById('cancel-edit-btn').classList.remove('hidden');
+
+      // Remonter en haut de page pour voir le formulaire
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      lucide.createIcons();
+    }
+
+    function cancelEdit() {
+      editingIndex = null;
+      form.reset();
+      document.getElementById('notif-date').value = "Aujourd'hui";
+      document.getElementById('form-title').innerHTML = `<i data-lucide="plus-circle" class="w-4 h-4 text-brand-light"></i><span>Ajouter une notification</span>`;
+      document.getElementById('submit-btn').innerHTML = `<i data-lucide="send" class="w-4 h-4"></i><span>Publier la notification</span>`;
+      document.getElementById('cancel-edit-btn').classList.add('hidden');
+      lucide.createIcons();
+    }
+
+    function deleteNotification(index) {
+      if (confirm('Voulez-vous vraiment supprimer cette notification ?')) {
+        let notifications = JSON.parse(localStorage.getItem('hevenly_notifications')) || [];
+        notifications.splice(index, 1);
+        localStorage.setItem('hevenly_notifications', JSON.stringify(notifications));
+        if (editingIndex === index) cancelEdit();
+        renderAdminList();
+      }
+    }
+  </script>
 </body>
 
 </html>
