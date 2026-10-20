@@ -41,7 +41,7 @@
         extend: {
           colors: {
             brand: {
-              DEFAULT: '#AA0000', // Rouge &4 Minecraft
+              DEFAULT: '#AA0000',
               hover: '#880000',
               light: '#FF2222',
               dark: '#121212',
@@ -165,49 +165,48 @@
   <!-- Bouton de Notification Flottant en Haut à Droite -->
   <div class="fixed top-5 right-5 z-40">
     <button onclick="openNewsModal()"
-      class="relative group flex items-center justify-center w-11 h-11 md:w-12 md:h-12 rounded-2xl bg-neutral-900/90 hover:bg-neutral-800 border border-neutral-800 backdrop-blur-md shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95">
+      class="relative group flex items-center justify-center w-11 h-11 md:w-12 md:h-12 rounded-2xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95">
       <i data-lucide="bell" class="w-5 h-5 text-neutral-300 group-hover:text-white transition-colors"></i>
-      <!-- Point indicateur rouge animé -->
-      <span class="absolute top-2.5 right-2.5 w-2.5 h-2.5 bg-brand rounded-full animate-ping"></span>
-      <span class="absolute top-2.5 right-2.5 w-2.5 h-2.5 bg-brand rounded-full"></span>
+      <!-- Point indicateur rouge sobre (sans effet néon agressif) -->
+      <span class="absolute top-2.5 right-2.5 w-2.5 h-2.5 bg-red-600 rounded-full"></span>
     </button>
   </div>
 
   <!-- Toast Notification -->
   <div id="toast"
-    class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 bg-neutral-900/90 backdrop-blur-md border border-neutral-800 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center space-x-3">
+    class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 bg-neutral-900 border border-neutral-800 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center space-x-3">
     <i data-lucide="check-circle-2" class="w-5 h-5 text-red-500"></i>
-    <span class="font-semibold text-sm">Adresse IP copiée dans le presse-papier !</span>
+    <span class="font-semibold text-sm text-white">Adresse IP copiée dans le presse-papier !</span>
   </div>
 
   <!-- Banner Cookie (Bas de page) -->
   <div id="cookie-banner"
-    class="fixed bottom-0 inset-x-0 z-50 bg-[#141414]/95 backdrop-blur-md border-t border-neutral-800/80 px-6 py-4 transition-all duration-500 transform translate-y-full opacity-0">
+    class="fixed bottom-0 inset-x-0 z-50 bg-[#141414] border-t border-neutral-800 px-6 py-4 transition-all duration-500 transform translate-y-full opacity-0">
     <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-xs">
-      <div class="space-y-1.5 text-neutral-300">
+      <div class="space-y-1.5 text-neutral-200">
         <h4 class="font-bold text-white text-sm">Cookies & mesure d'audience</h4>
-        <p class="text-neutral-400 max-w-3xl leading-relaxed">
+        <p class="text-neutral-300 max-w-3xl leading-relaxed">
           Nous utilisons des outils d'analyse pour mesurer l'audience et améliorer l'expérience du site. Vous pouvez
           accepter ou refuser la collecte. Pour en savoir plus, consultez :
         </p>
-        <div class="flex items-center space-x-4 pt-1 text-neutral-300 font-medium">
+        <div class="flex items-center space-x-4 pt-1 text-neutral-200 font-medium">
           <button onclick="openLegalModal('privacy')"
             class="hover:text-white underline underline-offset-2 transition-colors">Politique de
             confidentialité</button>
           <button onclick="openLegalModal('cookies')"
             class="hover:text-white underline underline-offset-2 transition-colors">Politique de cookies</button>
           <button onclick="openLegalModal('legal')"
-            class="hover:text-neutral-300 underline underline-offset-2 transition-colors">Mentions légales</button>
+            class="hover:text-white underline underline-offset-2 transition-colors">Mentions légales</button>
         </div>
       </div>
 
       <div class="flex items-center space-x-3 w-full md:w-auto justify-end pt-2 md:pt-0">
         <button onclick="acceptCookies(false)"
-          class="px-5 py-2.5 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-neutral-300 font-medium transition-colors text-xs">
+          class="px-5 py-2.5 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-neutral-200 font-medium transition-colors text-xs">
           Refuser
         </button>
         <button onclick="acceptCookies(true)"
-          class="px-5 py-2.5 rounded-lg bg-red-500 hover:bg-red-400 text-white font-bold transition-all text-xs shadow-lg shadow-red-500/20">
+          class="px-5 py-2.5 rounded-lg bg-red-600 hover:bg-red-500 text-white font-bold transition-all text-xs shadow-md">
           Tout accepter
         </button>
       </div>
@@ -219,81 +218,72 @@
     <section
       class="relative min-h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden w-full">
 
-      <!-- Halo Néon Rouge d'Arrière-Plan Centré -->
-      <div
-        class="absolute w-[500px] h-[500px] bg-brand/20 rounded-full blur-[120px] pointer-events-none top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10">
-      </div>
-
-      <!-- Image de Fond du Header avec Dégradé Élégant -->
+      <!-- Arrière-plan épuré (sans halo néon agressif) -->
       <div class="absolute inset-0 top-0 left-0 right-0 -z-20 overflow-hidden">
         <img src="https://i.imgur.com/xr1vqMq.jpg" alt="Hevenly Background"
-          class="w-full h-full object-cover filter blur-sm opacity-50 scale-105 object-top">
-        <div class="absolute inset-0 bg-gradient-to-b from-[#121212]/30 via-[#121212]/85 to-[#121212]"></div>
+          class="w-full h-full object-cover opacity-35 scale-105 object-top">
+        <div class="absolute inset-0 bg-gradient-to-b from-[#121212]/40 via-[#121212]/90 to-[#121212]"></div>
       </div>
 
       <!-- Conteneur centralisé absolu du Hero -->
       <div
         class="w-full max-w-3xl mx-auto relative z-10 flex flex-col items-center justify-center text-center my-auto pt-16 pb-24">
 
-        <!-- Status Indicator / En Ligne -->
+        <!-- Status Indicator / En Ligne (Badge sobre) -->
         <div
-          class="inline-flex items-center justify-center space-x-2 px-3.5 py-1 rounded-full bg-neutral-900/90 border border-neutral-800/80 text-[11px] font-semibold text-neutral-300 mb-6 backdrop-blur-md shadow-lg reveal mx-auto">
-          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          class="inline-flex items-center justify-center space-x-2 px-3.5 py-1 rounded-lg bg-neutral-900 border border-neutral-800 text-[11px] font-semibold text-neutral-200 mb-6 shadow-sm reveal mx-auto">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
           <span>0 Joueurs en ligne</span>
           <span class="text-neutral-600">-</span>
-          <span class="text-neutral-400">Saison 0</span>
+          <span class="text-neutral-300">Saison 0</span>
         </div>
 
         <!-- Titre HEVENLY strictement centré avec logo positionné à gauche sans décalage -->
         <div class="relative inline-block mb-4 reveal delay-100 mx-auto">
           <img src="https://i.imgur.com/BYA0Cs5.png" alt="Hevenly Logo"
-            class="absolute left-[-50px] md:left-[-76px] top-1/2 -translate-y-1/2 w-10 h-10 md:w-16 md:h-16 object-contain filter drop-shadow-[0_0_20px_rgba(170,0,0,0.6)]">
+            class="absolute left-[-50px] md:left-[-76px] top-1/2 -translate-y-1/2 w-10 h-10 md:w-16 md:h-16 object-contain">
           <h2 class="font-black text-4xl md:text-6xl tracking-tight text-white uppercase leading-none m-0">
             HEVENLY
           </h2>
         </div>
 
-        <!-- Badge Version Pilule en Rouge Minecraft -->
+        <!-- Badge Version (Design épuré non-néon) -->
         <div
-          class="inline-flex items-center justify-center space-x-2 px-4 py-1.5 rounded-full bg-brand/10 border border-brand/40 text-[11px] font-extrabold tracking-widest text-brand-light uppercase mb-6 backdrop-blur-md shadow-md reveal delay-200 mx-auto">
-          <span>1.8.9</span>
+          class="inline-flex items-center justify-center space-x-2 px-4 py-1.5 rounded-lg bg-neutral-900 border border-neutral-800 text-[11px] font-bold tracking-widest text-white uppercase mb-6 shadow-sm reveal delay-200 mx-auto">
+          <span>Version 1.8.9</span>
         </div>
 
         <!-- Titre principal -->
         <h1
-          class="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.1] mb-5 drop-shadow-xl reveal delay-300 text-center mx-auto">
+          class="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.1] mb-5 reveal delay-300 text-center mx-auto">
           La plateforme competitive que vous méritez.
         </h1>
 
         <!-- Sous-titre -->
         <p
-          class="text-neutral-300 text-xs sm:text-sm md:text-base max-w-lg mx-auto mb-8 leading-relaxed drop-shadow-sm font-normal reveal delay-400 text-center px-2">
+          class="text-neutral-200 text-xs sm:text-sm md:text-base max-w-lg mx-auto mb-8 leading-relaxed font-normal reveal delay-400 text-center px-2">
           Hevenly propose un système compétitif complet axé sur le Bedfight, développé sur mesure pour vous
           faire progresser dans les meilleures conditions.
         </p>
 
-        <!-- Boutons CTA de même taille pour un centrage symétrique parfait -->
+        <!-- Boutons CTA -->
         <div
           class="flex flex-col sm:flex-row items-center justify-center gap-4 w-full reveal delay-400 mx-auto px-4 sm:px-0">
           <a href="https://discord.gg" target="_blank"
-            class="w-full sm:w-64 py-4 rounded-xl bg-brand hover:bg-brand-hover text-white font-bold text-sm transition-all duration-300 transform hover:-translate-y-0.5 active:scale-95 flex items-center justify-center space-x-2.5 shadow-xl shadow-brand/30 border border-red-500/30">
+            class="w-full sm:w-64 py-4 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-sm transition-all duration-300 flex items-center justify-center space-x-2.5 shadow-lg active:scale-95">
             <svg class="w-4 h-4 shrink-0" viewBox="0 -28.5 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid" fill="#fff1fd" stroke="#fff1fd">
-              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-              <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-              <g id="SVGRepo_iconCarrier">
-                <g>
-                  <path
-                    d="M216.856339,16.5966031 C200.285002,8.84328665 182.566144,3.2084988 164.041564,0 C161.766523,4.11318106 159.108624,9.64549908 157.276099,14.0464379 C137.583995,11.0849896 118.072967,11.0849896 98.7430163,14.0464379 C96.9108417,9.64549908 94.1925838,4.11318106 91.8971895,0 C73.3526068,3.2084988 55.6133949,8.86399117 39.0420583,16.6376612 C5.61752293,67.146514 -3.4433191,116.400813 1.08711069,164.955721 C23.2560196,181.510915 44.7403634,191.567697 65.8621325,198.148576 C71.0772151,190.971126 75.7283628,183.341335 79.7352139,175.300261 C72.104019,172.400575 64.7949724,168.822202 57.8887866,164.667963 C59.7209612,163.310589 61.5131304,161.891452 63.2445898,160.431257 C105.36741,180.133187 151.134928,180.133187 192.754523,160.431257 C194.506336,161.891452 196.298154,163.310589 198.110326,164.667963 C191.183787,168.842556 183.854737,172.420929 176.223542,175.320965 C180.230393,183.341335 184.861538,190.991831 190.096624,198.16893 C211.238746,191.588051 232.743023,181.531619 254.911949,164.955721 C260.227747,108.668201 245.831087,59.8662432 216.856339,16.5966031 Z M85.4738752,135.09489 C72.8290281,135.09489 62.4592217,123.290155 62.4592217,108.914901 C62.4592217,94.5396472 72.607595,82.7145587 85.4738752,82.7145587 C98.3405064,82.7145587 108.709962,94.5189427 108.488529,108.914901 C108.508531,123.290155 98.3405064,135.09489 85.4738752,135.09489 Z M170.525237,135.09489 C157.88039,135.09489 147.510584,123.290155 147.510584,108.914901 C147.510584,94.5396472 157.658606,82.7145587 170.525237,82.7145587 C183.391518,82.7145587 193.761324,94.5189427 193.539891,108.914901 C193.539891,123.290155 183.391518,135.09489 170.525237,135.09489 Z"
-                    fill="#f9fffd" fill-rule="nonzero"> </path>
-                </g>
+              xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid" fill="#ffffff" stroke="#ffffff">
+              <g>
+                <path
+                  d="M216.856339,16.5966031 C200.285002,8.84328665 182.566144,3.2084988 164.041564,0 C161.766523,4.11318106 159.108624,9.64549908 157.276099,14.0464379 C137.583995,11.0849896 118.072967,11.0849896 98.7430163,14.0464379 C96.9108417,9.64549908 94.1925838,4.11318106 91.8971895,0 C73.3526068,3.2084988 55.6133949,8.86399117 39.0420583,16.6376612 C5.61752293,67.146514 -3.4433191,116.400813 1.08711069,164.955721 C23.2560196,181.510915 44.7403634,191.567697 65.8621325,198.148576 C71.0772151,190.971126 75.7283628,183.341335 79.7352139,175.300261 C72.104019,172.400575 64.7949724,168.822202 57.8887866,164.667963 C59.7209612,163.310589 61.5131304,161.891452 63.2445898,160.431257 C105.36741,180.133187 151.134928,180.133187 192.754523,160.431257 C194.506336,161.891452 196.298154,163.310589 198.110326,164.667963 C191.183787,168.842556 183.854737,172.420929 176.223542,175.320965 C180.230393,183.341335 184.861538,190.991831 190.096624,198.16893 C211.238746,191.588051 232.743023,181.531619 254.911949,164.955721 C260.227747,108.668201 245.831087,59.8662432 216.856339,16.5966031 Z M85.4738752,135.09489 C72.8290281,135.09489 62.4592217,123.290155 62.4592217,108.914901 C62.4592217,94.5396472 72.607595,82.7145587 85.4738752,82.7145587 C98.3405064,82.7145587 108.709962,94.5189427 108.488529,108.914901 C108.508531,123.290155 98.3405064,135.09489 85.4738752,135.09489 Z M170.525237,135.09489 C157.88039,135.09489 147.510584,123.290155 147.510584,108.914901 C147.510584,94.5396472 157.658606,82.7145587 170.525237,82.7145587 C183.391518,82.7145587 193.761324,94.5189427 193.539891,108.914901 C193.539891,123.290155 183.391518,135.09489 170.525237,135.09489 Z"
+                  fill="#ffffff" fill-rule="nonzero"> </path>
               </g>
             </svg>
             <span>Rejoindre le Discord</span>
           </a>
           <button onclick="copyIP()"
-            class="w-full sm:w-64 py-4 rounded-xl bg-neutral-900/90 hover:bg-neutral-800 backdrop-blur-md text-white font-bold text-sm border border-neutral-800 transition-all duration-300 transform hover:-translate-y-0.5 active:scale-95 flex items-center justify-center space-x-2.5 shadow-lg">
-            <i data-lucide="copy" class="w-4 h-4 text-neutral-400 shrink-0"></i>
+            class="w-full sm:w-64 py-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-sm border border-neutral-800 transition-all duration-300 active:scale-95 flex items-center justify-center space-x-2.5 shadow-lg">
+            <i data-lucide="copy" class="w-4 h-4 text-neutral-300 shrink-0"></i>
             <span class="uppercase">hevenly.games (1.8.9)</span>
           </button>
         </div>
@@ -302,47 +292,47 @@
     </section>
 
     <!-- Features Section -->
-    <section id="features" class="py-16 md:py-20 border-t border-neutral-800/60 bg-[#141414]">
+    <section id="features" class="py-16 md:py-20 border-t border-neutral-800 bg-[#141414]">
       <div class="max-w-6xl mx-auto px-4">
         <div
-          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 divide-y md:divide-y-0 md:divide-x divide-neutral-800/60">
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 divide-y md:divide-y-0 md:divide-x divide-neutral-800">
 
           <div class="pt-6 md:pt-0 md:px-4 first:px-0 reveal">
-            <div class="text-brand mb-4">
+            <div class="text-red-500 mb-4">
               <i data-lucide="scan" class="w-6 h-6"></i>
             </div>
             <h3 class="text-base font-bold text-white mb-2">Anti-cheat</h3>
-            <p class="text-xs text-neutral-400 leading-relaxed">
+            <p class="text-xs text-neutral-300 leading-relaxed">
               Anti-cheat mis à jour en continu : triche détectée = ban définitif et blacklist totale.
             </p>
           </div>
 
           <div class="pt-6 md:pt-0 md:px-4 reveal delay-100">
-            <div class="text-brand mb-4">
+            <div class="text-red-500 mb-4">
               <i data-lucide="flag" class="w-6 h-6"></i>
             </div>
             <h3 class="text-base font-bold text-white mb-2">Maps inédites</h3>
-            <p class="text-xs text-neutral-400 leading-relaxed">
+            <p class="text-xs text-neutral-300 leading-relaxed">
               Des arènes compétitives, testées et peaufinées en direct par les joueurs.
             </p>
           </div>
 
           <div class="pt-6 md:pt-0 md:px-4 reveal delay-200">
-            <div class="text-brand mb-4">
+            <div class="text-red-500 mb-4">
               <i data-lucide="trending-up" class="w-6 h-6"></i>
             </div>
             <h3 class="text-base font-bold text-white mb-2">Statistiques avancées</h3>
-            <p class="text-xs text-neutral-400 leading-relaxed">
+            <p class="text-xs text-neutral-300 leading-relaxed">
               Analysez vos stats, suivez votre progression et grimpez en ranked.
             </p>
           </div>
 
           <div class="pt-6 md:pt-0 md:px-4 reveal delay-300">
-            <div class="text-brand mb-4">
+            <div class="text-red-500 mb-4">
               <i data-lucide="swords" class="w-6 h-6"></i>
             </div>
             <h3 class="text-base font-bold text-white mb-2">PvP fluide</h3>
-            <p class="text-xs text-neutral-400 leading-relaxed">
+            <p class="text-xs text-neutral-300 leading-relaxed">
               Un PvP ultra-fluide et sans latence, propulsé directement par un Spigot maison optimisé !
             </p>
           </div>
@@ -352,15 +342,15 @@
     </section>
 
     <!-- Showcase Render Section Minecraft -->
-    <section class="py-16 md:py-20 relative overflow-hidden bg-[#111111] border-t border-neutral-800/60">
+    <section class="py-16 md:py-20 relative overflow-hidden bg-[#111111] border-t border-neutral-800">
       <div class="max-w-6xl mx-auto px-4">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
           <!-- Contenu texte à gauche -->
           <div class="lg:col-span-7 space-y-6 text-left reveal">
             <div
-              class="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-red-950/40 border border-red-500/40 text-xs font-bold text-red-400 uppercase tracking-wider">
-              <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+              class="inline-flex items-center space-x-2 px-3.5 py-1 rounded-lg bg-neutral-900 border border-neutral-800 text-xs font-bold text-neutral-200 uppercase tracking-wider">
+              <i data-lucide="zap" class="w-3.5 h-3.5 text-red-500"></i>
               <span>BEDFIGHT NEXT-GEN</span>
             </div>
 
@@ -374,28 +364,21 @@
             </p>
 
             <div class="grid grid-cols-2 gap-4 pt-4">
-              <div class="p-4 rounded-xl bg-neutral-900/80 border border-neutral-800">
-                <div class="text-2xl font-black text-red-500 mb-1">100%</div>
-                <p class="text-xs text-neutral-400 font-semibold">Knockback Optimisé</p>
+              <div class="p-4 rounded-xl bg-neutral-900 border border-neutral-800">
+                <div class="text-2xl font-black text-white mb-1">100%</div>
+                <p class="text-xs text-neutral-300 font-semibold">Knockback Optimisé</p>
               </div>
-              <div class="p-4 rounded-xl bg-neutral-900/80 border border-neutral-800">
-                <div class="text-2xl font-black text-cyan-400 mb-1">&lt; 20ms</div>
-                <p class="text-xs text-neutral-400 font-semibold">Latence Serveur</p>
+              <div class="p-4 rounded-xl bg-neutral-900 border border-neutral-800">
+                <div class="text-2xl font-black text-white mb-1">&lt; 20ms</div>
+                <p class="text-xs text-neutral-300 font-semibold">Latence Serveur</p>
               </div>
             </div>
           </div>
 
-          <!-- Visuel Render à droite avec Effets Néon Lumineux -->
+          <!-- Visuel Render à droite -->
           <div class="lg:col-span-5 relative flex justify-center items-center reveal delay-100">
-            <!-- Halos Néon arrière-plan -->
-            <div class="absolute w-72 h-72 bg-red-600/20 rounded-full blur-3xl -top-6 -left-6 pointer-events-none">
-            </div>
-            <div class="absolute w-72 h-72 bg-cyan-500/20 rounded-full blur-3xl -bottom-6 -right-6 pointer-events-none">
-            </div>
-
-            <!-- Image du Render Minecraft -->
             <img src="https://i.imgur.com/r8sDBMt.png" alt="Minecraft Bedfight Render"
-              class="relative z-10 w-full max-w-md object-contain drop-shadow-[0_20px_35px_rgba(0,0,0,0.8)] transform hover:scale-[1.02] transition-transform duration-500">
+              class="relative z-10 w-full max-w-md object-contain drop-shadow-2xl">
           </div>
 
         </div>
@@ -408,7 +391,7 @@
         <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-3">
           Comment jouer sur le serveur ?
         </h2>
-        <p class="text-neutral-400 text-xs sm:text-sm max-w-xl mx-auto">
+        <p class="text-neutral-300 text-xs sm:text-sm max-w-xl mx-auto">
           Rejoins le Serveur, entre en file. Simple, rapide et compétitif.
         </p>
       </div>
@@ -418,22 +401,22 @@
         <div class="absolute top-1/2 left-8 right-8 h-[2px] bg-neutral-800 -z-10 -translate-y-1/2"></div>
 
         <button onclick="setStep(0)" id="step-btn-0"
-          class="w-10 h-10 rounded-full bg-brand text-white font-extrabold text-sm flex items-center justify-center transition-all duration-300 shadow-lg shadow-brand/30 border border-red-500/40">
+          class="w-10 h-10 rounded-full bg-red-600 text-white font-extrabold text-sm flex items-center justify-center transition-all duration-300 shadow-md">
           01
         </button>
         <button onclick="setStep(1)" id="step-btn-1"
-          class="w-10 h-10 rounded-full bg-neutral-900 text-neutral-500 border border-neutral-800 font-extrabold text-sm flex items-center justify-center transition-all duration-300 hover:text-white">
+          class="w-10 h-10 rounded-full bg-neutral-900 text-neutral-400 border border-neutral-800 font-extrabold text-sm flex items-center justify-center transition-all duration-300 hover:text-white">
           02
         </button>
         <button onclick="setStep(2)" id="step-btn-2"
-          class="w-10 h-10 rounded-full bg-neutral-900 text-neutral-500 border border-neutral-800 font-extrabold text-sm flex items-center justify-center transition-all duration-300 hover:text-white">
+          class="w-10 h-10 rounded-full bg-neutral-900 text-neutral-400 border border-neutral-800 font-extrabold text-sm flex items-center justify-center transition-all duration-300 hover:text-white">
           03
         </button>
       </div>
 
       <!-- Slider Card Container -->
       <div
-        class="relative max-w-xl mx-auto rounded-2xl bg-brand-card border border-brand-border p-6 md:p-8 shadow-2xl reveal delay-200">
+        class="relative max-w-xl mx-auto rounded-2xl bg-neutral-900 border border-neutral-800 p-6 md:p-8 shadow-2xl reveal delay-200">
 
         <div class="grid grid-cols-1 grid-rows-1 w-full">
 
@@ -441,15 +424,15 @@
           <div id="step-card-0" class="col-start-1 row-start-1 space-y-4 slide-step opacity-100 translate-x-0">
             <div class="flex items-center space-x-4">
               <div
-                class="w-10 h-10 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center text-brand shrink-0">
+                class="w-10 h-10 rounded-xl bg-neutral-800 border border-neutral-700 flex items-center justify-center text-white shrink-0">
                 <i data-lucide="disc" class="w-5 h-5"></i>
               </div>
               <div>
                 <h4 class="text-base font-bold text-white">Hevenly Games</h4>
-                <p class="text-xs text-neutral-400 font-medium">hevenly.games</p>
+                <p class="text-xs text-neutral-300 font-medium">hevenly.games</p>
               </div>
             </div>
-            <p class="text-xs md:text-sm text-neutral-400 leading-relaxed pt-2">
+            <p class="text-xs md:text-sm text-neutral-200 leading-relaxed pt-2">
               Rejoins le serveur en 1.8.9.
             </p>
           </div>
@@ -459,15 +442,15 @@
             class="col-start-1 row-start-1 space-y-4 slide-step opacity-0 translate-x-4 pointer-events-none">
             <div class="flex items-center space-x-4">
               <div
-                class="w-10 h-10 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center text-brand shrink-0">
+                class="w-10 h-10 rounded-xl bg-neutral-800 border border-neutral-700 flex items-center justify-center text-white shrink-0">
                 <i data-lucide="swords" class="w-5 h-5"></i>
               </div>
               <div>
                 <h4 class="text-base font-bold text-white">Matchmaking</h4>
-                <p class="text-xs text-neutral-400 font-medium">File d'attente automatisée</p>
+                <p class="text-xs text-neutral-300 font-medium">File d'attente automatisée</p>
               </div>
             </div>
-            <p class="text-xs md:text-sm text-neutral-400 leading-relaxed pt-2">
+            <p class="text-xs md:text-sm text-neutral-200 leading-relaxed pt-2">
               Entre en file d'attente via la boussole. Un match équilibré de
               ton niveau est instantanément généré.
             </p>
@@ -478,15 +461,15 @@
             class="col-start-1 row-start-1 space-y-4 slide-step opacity-0 translate-x-4 pointer-events-none">
             <div class="flex items-center space-x-4">
               <div
-                class="w-10 h-10 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center text-brand shrink-0">
+                class="w-10 h-10 rounded-xl bg-neutral-800 border border-neutral-700 flex items-center justify-center text-white shrink-0">
                 <i data-lucide="server" class="w-5 h-5"></i>
               </div>
               <div>
                 <h4 class="text-base font-bold text-white">Ranked</h4>
-                <p class="text-xs text-neutral-400 font-medium">Un leaderboard est mis en place</p>
+                <p class="text-xs text-neutral-300 font-medium">Un leaderboard est mis en place</p>
               </div>
             </div>
-            <p class="text-xs md:text-sm text-neutral-400 leading-relaxed pt-2">
+            <p class="text-xs md:text-sm text-neutral-200 leading-relaxed pt-2">
               Donne le meilleur de toi même pour atteindre le top du serveur.
             </p>
           </div>
@@ -494,20 +477,20 @@
         </div>
 
         <!-- Flèches de contrôle du slider -->
-        <div class="flex items-center justify-between pt-6 border-t border-neutral-800/80 mt-6">
+        <div class="flex items-center justify-between pt-6 border-t border-neutral-800 mt-6">
           <button onclick="prevStep()"
-            class="p-2 rounded-lg bg-neutral-900 border border-neutral-800 text-neutral-400 hover:text-white hover:border-neutral-700 transition-colors">
+            class="p-2 rounded-lg bg-neutral-800 border border-neutral-700 text-neutral-300 hover:text-white transition-colors">
             <i data-lucide="arrow-left" class="w-4 h-4"></i>
           </button>
 
           <div class="flex space-x-1.5" id="slider-dots">
-            <span class="w-2 h-2 rounded-full bg-brand"></span>
+            <span class="w-2 h-2 rounded-full bg-red-600"></span>
             <span class="w-2 h-2 rounded-full bg-neutral-800"></span>
             <span class="w-2 h-2 rounded-full bg-neutral-800"></span>
           </div>
 
           <button onclick="nextStep()"
-            class="p-2 rounded-lg bg-neutral-900 border border-neutral-800 text-neutral-400 hover:text-white hover:border-neutral-700 transition-colors">
+            class="p-2 rounded-lg bg-neutral-800 border border-neutral-700 text-neutral-300 hover:text-white transition-colors">
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </button>
         </div>
@@ -515,72 +498,72 @@
       </div>
     </section>
 
-    <!-- Boutique Section : HEVENLY+ et HEVENLY PREMIUM (Thème Élégant Rouge & Or/Blanc) -->
-    <section id="shop" class="py-16 md:py-20 border-t border-neutral-800/60 bg-[#141414]">
+    <!-- Boutique Section : HEVENLY+ et HEVENLY PREMIUM (Textes ultra-lisibles, zéro effet néon agressif) -->
+    <section id="shop" class="py-16 md:py-20 border-t border-neutral-800 bg-[#141414]">
       <div class="max-w-5xl mx-auto px-4">
         <div class="text-center mb-12 reveal">
           <div
-            class="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-red-950/40 border border-red-500/30 text-xs font-semibold text-red-400 mb-4">
+            class="inline-flex items-center space-x-2 px-3.5 py-1 rounded-lg bg-neutral-900 border border-neutral-800 text-xs font-semibold text-white mb-4">
             <span>GRADES EXCLUSIFS</span>
           </div>
           <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-3">
             Soutenez le serveur
           </h2>
-          <p class="text-neutral-400 text-xs sm:text-sm max-w-lg mx-auto">
+          <p class="text-neutral-300 text-xs sm:text-sm max-w-lg mx-auto">
             Débloquez des fonctionnalités exclusives, des cosmétiques rares et soutenez directement le
             développement.
           </p>
         </div>
 
-        <!-- Grille des Grades VIP Harmonisés -->
+        <!-- Grille des Grades VIP -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 reveal delay-100">
 
           <!-- Carte 1 : HEVENLY PLUS -->
           <div
-            class="bg-gradient-to-b from-neutral-900/90 via-brand-card to-brand-card border border-neutral-800 hover:border-neutral-700 rounded-2xl p-6 md:p-8 transition-all duration-300 shadow-2xl relative flex flex-col justify-between">
+            class="bg-neutral-900 border border-neutral-800 hover:border-neutral-700 rounded-2xl p-6 md:p-8 transition-all duration-300 shadow-2xl relative flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between mb-4">
                 <span
-                  class="px-3 py-0.5 rounded-full bg-neutral-800 text-neutral-300 text-[11px] font-extrabold border border-neutral-700">
+                  class="px-3 py-0.5 rounded-lg bg-neutral-800 text-neutral-200 text-[11px] font-bold border border-neutral-700">
                   Mensuel
                 </span>
-                <span class="text-xs font-mono text-red-400 font-bold">PLUS</span>
+                <span class="text-xs font-mono text-white font-bold tracking-wider">PLUS</span>
               </div>
 
               <h3 class="text-2xl md:text-3xl font-black text-white mb-2">HEVENLY PLUS</h3>
-              <p class="text-xs text-neutral-400 mb-6 leading-relaxed">
+              <p class="text-xs text-neutral-300 mb-6 leading-relaxed">
                 Le grade idéal pour profiter de l'expérience compétitive avec priorité et cosmétiques.
               </p>
 
-              <div class="space-y-2.5 text-xs text-neutral-300 mb-8">
-                <div class="flex items-center space-x-2">
-                  <i data-lucide="check-circle" class="w-4 h-4 text-red-500 shrink-0"></i>
-                  <span>Prefixe <strong class="text-white">[+]</strong> distinctif</span>
+              <div class="space-y-3 text-xs text-neutral-200 mb-8">
+                <div class="flex items-center space-x-2.5">
+                  <i data-lucide="check" class="w-4 h-4 text-red-500 shrink-0"></i>
+                  <span>Prefixe <strong class="text-white font-bold">[+]</strong> distinctif</span>
                 </div>
-                <div class="flex items-center space-x-2">
-                  <i data-lucide="check-circle" class="w-4 h-4 text-red-500 shrink-0"></i>
+                <div class="flex items-center space-x-2.5">
+                  <i data-lucide="check" class="w-4 h-4 text-red-500 shrink-0"></i>
                   <span>Priorité de file d'attente</span>
                 </div>
-                <div class="flex items-center space-x-2">
-                  <i data-lucide="check-circle" class="w-4 h-4 text-red-500 shrink-0"></i>
+                <div class="flex items-center space-x-2.5">
+                  <i data-lucide="check" class="w-4 h-4 text-red-500 shrink-0"></i>
                   <span>Effets de victoire / mort exclusifs</span>
                 </div>
-                <div class="flex items-center space-x-2">
-                  <i data-lucide="check-circle" class="w-4 h-4 text-red-500 shrink-0"></i>
+                <div class="flex items-center space-x-2.5">
+                  <i data-lucide="check" class="w-4 h-4 text-red-500 shrink-0"></i>
                   <span>Rôle Discord + Salon restreint</span>
                 </div>
               </div>
             </div>
 
-            <div class="pt-4 border-t border-neutral-800/80">
+            <div class="pt-4 border-t border-neutral-800">
               <div class="flex items-baseline justify-between mb-4">
-                <span class="text-xs text-neutral-400 font-medium">Prix</span>
-                <span class="text-2xl font-black text-white">2.99€ <span class="text-xs text-neutral-500 font-normal">/
+                <span class="text-xs text-neutral-300 font-medium">Prix</span>
+                <span class="text-2xl font-black text-white">2.99€ <span class="text-xs text-neutral-400 font-normal">/
                     mois</span></span>
               </div>
               <button
                 onclick="openModal('HEVENLY PLUS', '2.99€', ['Prefixe [+] distinctif', 'Priorité de file d attente', 'Effets de victoire / mort exclusifs', 'Rôle Discord + Salon restreint'])"
-                class="w-full py-3 px-5 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-white font-extrabold text-xs transition-all shadow-lg flex items-center justify-center space-x-2 active:scale-95">
+                class="w-full py-3 px-5 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-white font-bold text-xs transition-all shadow-md flex items-center justify-center space-x-2 active:scale-95">
                 <span>Voir les détails</span>
                 <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
               </button>
@@ -589,50 +572,50 @@
 
           <!-- Carte 2 : HEVENLY PREMIUM -->
           <div
-            class="bg-gradient-to-b from-red-950/20 via-brand-card to-brand-card border border-red-900/40 hover:border-red-600/50 rounded-2xl p-6 md:p-8 transition-all duration-300 shadow-2xl relative flex flex-col justify-between">
+            class="bg-neutral-900 border border-neutral-700 hover:border-red-600 rounded-2xl p-6 md:p-8 transition-all duration-300 shadow-2xl relative flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between mb-4">
                 <span
-                  class="px-3 py-0.5 rounded-full bg-red-950/60 text-red-400 text-[11px] font-extrabold border border-red-500/30">
-                  Mensuel
+                  class="px-3 py-0.5 rounded-lg bg-red-950/60 text-red-400 text-[11px] font-bold border border-red-900/50">
+                  Populaire
                 </span>
-                <span class="text-xs font-mono text-red-400 font-bold">PREMIUM</span>
+                <span class="text-xs font-mono text-red-400 font-bold tracking-wider">PREMIUM</span>
               </div>
 
               <h3 class="text-2xl md:text-3xl font-black text-white mb-2">HEVENLY PREMIUM</h3>
-              <p class="text-xs text-neutral-400 mb-6 leading-relaxed">
+              <p class="text-xs text-neutral-300 mb-6 leading-relaxed">
                 Le statut suprême débloquant la priorité absolue, toutes les customisations et l'accès bêta.
               </p>
 
-              <div class="space-y-2.5 text-xs text-neutral-300 mb-8">
-                <div class="flex items-center space-x-2">
-                  <i data-lucide="check-circle" class="w-4 h-4 text-red-500 shrink-0"></i>
-                  <span>Prefixe <strong class="text-white">[✦]</strong> exclusif</span>
+              <div class="space-y-3 text-xs text-neutral-200 mb-8">
+                <div class="flex items-center space-x-2.5">
+                  <i data-lucide="check" class="w-4 h-4 text-red-500 shrink-0"></i>
+                  <span>Prefixe <strong class="text-white font-bold">[✦]</strong> exclusif</span>
                 </div>
-                <div class="flex items-center space-x-2">
-                  <i data-lucide="check-circle" class="w-4 h-4 text-red-500 shrink-0"></i>
+                <div class="flex items-center space-x-2.5">
+                  <i data-lucide="check" class="w-4 h-4 text-red-500 shrink-0"></i>
                   <span>Avantage du + inclus</span>
                 </div>
-                <div class="flex items-center space-x-2">
-                  <i data-lucide="check-circle" class="w-4 h-4 text-red-500 shrink-0"></i>
+                <div class="flex items-center space-x-2.5">
+                  <i data-lucide="check" class="w-4 h-4 text-red-500 shrink-0"></i>
                   <span>Permet d'héberger un événement</span>
                 </div>
-                <div class="flex items-center space-x-2">
-                  <i data-lucide="check-circle" class="w-4 h-4 text-red-500 shrink-0"></i>
+                <div class="flex items-center space-x-2.5">
+                  <i data-lucide="check" class="w-4 h-4 text-red-500 shrink-0"></i>
                   <span>Accès bêta aux nouvelles cartes et modes</span>
                 </div>
               </div>
             </div>
 
-            <div class="pt-4 border-t border-neutral-800/80">
+            <div class="pt-4 border-t border-neutral-800">
               <div class="flex items-baseline justify-between mb-4">
-                <span class="text-xs text-neutral-400 font-medium">Prix</span>
-                <span class="text-2xl font-black text-white">6.99€ <span class="text-xs text-neutral-500 font-normal">/
+                <span class="text-xs text-neutral-300 font-medium">Prix</span>
+                <span class="text-2xl font-black text-white">6.99€ <span class="text-xs text-neutral-400 font-normal">/
                     mois</span></span>
               </div>
               <button
                 onclick="openModal('HEVENLY PREMIUM', '6.99€', ['Prefixe [✦] exclusif', 'Avantage du + inclus', 'Permet d héberger un événement', 'Accès bêta aux nouvelles cartes et modes'])"
-                class="w-full py-3 px-5 rounded-xl bg-brand hover:bg-brand-hover text-white font-extrabold text-xs transition-all shadow-lg shadow-brand/20 flex items-center justify-center space-x-2 active:scale-95">
+                class="w-full py-3 px-5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs transition-all shadow-lg flex items-center justify-center space-x-2 active:scale-95">
                 <span>Voir les détails</span>
                 <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
               </button>
@@ -645,7 +628,7 @@
     </section>
   </main>
 
-  <!-- Modale Détails Grade (Fermeture au clic extérieur) -->
+  <!-- Modale Détails Grade -->
   <div id="modal-backdrop" onclick="closeModalOnBackdrop(event)"
     class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4 transition-opacity duration-300 opacity-0">
     <div id="modal-card"
@@ -661,28 +644,28 @@
       <div id="modal-price" class="text-lg font-bold text-red-400 mb-6">0.00€</div>
 
       <div class="space-y-3 mb-8">
-        <h4 class="text-xs font-bold text-neutral-400 uppercase tracking-wider">Avantages inclus :</h4>
-        <ul id="modal-list" class="space-y-2 text-xs text-neutral-300">
+        <h4 class="text-xs font-bold text-neutral-300 uppercase tracking-wider">Avantages inclus :</h4>
+        <ul id="modal-list" class="space-y-2.5 text-xs text-neutral-200">
           <!-- Injecté par JS -->
         </ul>
       </div>
 
       <a href="https://discord.gg" target="_blank"
-        class="w-full py-3 rounded-xl bg-brand hover:bg-brand-hover text-white font-extrabold text-xs flex items-center justify-center space-x-2 transition-all shadow-lg shadow-brand/20">
+        class="w-full py-3 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs flex items-center justify-center space-x-2 transition-all shadow-md">
         <span>Acheter sur la boutique</span>
         <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
       </a>
     </div>
   </div>
 
-  <!-- Modale Actualités / Notifications (Fermeture au clic extérieur) -->
+  <!-- Modale Actualités / Notifications -->
   <div id="news-modal-backdrop" onclick="closeNewsModalOnBackdrop(event)"
     class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 transition-opacity duration-300 opacity-0">
     <div id="news-modal-card"
       class="bg-neutral-900 border border-neutral-800 rounded-2xl p-6 md:p-8 max-w-lg w-full shadow-2xl scale-95 opacity-0 transition-all duration-300 flex flex-col max-h-[85vh]">
       <div class="flex items-center justify-between pb-4 border-b border-neutral-800 shrink-0">
         <div class="flex items-center space-x-2.5">
-          <div class="p-2 rounded-lg bg-brand/10 text-brand-light">
+          <div class="p-2 rounded-lg bg-neutral-800 text-red-500">
             <i data-lucide="bell" class="w-5 h-5"></i>
           </div>
           <h3 class="text-xl font-black text-white">Dernières Informations</h3>
@@ -695,7 +678,7 @@
 
       <!-- Conteneur dynamique relié à Supabase -->
       <div id="dynamic-news-container"
-        class="py-6 overflow-y-auto custom-scrollbar space-y-5 text-xs md:text-sm text-neutral-300 leading-relaxed pr-2">
+        class="py-6 overflow-y-auto custom-scrollbar space-y-4 text-xs md:text-sm text-neutral-200 leading-relaxed pr-2">
         <!-- Chargé dynamiquement par JS -->
       </div>
 
@@ -708,7 +691,7 @@
     </div>
   </div>
 
-  <!-- Modale Légale Dynamique (Fermeture au clic extérieur) -->
+  <!-- Modale Légale Dynamique -->
   <div id="legal-modal-backdrop" onclick="closeLegalModalOnBackdrop(event)"
     class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 transition-opacity duration-300 opacity-0">
     <div id="legal-modal-card"
@@ -722,7 +705,7 @@
       </div>
 
       <div id="legal-modal-body"
-        class="py-6 overflow-y-auto custom-scrollbar space-y-4 text-xs md:text-sm text-neutral-300 leading-relaxed pr-2">
+        class="py-6 overflow-y-auto custom-scrollbar space-y-4 text-xs md:text-sm text-neutral-200 leading-relaxed pr-2">
         <!-- Contenu légal injecté -->
       </div>
 
@@ -735,44 +718,42 @@
     </div>
   </div>
 
-  <!-- Footer avec Filigrane Animé Bouclé Sans Espace Vide -->
+  <!-- Footer -->
   <footer class="relative overflow-hidden pt-10 pb-8 border-t border-neutral-900 bg-brand-dark">
 
     <div class="w-full overflow-hidden select-none pointer-events-none my-2">
       <div class="animate-marquee whitespace-nowrap flex items-center justify-center opacity-80">
-        <!-- Répétition triplée pour garantir une boucle infinie parfaite sans espace vide -->
         <span
-          class="font-black text-[15vw] leading-none tracking-tighter text-neutral-700 uppercase mr-12 flex items-center gap-12">
-          HEVENLY <span class="text-neutral-700 font-black text-[10vw]">•</span>
+          class="font-black text-[15vw] leading-none tracking-tighter text-neutral-800 uppercase mr-12 flex items-center gap-12">
+          HEVENLY <span class="text-neutral-800 font-black text-[10vw]">•</span>
         </span>
         <span
-          class="font-black text-[15vw] leading-none tracking-tighter text-neutral-700 uppercase mr-12 flex items-center gap-12">
-          HEVENLY <span class="text-neutral-700 font-black text-[10vw]">•</span>
+          class="font-black text-[15vw] leading-none tracking-tighter text-neutral-800 uppercase mr-12 flex items-center gap-12">
+          HEVENLY <span class="text-neutral-800 font-black text-[10vw]">•</span>
         </span>
         <span
-          class="font-black text-[15vw] leading-none tracking-tighter text-neutral-700 uppercase mr-12 flex items-center gap-12">
-          HEVENLY <span class="text-neutral-700 font-black text-[10vw]">•</span>
+          class="font-black text-[15vw] leading-none tracking-tighter text-neutral-800 uppercase mr-12 flex items-center gap-12">
+          HEVENLY <span class="text-neutral-800 font-black text-[10vw]">•</span>
         </span>
       </div>
     </div>
 
     <div class="max-w-6xl mx-auto px-4 relative z-10">
-      <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-neutral-500">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-neutral-400">
         <div class="flex items-center space-x-3">
           <img src="https://i.imgur.com/BYA0Cs5.png" alt="Hevenly Logo" class="w-6 h-6 object-contain opacity-70">
           <div>
             <p>© 2026 Hevenly Games. Tous droits réservés.</p>
-            <p class="mt-0.5 text-[11px] text-neutral-600">Not an official minecraft product. Not approved by or
+            <p class="mt-0.5 text-[11px] text-neutral-500">Not an official minecraft product. Not approved by or
               associated with Mojang or Microsoft</p>
           </div>
         </div>
 
         <div class="flex items-center space-x-6">
-          <button onclick="openLegalModal('legal')" class="hover:text-neutral-300 transition-colors">Mentions
-            légales</button>
-          <button onclick="openLegalModal('privacy')" class="hover:text-neutral-300 transition-colors">Politique de
+          <button onclick="openLegalModal('legal')" class="hover:text-white transition-colors">Mentions légales</button>
+          <button onclick="openLegalModal('privacy')" class="hover:text-white transition-colors">Politique de
             confidentialité</button>
-          <button onclick="openLegalModal('cookies')" class="hover:text-neutral-300 transition-colors">Politique de
+          <button onclick="openLegalModal('cookies')" class="hover:text-white transition-colors">Politique de
             cookies</button>
         </div>
       </div>
@@ -780,7 +761,6 @@
   </footer>
 
   <script>
-    // Configuration Supabase intégrée
     const SUPABASE_URL = "https://tawnbphpaaxjzkydeubq.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_g0M5uEmx7p6s9w7LzUID7w_bVDKjw3-";
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -801,8 +781,6 @@
       }
     });
 
-    // Chargement automatique des notifications depuis Supabase
-    // Chargement automatique des notifications depuis Supabase
     async function loadIndexNotifications() {
       const container = document.getElementById('dynamic-news-container');
       container.innerHTML = '<p class="text-neutral-400 text-center py-4">Chargement...</p>';
@@ -813,25 +791,24 @@
         .order('id', { ascending: false });
 
       if (error || !savedNotes || savedNotes.length === 0) {
-        container.innerHTML = '<p class="text-neutral-500 text-center py-4">Aucune notification pour le moment.</p>';
+        container.innerHTML = '<p class="text-neutral-400 text-center py-4">Aucune notification pour le moment.</p>';
         return;
       }
 
       container.innerHTML = '';
       savedNotes.forEach(note => {
         const div = document.createElement('div');
-        div.className = "p-4 rounded-xl bg-neutral-800/50 border border-neutral-800 space-y-1.5";
+        div.className = "p-4 rounded-xl bg-neutral-800/60 border border-neutral-700/80 space-y-1.5";
 
-        // Sécurisation de la couleur pour qu'elle reste bien visible sur fond sombre
         let titleColor = note.color && note.color !== 'text-white' ? note.color : 'text-white font-bold';
 
         div.innerHTML = `
           <div class="flex items-center justify-between">
-            <span class="text-xs font-bold text-red-400 uppercase tracking-wide bg-red-950/40 px-2.5 py-0.5 rounded-full border border-red-500/30">${note.category}</span>
+            <span class="text-xs font-bold text-white uppercase tracking-wide bg-neutral-900 px-2.5 py-0.5 rounded-md border border-neutral-700">${note.category}</span>
             <span class="text-[11px] text-neutral-400 font-mono">${note.notif_date || 'Aujourd\'hui'}</span>
           </div>
           <h4 class="${titleColor} text-sm pt-1">${note.title}</h4>
-          <p class="text-neutral-300 text-xs leading-relaxed">${note.content}</p>
+          <p class="text-neutral-200 text-xs leading-relaxed">${note.content}</p>
         `;
         container.appendChild(div);
       });
@@ -895,7 +872,7 @@
         content: `
           <h4 class="font-bold text-white text-base">1. Collecte des données personnelles</h4>
           <p>Afin d'assurer le fonctionnement des parties classées (Bedfight Ranked), nous collectons un minimum d'informations nécessaires :</p>
-          <ul class="list-disc pl-5 space-y-1 text-neutral-400">
+          <ul class="list-disc pl-5 space-y-1 text-neutral-300">
             <li>Votre pseudonyme et identifiant UUID Minecraft.</li>
             <li>Votre identifiant utilisateur Discord (lors de la liaison de votre compte).</li>
             <li>Vos statistiques de jeu (classement ELO, nombre de victoires/défaites, ratio).</li>
@@ -917,7 +894,7 @@
 
           <h4 class="font-bold text-white text-base pt-3">2. Cookies utilisés sur ce site</h4>
           <p>Notre site web utilise un nombre strictement limité de traceurs :</p>
-          <ul class="list-disc pl-5 space-y-1 text-neutral-400">
+          <ul class="list-disc pl-5 space-y-1 text-neutral-300">
             <li><strong class="text-white">Cookies de préférences (localStorage) :</strong> Utilisé uniquement pour mémoriser votre choix d'acceptation ou de refus des cookies.</li>
             <li><strong class="text-white">Mesure d'audience anonymisée :</strong> Mesure le volume de fréquentation du site sans stocker d'adresse IP en clair ni données nominatives.</li>
           </ul>
@@ -986,9 +963,9 @@
 
         if (btn) {
           if (i === currentStep) {
-            btn.className = "w-10 h-10 rounded-full bg-brand text-white font-extrabold text-sm flex items-center justify-center transition-all duration-300 shadow-lg shadow-brand/30 border border-red-500/40";
+            btn.className = "w-10 h-10 rounded-full bg-red-600 text-white font-extrabold text-sm flex items-center justify-center transition-all duration-300 shadow-md";
           } else {
-            btn.className = "w-10 h-10 rounded-full bg-neutral-900 text-neutral-500 border border-neutral-800 font-extrabold text-sm flex items-center justify-center transition-all duration-300 hover:text-white";
+            btn.className = "w-10 h-10 rounded-full bg-neutral-900 text-neutral-400 border border-neutral-800 font-extrabold text-sm flex items-center justify-center transition-all duration-300 hover:text-white";
           }
         }
       }
@@ -997,7 +974,7 @@
       if (dotsContainer) {
         const dots = dotsContainer.children;
         for (let i = 0; i < dots.length; i++) {
-          dots[i].className = i === currentStep ? "w-2 h-2 rounded-full bg-brand" : "w-2 h-2 rounded-full bg-neutral-800";
+          dots[i].className = i === currentStep ? "w-2 h-2 rounded-full bg-red-600" : "w-2 h-2 rounded-full bg-neutral-800";
         }
       }
     }
@@ -1047,8 +1024,8 @@
       list.innerHTML = '';
       perks.forEach(perk => {
         const li = document.createElement('li');
-        li.className = 'flex items-center space-x-2';
-        li.innerHTML = `<i data-lucide="check" class="w-4 h-4 text-red-500"></i><span>${perk}</span>`;
+        li.className = 'flex items-center space-x-2.5';
+        li.innerHTML = `<i data-lucide="check" class="w-4 h-4 text-red-500 shrink-0"></i><span>${perk}</span>`;
         list.appendChild(li);
       });
       lucide.createIcons();
