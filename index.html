@@ -627,11 +627,11 @@
             <div class="pt-4 border-t border-neutral-800/80">
               <div class="flex items-baseline justify-between mb-4">
                 <span class="text-xs text-neutral-400 font-medium">Prix</span>
-                <span class="text-2xl font-black text-white">9.99€ <span class="text-xs text-neutral-500 font-normal">/
+                <span class="text-2xl font-black text-white">6.99€ <span class="text-xs text-neutral-500 font-normal">/
                     mois</span></span>
               </div>
               <button
-                onclick="openModal('HEVENLY PREMIUM', '9.99€', ['Prefixe [✦] exclusif', 'Avantage du + inclus', 'Permet d héberger un événement', 'Accès bêta aux nouvelles cartes et modes'])"
+                onclick="openModal('HEVENLY PREMIUM', '6.99€', ['Prefixe [✦] exclusif', 'Avantage du + inclus', 'Permet d héberger un événement', 'Accès bêta aux nouvelles cartes et modes'])"
                 class="w-full py-3 px-5 rounded-xl bg-brand hover:bg-brand-hover text-white font-extrabold text-xs transition-all shadow-lg shadow-brand/20 flex items-center justify-center space-x-2 active:scale-95">
                 <span>Voir les détails</span>
                 <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
@@ -802,6 +802,7 @@
     });
 
     // Chargement automatique des notifications depuis Supabase
+    // Chargement automatique des notifications depuis Supabase
     async function loadIndexNotifications() {
       const container = document.getElementById('dynamic-news-container');
       container.innerHTML = '<p class="text-neutral-400 text-center py-4">Chargement...</p>';
@@ -820,13 +821,17 @@
       savedNotes.forEach(note => {
         const div = document.createElement('div');
         div.className = "p-4 rounded-xl bg-neutral-800/50 border border-neutral-800 space-y-1.5";
+
+        // Sécurisation de la couleur pour qu'elle reste bien visible sur fond sombre
+        let titleColor = note.color && note.color !== 'text-white' ? note.color : 'text-white font-bold';
+
         div.innerHTML = `
           <div class="flex items-center justify-between">
-            <span class="text-xs font-bold text-white uppercase tracking-wide">${note.category}</span>
+            <span class="text-xs font-bold text-red-400 uppercase tracking-wide bg-red-950/40 px-2.5 py-0.5 rounded-full border border-red-500/30">${note.category}</span>
             <span class="text-[11px] text-neutral-400 font-mono">${note.notif_date || 'Aujourd\'hui'}</span>
           </div>
-          <h4 class="font-bold ${note.color || 'text-white'} text-sm">${note.title}</h4>
-          <p class="text-neutral-400">${note.content}</p>
+          <h4 class="${titleColor} text-sm pt-1">${note.title}</h4>
+          <p class="text-neutral-300 text-xs leading-relaxed">${note.content}</p>
         `;
         container.appendChild(div);
       });
