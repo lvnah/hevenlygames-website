@@ -76,10 +76,24 @@
     .custom-scrollbar::-webkit-scrollbar-thumb:hover {
       background: #AA0000;
     }
+
+    /* Pop-up Toast Admin */
+    #admin-toast {
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
   </style>
 </head>
 
 <body class="bg-brand-dark antialiased min-h-screen flex flex-col justify-between">
+
+  <!-- Pop-up Toast Flottant -->
+  <div id="admin-toast"
+    class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 bg-neutral-900/95 backdrop-blur-md border border-neutral-800 text-white px-5 py-3.5 rounded-xl shadow-2xl flex items-center space-x-3">
+    <div id="admin-toast-icon" class="text-red-500">
+      <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+    </div>
+    <span id="admin-toast-message" class="font-semibold text-xs">Action effectuée avec succès !</span>
+  </div>
 
   <!-- Header Admin -->
   <header class="border-b border-neutral-800 bg-neutral-900/60 backdrop-blur-md px-6 py-4">
@@ -91,14 +105,24 @@
           <p class="text-[11px] text-neutral-400">Gestion des notifications en direct</p>
         </div>
       </div>
-      <div id="admin-user-info" class="hidden items-center space-x-4">
-        <span class="text-xs text-neutral-300">Connecté en tant que <strong id="session-username"
-            class="text-white">admin</strong></span>
-        <button onclick="logout()"
-          class="px-3 py-1.5 rounded-lg bg-neutral-800 hover:bg-red-950/60 text-neutral-300 hover:text-red-400 text-xs font-semibold transition-colors flex items-center space-x-1.5">
-          <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
-          <span>Déconnexion</span>
-        </button>
+
+      <div class="flex items-center space-x-3">
+        <!-- Bouton Retour au site -->
+        <a href="/"
+          class="px-3 py-1.5 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-neutral-300 hover:text-white text-xs font-semibold transition-colors flex items-center space-x-1.5">
+          <i data-lucide="home" class="w-3.5 h-3.5"></i>
+          <span>Retour au site</span>
+        </a>
+
+        <div id="admin-user-info" class="hidden items-center space-x-3 pl-3 border-l border-neutral-800">
+          <span class="text-xs text-neutral-300 hidden sm:inline">Connecté : <strong id="session-username"
+              class="text-white">admin</strong></span>
+          <button onclick="logout()"
+            class="px-3 py-1.5 rounded-lg bg-neutral-800 hover:bg-red-950/60 text-neutral-300 hover:text-red-400 text-xs font-semibold transition-colors flex items-center space-x-1.5">
+            <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
+            <span>Déconnexion</span>
+          </button>
+        </div>
       </div>
     </div>
   </header>
@@ -231,13 +255,35 @@
 
     let editingId = null;
     let inactivityTimer = null;
-    let allNotifications = []; // Stockage global pour éviter les erreurs de parsing
+    let allNotifications = [];
 
     document.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
       setDefaultDate();
       checkAuthStatus();
     });
+
+    // Fonction d'affichage des pop-ups Toast design
+    function showToast(message, isError = false) {
+      const toast = document.getElementById('admin-toast');
+      const msgEl = document.getElementById('admin-toast-message');
+      const iconEl = document.getElementById('admin-toast-icon');
+
+      msgEl.innerText = message;
+      if (isError) {
+        iconEl.className = "text-red-500";
+        iconEl.innerHTML = '<i data-lucide="alert-circle" class="w-5 h-5"></i>';
+      } else {
+        iconEl.className = "text-emerald-400";
+        iconEl.innerHTML = '<i data-lucide="check-circle-2" class="w-5 h-5"></i>';
+      }
+      lucide.createIcons();
+
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 3500);
+    }
 
     function setDefaultDate() {
       const today = new Date().toISOString().split('T')[0];
@@ -248,8 +294,7 @@
       if (localStorage.getItem('hevenly_admin_logged') === 'true') {
         clearTimeout(inactivityTimer);
         inactivityTimer = setTimeout(() => {
-          alert('Session expirée suite à 2 minutes d\'inactivité.');
-          logout();
+          logout(true); // true indique que c'est une déconnexion automatique
         }, 120000);
       }
     }
@@ -270,6 +315,7 @@
         localStorage.setItem('hevenly_admin_user', u);
         errorMsg.classList.add('hidden');
         checkAuthStatus();
+        showToast('Connexion réussie ! Bienvenue admin.');
       } else {
         errorMsg.classList.remove('hidden');
       }
@@ -299,10 +345,15 @@
       lucide.createIcons();
     }
 
-    function logout() {
+    function logout(isTimeout = false) {
       localStorage.removeItem('hevenly_admin_logged');
       localStorage.removeItem('hevenly_admin_user');
       checkAuthStatus();
+      if (isTimeout) {
+        showToast('Session expirée suite à 2 min d\'inactivité.', true);
+      } else {
+        showToast('Déconnexion effectuée.');
+      }
     }
 
     // Soumission Formulaire (Ajout ou Modification dans Supabase)
@@ -324,7 +375,7 @@
           .eq('id', editingId);
 
         if (error) {
-          alert('Erreur lors de la modification : ' + error.message);
+          showToast('Erreur : ' + error.message, true);
           return;
         }
 
@@ -332,7 +383,7 @@
         document.getElementById('form-title').innerHTML = `<i data-lucide="plus-circle" class="w-4 h-4 text-brand-light"></i><span>Ajouter une notification</span>`;
         document.getElementById('submit-btn').innerHTML = `<i data-lucide="send" class="w-4 h-4"></i><span>Publier la notification</span>`;
         document.getElementById('cancel-edit-btn').classList.add('hidden');
-        alert('Notification modifiée avec succès !');
+        showToast('Notification modifiée avec succès !');
       } else {
         // Ajout
         const { error } = await supabaseClient
@@ -340,11 +391,11 @@
           .insert([{ title, category, notif_date, color, content }]);
 
         if (error) {
-          alert('Erreur lors de l\'ajout : ' + error.message);
+          showToast('Erreur : ' + error.message, true);
           return;
         }
 
-        alert('Notification publiée en ligne avec succès !');
+        showToast('Notification publiée en ligne avec succès !');
       }
 
       form.reset();
@@ -367,7 +418,7 @@
         return;
       }
 
-      allNotifications = notifications; // On stocke dans le tableau global
+      allNotifications = notifications;
       listContainer.innerHTML = '';
 
       notifications.forEach((note) => {
@@ -396,7 +447,6 @@
       lucide.createIcons();
     }
 
-    // Fonction sécurisée par ID pour l'édition (évite les erreurs de syntaxe)
     function startEditById(id) {
       const note = allNotifications.find(n => n.id === id);
       if (!note) return;
@@ -434,12 +484,13 @@
           .eq('id', id);
 
         if (error) {
-          alert('Erreur lors de la suppression : ' + error.message);
+          showToast('Erreur lors de la suppression : ' + error.message, true);
           return;
         }
 
         if (editingId === id) cancelEdit();
         renderAdminList();
+        showToast('Notification supprimée avec succès !');
       }
     }
   </script>
