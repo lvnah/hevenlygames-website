@@ -231,6 +231,7 @@
 
     let editingId = null;
     let inactivityTimer = null;
+    let allNotifications = []; // Stockage global pour éviter les erreurs de parsing
 
     document.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
@@ -366,7 +367,9 @@
         return;
       }
 
+      allNotifications = notifications; // On stocke dans le tableau global
       listContainer.innerHTML = '';
+
       notifications.forEach((note) => {
         const item = document.createElement('div');
         item.className = "bg-neutral-800/50 border border-neutral-800 rounded-xl p-4 flex items-center justify-between gap-4";
@@ -380,7 +383,7 @@
             <p class="text-xs text-neutral-400 line-clamp-1">${note.content}</p>
           </div>
           <div class="flex items-center space-x-2 shrink-0">
-            <button type="button" onclick="startEdit(${note.id}, '${encodeURIComponent(note.title)}', '${encodeURIComponent(note.category)}', '${note.notif_date}', '${note.color}', '${encodeURIComponent(note.content)}')" class="p-2 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-neutral-300 transition-colors" title="Modifier">
+            <button type="button" onclick="startEditById(${note.id})" class="p-2 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-neutral-300 transition-colors" title="Modifier">
               <i data-lucide="pencil" class="w-4 h-4"></i>
             </button>
             <button type="button" onclick="deleteNotification(${note.id})" class="p-2 rounded-lg bg-neutral-800 hover:bg-red-950 text-neutral-400 hover:text-red-400 transition-colors" title="Supprimer">
@@ -393,13 +396,17 @@
       lucide.createIcons();
     }
 
-    function startEdit(id, title, category, date, color, content) {
-      editingId = id;
-      document.getElementById('notif-title').value = decodeURIComponent(title);
-      document.getElementById('notif-category').value = decodeURIComponent(category);
-      document.getElementById('notif-date').value = date || '';
-      document.getElementById('notif-color').value = color || 'text-white';
-      document.getElementById('notif-content').value = decodeURIComponent(content);
+    // Fonction sécurisée par ID pour l'édition (évite les erreurs de syntaxe)
+    function startEditById(id) {
+      const note = allNotifications.find(n => n.id === id);
+      if (!note) return;
+
+      editingId = note.id;
+      document.getElementById('notif-title').value = note.title || '';
+      document.getElementById('notif-category').value = note.category || '';
+      document.getElementById('notif-date').value = note.notif_date || '';
+      document.getElementById('notif-color').value = note.color || 'text-white';
+      document.getElementById('notif-content').value = note.content || '';
 
       document.getElementById('form-title').innerHTML = `<i data-lucide="pencil" class="w-4 h-4 text-brand-light"></i><span>Modifier la notification</span>`;
       document.getElementById('submit-btn').innerHTML = `<i data-lucide="check" class="w-4 h-4"></i><span>Enregistrer les modifications</span>`;
