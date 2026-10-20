@@ -58,17 +58,21 @@
       color: #EDEDED;
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
+
     .custom-scrollbar::-webkit-scrollbar {
       width: 6px;
     }
+
     .custom-scrollbar::-webkit-scrollbar-track {
       background: #181818;
       border-radius: 8px;
     }
+
     .custom-scrollbar::-webkit-scrollbar-thumb {
       background: #333333;
       border-radius: 8px;
     }
+
     .custom-scrollbar::-webkit-scrollbar-thumb:hover {
       background: #AA0000;
     }
@@ -88,8 +92,10 @@
         </div>
       </div>
       <div id="admin-user-info" class="hidden items-center space-x-4">
-        <span class="text-xs text-neutral-300">Connecté en tant que <strong id="session-username" class="text-white">admin</strong></span>
-        <button onclick="logout()" class="px-3 py-1.5 rounded-lg bg-neutral-800 hover:bg-red-950/60 text-neutral-300 hover:text-red-400 text-xs font-semibold transition-colors flex items-center space-x-1.5">
+        <span class="text-xs text-neutral-300">Connecté en tant que <strong id="session-username"
+            class="text-white">admin</strong></span>
+        <button onclick="logout()"
+          class="px-3 py-1.5 rounded-lg bg-neutral-800 hover:bg-red-950/60 text-neutral-300 hover:text-red-400 text-xs font-semibold transition-colors flex items-center space-x-1.5">
           <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
           <span>Déconnexion</span>
         </button>
@@ -101,7 +107,8 @@
   <main class="flex-grow max-w-5xl w-full mx-auto px-4 py-8">
 
     <!-- Section Connexion (Affichée si non connecté) -->
-    <div id="login-section" class="max-w-md mx-auto bg-neutral-900 border border-neutral-800 rounded-2xl p-8 shadow-2xl my-12">
+    <div id="login-section"
+      class="max-w-md mx-auto bg-neutral-900 border border-neutral-800 rounded-2xl p-8 shadow-2xl my-12">
       <div class="text-center mb-6">
         <div class="w-12 h-12 rounded-xl bg-brand/10 text-brand-light flex items-center justify-center mx-auto mb-3">
           <i data-lucide="lock" class="w-6 h-6"></i>
@@ -113,14 +120,17 @@
       <form id="login-form" class="space-y-4">
         <div>
           <label class="block text-xs font-bold text-neutral-300 uppercase mb-1.5">Nom d'utilisateur</label>
-          <input type="text" id="username" required class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-brand">
+          <input type="text" id="username" required
+            class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-brand">
         </div>
         <div>
           <label class="block text-xs font-bold text-neutral-300 uppercase mb-1.5">Mot de passe</label>
-          <input type="password" id="password" required class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-brand">
+          <input type="password" id="password" required
+            class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-brand">
         </div>
         <p id="login-error" class="text-xs text-red-500 font-medium hidden">Identifiant ou mot de passe incorrect.</p>
-        <button type="submit" class="w-full py-3 rounded-xl bg-brand hover:bg-brand-hover text-white font-bold text-xs transition-colors shadow-lg shadow-brand/20">
+        <button type="submit"
+          class="w-full py-3 rounded-xl bg-brand hover:bg-brand-hover text-white font-bold text-xs transition-colors shadow-lg shadow-brand/20">
           Se connecter
         </button>
       </form>
@@ -136,7 +146,8 @@
             <i data-lucide="plus-circle" class="w-4 h-4 text-brand-light"></i>
             <span>Ajouter une notification</span>
           </h3>
-          <button type="button" id="cancel-edit-btn" onclick="cancelEdit()" class="hidden px-3 py-1.5 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-neutral-300 text-xs font-semibold transition-colors">
+          <button type="button" id="cancel-edit-btn" onclick="cancelEdit()"
+            class="hidden px-3 py-1.5 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-neutral-300 text-xs font-semibold transition-colors">
             Annuler la modification
           </button>
         </div>
@@ -144,22 +155,26 @@
         <form id="notification-form" class="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div class="space-y-1.5">
             <label class="block text-xs font-bold text-neutral-300 uppercase">Titre de la notif</label>
-            <input type="text" id="notif-title" required placeholder="Ex: Ouverture des candidatures Staff" class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-brand">
+            <input type="text" id="notif-title" required placeholder="Ex: Ouverture des candidatures Staff"
+              class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-brand">
           </div>
 
           <div class="space-y-1.5">
             <label class="block text-xs font-bold text-neutral-300 uppercase">Catégorie (Badge)</label>
-            <input type="text" id="notif-category" required placeholder="Ex: Événement / Mise à jour" class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-brand">
+            <input type="text" id="notif-category" required placeholder="Ex: Événement / Mise à jour"
+              class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-brand">
           </div>
 
           <div class="space-y-1.5">
             <label class="block text-xs font-bold text-neutral-300 uppercase">Date</label>
-            <input type="date" id="notif-date" required class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-brand">
+            <input type="date" id="notif-date" required
+              class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-brand">
           </div>
 
           <div class="space-y-1.5">
             <label class="block text-xs font-bold text-neutral-300 uppercase">Couleur du Titre</label>
-            <select id="notif-color" class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-brand">
+            <select id="notif-color"
+              class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-brand">
               <option value="text-white">Blanc (Défaut)</option>
               <option value="text-red-500">Rouge Minecraft</option>
               <option value="text-mcGreen">Vert Minecraft</option>
@@ -170,11 +185,13 @@
 
           <div class="md:col-span-2 space-y-1.5">
             <label class="block text-xs font-bold text-neutral-300 uppercase">Contenu / Description</label>
-            <textarea id="notif-content" rows="3" required placeholder="Détails de l'information..." class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-brand custom-scrollbar"></textarea>
+            <textarea id="notif-content" rows="3" required placeholder="Détails de l'information..."
+              class="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-brand custom-scrollbar"></textarea>
           </div>
 
           <div class="md:col-span-2 pt-2 flex justify-end">
-            <button type="submit" id="submit-btn" class="px-6 py-3 rounded-xl bg-brand hover:bg-brand-hover text-white font-bold text-xs transition-colors shadow-lg shadow-brand/20 flex items-center space-x-2">
+            <button type="submit" id="submit-btn"
+              class="px-6 py-3 rounded-xl bg-brand hover:bg-brand-hover text-white font-bold text-xs transition-colors shadow-lg shadow-brand/20 flex items-center space-x-2">
               <i data-lucide="send" class="w-4 h-4"></i>
               <span>Publier la notification</span>
             </button>
