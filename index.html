@@ -58,11 +58,16 @@
   </script>
 
   <style>
+    /* Fond fixé en sombre par défaut pour empêcher le flash lumineux au chargement */
+    html,
     body {
       background-color: #121212;
       color: #EDEDED;
       font-family: 'Plus Jakarta Sans', sans-serif;
       overflow-x: hidden;
+    }
+
+    body {
       opacity: 0;
       transition: opacity 0.8s ease-out;
     }
@@ -160,14 +165,13 @@
   </style>
 </head>
 
-<body class="bg-brand-dark antialiased flex flex-col min-h-screen m-0 p-0">
+<body class="bg-[#121212] antialiased flex flex-col min-h-screen m-0 p-0">
 
   <!-- Bouton de Notification Flottant en Haut à Droite -->
   <div class="fixed top-5 right-5 z-40">
     <button onclick="openNewsModal()"
       class="relative group flex items-center justify-center w-11 h-11 md:w-12 md:h-12 rounded-2xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 shadow-xl transition-all duration-300 transform hover:scale-105 active:scale-95">
       <i data-lucide="bell" class="w-5 h-5 text-neutral-300 group-hover:text-white transition-colors"></i>
-      <!-- Point indicateur rouge sobre (sans effet néon agressif) -->
       <span class="absolute top-2.5 right-2.5 w-2.5 h-2.5 bg-red-600 rounded-full"></span>
     </button>
   </div>
@@ -218,7 +222,7 @@
     <section
       class="relative min-h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden w-full">
 
-      <!-- Arrière-plan épuré (sans halo néon agressif) -->
+      <!-- Arrière-plan épuré -->
       <div class="absolute inset-0 top-0 left-0 right-0 -z-20 overflow-hidden">
         <img src="https://i.imgur.com/xr1vqMq.jpg" alt="Hevenly Background"
           class="w-full h-full object-cover opacity-35 scale-105 object-top">
@@ -229,7 +233,7 @@
       <div
         class="w-full max-w-3xl mx-auto relative z-10 flex flex-col items-center justify-center text-center my-auto pt-16 pb-24">
 
-        <!-- Status Indicator / En Ligne (Badge sobre) -->
+        <!-- Status Indicator / En Ligne -->
         <div
           class="inline-flex items-center justify-center space-x-2 px-3.5 py-1 rounded-lg bg-neutral-900 border border-neutral-800 text-[11px] font-semibold text-neutral-200 mb-6 shadow-sm reveal mx-auto">
           <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
@@ -247,7 +251,7 @@
           </h2>
         </div>
 
-        <!-- Badge Version (Design épuré non-néon) -->
+        <!-- Badge Version -->
         <div
           class="inline-flex items-center justify-center space-x-2 px-4 py-1.5 rounded-lg bg-neutral-900 border border-neutral-800 text-[11px] font-bold tracking-widest text-white uppercase mb-6 shadow-sm reveal delay-200 mx-auto">
           <span>Version 1.8.9</span>
@@ -385,120 +389,184 @@
       </div>
     </section>
 
-    <!-- How to Play Section Interactive -->
-    <section id="how-to-play" class="py-16 md:py-24 max-w-4xl mx-auto px-4">
-      <div class="text-center mb-12 reveal">
-        <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-3">
+    <!-- How to Play Section Améliorée et Complète (Grille 3 colonnes + Carrousel mobile) -->
+    <section id="how-to-play" class="py-20 md:py-28 max-w-6xl mx-auto px-4">
+      <div class="text-center mb-16 reveal">
+        <div
+          class="inline-flex items-center space-x-2 px-3.5 py-1 rounded-lg bg-neutral-900 border border-neutral-800 text-xs font-semibold text-white mb-4">
+          <span>GUIDE RAPIDE</span>
+        </div>
+        <h2 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-3">
           Comment jouer sur le serveur ?
         </h2>
         <p class="text-neutral-300 text-xs sm:text-sm max-w-xl mx-auto">
-          Rejoins le Serveur, entre en file. Simple, rapide et compétitif.
+          Rejoins le serveur, entre en file et affronte les meilleurs joueurs pour grimper dans le classement.
         </p>
       </div>
 
-      <!-- Navigation interactive 01 / 02 / 03 avec ligne connectrice -->
-      <div class="relative flex items-center justify-between max-w-md mx-auto mb-10 reveal delay-100">
-        <div class="absolute top-1/2 left-8 right-8 h-[2px] bg-neutral-800 -z-10 -translate-y-1/2"></div>
+      <!-- Affichage Grille Complète sur Desktop (3 colonnes) & Slider interactif sur Mobile/Tablette -->
+      <div class="hidden md:grid grid-cols-3 gap-6 reveal delay-100">
 
-        <button onclick="setStep(0)" id="step-btn-0"
-          class="w-10 h-10 rounded-full bg-red-600 text-white font-extrabold text-sm flex items-center justify-center transition-all duration-300 shadow-md">
-          01
-        </button>
-        <button onclick="setStep(1)" id="step-btn-1"
-          class="w-10 h-10 rounded-full bg-neutral-900 text-neutral-400 border border-neutral-800 font-extrabold text-sm flex items-center justify-center transition-all duration-300 hover:text-white">
-          02
-        </button>
-        <button onclick="setStep(2)" id="step-btn-2"
-          class="w-10 h-10 rounded-full bg-neutral-900 text-neutral-400 border border-neutral-800 font-extrabold text-sm flex items-center justify-center transition-all duration-300 hover:text-white">
-          03
-        </button>
+        <!-- Étape 1 -->
+        <div
+          class="bg-neutral-900 border border-neutral-800 hover:border-neutral-700 rounded-2xl p-6 md:p-8 flex flex-col justify-between transition-all duration-300 shadow-xl relative overflow-hidden group">
+          <div class="absolute top-4 right-4 text-5xl font-black text-neutral-800/60 select-none">01</div>
+          <div class="space-y-4 relative z-10">
+            <div
+              class="w-12 h-12 rounded-xl bg-neutral-800 border border-neutral-700 flex items-center justify-center text-red-500 shadow-sm">
+              <i data-lucide="disc" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h4 class="text-lg font-bold text-white mb-1">Connexion en 1.8.9</h4>
+              <p class="text-xs text-red-400 font-mono font-bold">hevenly.games</p>
+            </div>
+            <p class="text-xs text-neutral-300 leading-relaxed pt-2">
+              Lance ton jeu en version 1.8.9 (recommandé avec Badlion ou Lunar Client), ajoute l'adresse IP et
+              connecte-toi au lobby principal.
+            </p>
+          </div>
+          <div class="pt-6 mt-6 border-t border-neutral-800/80 flex items-center text-xs text-neutral-400 font-medium">
+            <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 mr-2"></i>
+            <span>Serveur ouvert 24/7</span>
+          </div>
+        </div>
+
+        <!-- Étape 2 -->
+        <div
+          class="bg-neutral-900 border border-neutral-800 hover:border-neutral-700 rounded-2xl p-6 md:p-8 flex flex-col justify-between transition-all duration-300 shadow-xl relative overflow-hidden group">
+          <div class="absolute top-4 right-4 text-5xl font-black text-neutral-800/60 select-none">02</div>
+          <div class="space-y-4 relative z-10">
+            <div
+              class="w-12 h-12 rounded-xl bg-neutral-800 border border-neutral-700 flex items-center justify-center text-red-500 shadow-sm">
+              <i data-lucide="swords" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h4 class="text-lg font-bold text-white mb-1">Matchmaking Rapide</h4>
+              <p class="text-xs text-neutral-400 font-medium">File d'attente automatisée</p>
+            </div>
+            <p class="text-xs text-neutral-300 leading-relaxed pt-2">
+              Utilise le menu ou clique sur la boussole pour entrer en file d'attente Ranked Bedfight. Un adversaire de
+              ton niveau te sera assigné.
+            </p>
+          </div>
+          <div class="pt-6 mt-6 border-t border-neutral-800/80 flex items-center text-xs text-neutral-400 font-medium">
+            <i data-lucide="zap" class="w-4 h-4 text-red-500 mr-2"></i>
+            <span>Recherche instantanée</span>
+          </div>
+        </div>
+
+        <!-- Étape 3 -->
+        <div
+          class="bg-neutral-900 border border-neutral-800 hover:border-neutral-700 rounded-2xl p-6 md:p-8 flex flex-col justify-between transition-all duration-300 shadow-xl relative overflow-hidden group">
+          <div class="absolute top-4 right-4 text-5xl font-black text-neutral-800/60 select-none">03</div>
+          <div class="space-y-4 relative z-10">
+            <div
+              class="w-12 h-12 rounded-xl bg-neutral-800 border border-neutral-700 flex items-center justify-center text-red-500 shadow-sm">
+              <i data-lucide="trophy" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h4 class="text-lg font-bold text-white mb-1">Classement & Gloire</h4>
+              <p class="text-xs text-neutral-400 font-medium">Leaderboard compétitif</p>
+            </div>
+            <p class="text-xs text-neutral-300 leading-relaxed pt-2">
+              Remporte tes duels pour gagner des points d'ELO, progresse de division au fil des saisons et impose ton
+              nom au sommet du classement général.
+            </p>
+          </div>
+          <div class="pt-6 mt-6 border-t border-neutral-800/80 flex items-center text-xs text-neutral-400 font-medium">
+            <i data-lucide="award" class="w-4 h-4 text-amber-400 mr-2"></i>
+            <span>Récompenses de saison</span>
+          </div>
+        </div>
+
       </div>
 
-      <!-- Slider Card Container -->
-      <div
-        class="relative max-w-xl mx-auto rounded-2xl bg-neutral-900 border border-neutral-800 p-6 md:p-8 shadow-2xl reveal delay-200">
-
-        <div class="grid grid-cols-1 grid-rows-1 w-full">
-
-          <!-- Étape 01 -->
-          <div id="step-card-0" class="col-start-1 row-start-1 space-y-4 slide-step opacity-100 translate-x-0">
-            <div class="flex items-center space-x-4">
-              <div
-                class="w-10 h-10 rounded-xl bg-neutral-800 border border-neutral-700 flex items-center justify-center text-white shrink-0">
-                <i data-lucide="disc" class="w-5 h-5"></i>
-              </div>
-              <div>
-                <h4 class="text-base font-bold text-white">Hevenly Games</h4>
-                <p class="text-xs text-neutral-300 font-medium">hevenly.games</p>
-              </div>
-            </div>
-            <p class="text-xs md:text-sm text-neutral-200 leading-relaxed pt-2">
-              Rejoins le serveur en 1.8.9.
-            </p>
-          </div>
-
-          <!-- Étape 02 -->
-          <div id="step-card-1"
-            class="col-start-1 row-start-1 space-y-4 slide-step opacity-0 translate-x-4 pointer-events-none">
-            <div class="flex items-center space-x-4">
-              <div
-                class="w-10 h-10 rounded-xl bg-neutral-800 border border-neutral-700 flex items-center justify-center text-white shrink-0">
-                <i data-lucide="swords" class="w-5 h-5"></i>
-              </div>
-              <div>
-                <h4 class="text-base font-bold text-white">Matchmaking</h4>
-                <p class="text-xs text-neutral-300 font-medium">File d'attente automatisée</p>
-              </div>
-            </div>
-            <p class="text-xs md:text-sm text-neutral-200 leading-relaxed pt-2">
-              Entre en file d'attente via la boussole. Un match équilibré de
-              ton niveau est instantanément généré.
-            </p>
-          </div>
-
-          <!-- Étape 03 -->
-          <div id="step-card-2"
-            class="col-start-1 row-start-1 space-y-4 slide-step opacity-0 translate-x-4 pointer-events-none">
-            <div class="flex items-center space-x-4">
-              <div
-                class="w-10 h-10 rounded-xl bg-neutral-800 border border-neutral-700 flex items-center justify-center text-white shrink-0">
-                <i data-lucide="server" class="w-5 h-5"></i>
-              </div>
-              <div>
-                <h4 class="text-base font-bold text-white">Ranked</h4>
-                <p class="text-xs text-neutral-300 font-medium">Un leaderboard est mis en place</p>
-              </div>
-            </div>
-            <p class="text-xs md:text-sm text-neutral-200 leading-relaxed pt-2">
-              Donne le meilleur de toi même pour atteindre le top du serveur.
-            </p>
-          </div>
-
+      <!-- Version Mobile Interactive (Carrousel / Slider conservé pour petits écrans) -->
+      <div class="md:hidden">
+        <div class="relative flex items-center justify-between max-w-xs mx-auto mb-8">
+          <div class="absolute top-1/2 left-6 right-6 h-[2px] bg-neutral-800 -z-10 -translate-y-1/2"></div>
+          <button onclick="setStep(0)" id="step-btn-0"
+            class="w-10 h-10 rounded-full bg-red-600 text-white font-extrabold text-sm flex items-center justify-center shadow-md">01</button>
+          <button onclick="setStep(1)" id="step-btn-1"
+            class="w-10 h-10 rounded-full bg-neutral-900 text-neutral-400 border border-neutral-800 font-extrabold text-sm flex items-center justify-center">02</button>
+          <button onclick="setStep(2)" id="step-btn-2"
+            class="w-10 h-10 rounded-full bg-neutral-900 text-neutral-400 border border-neutral-800 font-extrabold text-sm flex items-center justify-center">03</button>
         </div>
 
-        <!-- Flèches de contrôle du slider -->
-        <div class="flex items-center justify-between pt-6 border-t border-neutral-800 mt-6">
-          <button onclick="prevStep()"
-            class="p-2 rounded-lg bg-neutral-800 border border-neutral-700 text-neutral-300 hover:text-white transition-colors">
-            <i data-lucide="arrow-left" class="w-4 h-4"></i>
-          </button>
-
-          <div class="flex space-x-1.5" id="slider-dots">
-            <span class="w-2 h-2 rounded-full bg-red-600"></span>
-            <span class="w-2 h-2 rounded-full bg-neutral-800"></span>
-            <span class="w-2 h-2 rounded-full bg-neutral-800"></span>
+        <div class="relative max-w-xl mx-auto rounded-2xl bg-neutral-900 border border-neutral-800 p-6 shadow-2xl">
+          <div class="grid grid-cols-1 grid-rows-1 w-full">
+            <!-- Étape 01 mobile -->
+            <div id="step-card-0" class="col-start-1 row-start-1 space-y-4 slide-step opacity-100 translate-x-0">
+              <div class="flex items-center space-x-4">
+                <div
+                  class="w-10 h-10 rounded-xl bg-neutral-800 border border-neutral-700 flex items-center justify-center text-red-500 shrink-0">
+                  <i data-lucide="disc" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <h4 class="text-base font-bold text-white">Connexion en 1.8.9</h4>
+                  <p class="text-xs text-red-400 font-mono">hevenly.games</p>
+                </div>
+              </div>
+              <p class="text-xs text-neutral-300 leading-relaxed pt-2">
+                Lance ton jeu en version 1.8.9, ajoute l'adresse IP et connecte-toi au lobby principal.
+              </p>
+            </div>
+            <!-- Étape 02 mobile -->
+            <div id="step-card-1"
+              class="col-start-1 row-start-1 space-y-4 slide-step opacity-0 translate-x-4 pointer-events-none">
+              <div class="flex items-center space-x-4">
+                <div
+                  class="w-10 h-10 rounded-xl bg-neutral-800 border border-neutral-700 flex items-center justify-center text-red-500 shrink-0">
+                  <i data-lucide="swords" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <h4 class="text-base font-bold text-white">Matchmaking Rapide</h4>
+                  <p class="text-xs text-neutral-400 font-medium">File d'attente automatisée</p>
+                </div>
+              </div>
+              <p class="text-xs text-neutral-300 leading-relaxed pt-2">
+                Entre en file d'attente via la boussole. Un adversaire de ton niveau te sera assigné.
+              </p>
+            </div>
+            <!-- Étape 03 mobile -->
+            <div id="step-card-2"
+              class="col-start-1 row-start-1 space-y-4 slide-step opacity-0 translate-x-4 pointer-events-none">
+              <div class="flex items-center space-x-4">
+                <div
+                  class="w-10 h-10 rounded-xl bg-neutral-800 border border-neutral-700 flex items-center justify-center text-red-500 shrink-0">
+                  <i data-lucide="trophy" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <h4 class="text-base font-bold text-white">Classement & Gloire</h4>
+                  <p class="text-xs text-neutral-400 font-medium">Leaderboard compétitif</p>
+                </div>
+              </div>
+              <p class="text-xs text-neutral-300 leading-relaxed pt-2">
+                Remporte tes duels pour gagner des points d'ELO et progresse au sommet du classement général.
+              </p>
+            </div>
           </div>
 
-          <button onclick="nextStep()"
-            class="p-2 rounded-lg bg-neutral-800 border border-neutral-700 text-neutral-300 hover:text-white transition-colors">
-            <i data-lucide="arrow-right" class="w-4 h-4"></i>
-          </button>
+          <div class="flex items-center justify-between pt-6 border-t border-neutral-800 mt-6">
+            <button onclick="prevStep()"
+              class="p-2 rounded-lg bg-neutral-800 border border-neutral-700 text-neutral-300 hover:text-white transition-colors">
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            </button>
+            <div class="flex space-x-1.5" id="slider-dots">
+              <span class="w-2 h-2 rounded-full bg-red-600"></span>
+              <span class="w-2 h-2 rounded-full bg-neutral-800"></span>
+              <span class="w-2 h-2 rounded-full bg-neutral-800"></span>
+            </div>
+            <button onclick="nextStep()"
+              class="p-2 rounded-lg bg-neutral-800 border border-neutral-700 text-neutral-300 hover:text-white transition-colors">
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+          </div>
         </div>
-
       </div>
     </section>
 
-    <!-- Boutique Section : HEVENLY+ et HEVENLY PREMIUM (Textes ultra-lisibles, zéro effet néon agressif) -->
+    <!-- Boutique Section : HEVENLY+ et HEVENLY PREMIUM -->
     <section id="shop" class="py-16 md:py-20 border-t border-neutral-800 bg-[#141414]">
       <div class="max-w-5xl mx-auto px-4">
         <div class="text-center mb-12 reveal">
@@ -515,46 +583,31 @@
           </p>
         </div>
 
-        <!-- Grille des Grades VIP -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 reveal delay-100">
-
-          <!-- Carte 1 : HEVENLY PLUS -->
+          <!-- Carte 1 -->
           <div
             class="bg-neutral-900 border border-neutral-800 hover:border-neutral-700 rounded-2xl p-6 md:p-8 transition-all duration-300 shadow-2xl relative flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between mb-4">
                 <span
-                  class="px-3 py-0.5 rounded-lg bg-neutral-800 text-neutral-200 text-[11px] font-bold border border-neutral-700">
-                  Mensuel
-                </span>
+                  class="px-3 py-0.5 rounded-lg bg-neutral-800 text-neutral-200 text-[11px] font-bold border border-neutral-700">Mensuel</span>
                 <span class="text-xs font-mono text-white font-bold tracking-wider">PLUS</span>
               </div>
-
               <h3 class="text-2xl md:text-3xl font-black text-white mb-2">HEVENLY PLUS</h3>
-              <p class="text-xs text-neutral-300 mb-6 leading-relaxed">
-                Le grade idéal pour profiter de l'expérience compétitive avec priorité et cosmétiques.
-              </p>
-
+              <p class="text-xs text-neutral-300 mb-6 leading-relaxed">Le grade idéal pour profiter de l'expérience
+                compétitive avec priorité et cosmétiques.</p>
               <div class="space-y-3 text-xs text-neutral-200 mb-8">
-                <div class="flex items-center space-x-2.5">
-                  <i data-lucide="check" class="w-4 h-4 text-red-500 shrink-0"></i>
-                  <span>Prefixe <strong class="text-white font-bold">[+]</strong> distinctif</span>
-                </div>
-                <div class="flex items-center space-x-2.5">
-                  <i data-lucide="check" class="w-4 h-4 text-red-500 shrink-0"></i>
-                  <span>Priorité de file d'attente</span>
-                </div>
-                <div class="flex items-center space-x-2.5">
-                  <i data-lucide="check" class="w-4 h-4 text-red-500 shrink-0"></i>
-                  <span>Effets de victoire / mort exclusifs</span>
-                </div>
-                <div class="flex items-center space-x-2.5">
-                  <i data-lucide="check" class="w-4 h-4 text-red-500 shrink-0"></i>
-                  <span>Rôle Discord + Salon restreint</span>
-                </div>
+                <div class="flex items-center space-x-2.5"><i data-lucide="check"
+                    class="w-4 h-4 text-red-500 shrink-0"></i><span>Prefixe <strong
+                      class="text-white font-bold">[+]</strong> distinctif</span></div>
+                <div class="flex items-center space-x-2.5"><i data-lucide="check"
+                    class="w-4 h-4 text-red-500 shrink-0"></i><span>Priorité de file d'attente</span></div>
+                <div class="flex items-center space-x-2.5"><i data-lucide="check"
+                    class="w-4 h-4 text-red-500 shrink-0"></i><span>Effets de victoire / mort exclusifs</span></div>
+                <div class="flex items-center space-x-2.5"><i data-lucide="check"
+                    class="w-4 h-4 text-red-500 shrink-0"></i><span>Rôle Discord + Salon restreint</span></div>
               </div>
             </div>
-
             <div class="pt-4 border-t border-neutral-800">
               <div class="flex items-baseline justify-between mb-4">
                 <span class="text-xs text-neutral-300 font-medium">Prix</span>
@@ -570,43 +623,31 @@
             </div>
           </div>
 
-          <!-- Carte 2 : HEVENLY PREMIUM -->
+          <!-- Carte 2 -->
           <div
             class="bg-neutral-900 border border-neutral-700 hover:border-red-600 rounded-2xl p-6 md:p-8 transition-all duration-300 shadow-2xl relative flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between mb-4">
                 <span
-                  class="px-3 py-0.5 rounded-lg bg-red-950/60 text-red-400 text-[11px] font-bold border border-red-900/50">
-                  Populaire
-                </span>
+                  class="px-3 py-0.5 rounded-lg bg-red-950/60 text-red-400 text-[11px] font-bold border border-red-900/50">Populaire</span>
                 <span class="text-xs font-mono text-red-400 font-bold tracking-wider">PREMIUM</span>
               </div>
-
               <h3 class="text-2xl md:text-3xl font-black text-white mb-2">HEVENLY PREMIUM</h3>
-              <p class="text-xs text-neutral-300 mb-6 leading-relaxed">
-                Le statut suprême débloquant la priorité absolue, toutes les customisations et l'accès bêta.
-              </p>
-
+              <p class="text-xs text-neutral-300 mb-6 leading-relaxed">Le statut suprême débloquant la priorité absolue,
+                toutes les customisations et l'accès bêta.</p>
               <div class="space-y-3 text-xs text-neutral-200 mb-8">
-                <div class="flex items-center space-x-2.5">
-                  <i data-lucide="check" class="w-4 h-4 text-red-500 shrink-0"></i>
-                  <span>Prefixe <strong class="text-white font-bold">[✦]</strong> exclusif</span>
-                </div>
-                <div class="flex items-center space-x-2.5">
-                  <i data-lucide="check" class="w-4 h-4 text-red-500 shrink-0"></i>
-                  <span>Avantage du + inclus</span>
-                </div>
-                <div class="flex items-center space-x-2.5">
-                  <i data-lucide="check" class="w-4 h-4 text-red-500 shrink-0"></i>
-                  <span>Permet d'héberger un événement</span>
-                </div>
-                <div class="flex items-center space-x-2.5">
-                  <i data-lucide="check" class="w-4 h-4 text-red-500 shrink-0"></i>
-                  <span>Accès bêta aux nouvelles cartes et modes</span>
+                <div class="flex items-center space-x-2.5"><i data-lucide="check"
+                    class="w-4 h-4 text-red-500 shrink-0"></i><span>Prefixe <strong
+                      class="text-white font-bold">[✦]</strong> exclusif</span></div>
+                <div class="flex items-center space-x-2.5"><i data-lucide="check"
+                    class="w-4 h-4 text-red-500 shrink-0"></i><span>Avantage du + inclus</span></div>
+                <div class="flex items-center space-x-2.5"><i data-lucide="check"
+                    class="w-4 h-4 text-red-500 shrink-0"></i><span>Permet d'héberger un événement</span></div>
+                <div class="flex items-center space-x-2.5"><i data-lucide="check"
+                    class="w-4 h-4 text-red-500 shrink-0"></i><span>Accès bêta aux nouvelles cartes et modes</span>
                 </div>
               </div>
             </div>
-
             <div class="pt-4 border-t border-neutral-800">
               <div class="flex items-baseline justify-between mb-4">
                 <span class="text-xs text-neutral-300 font-medium">Prix</span>
@@ -621,9 +662,7 @@
               </button>
             </div>
           </div>
-
         </div>
-
       </div>
     </section>
   </main>
@@ -640,16 +679,11 @@
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
-
       <div id="modal-price" class="text-lg font-bold text-red-400 mb-6">0.00€</div>
-
       <div class="space-y-3 mb-8">
         <h4 class="text-xs font-bold text-neutral-300 uppercase tracking-wider">Avantages inclus :</h4>
-        <ul id="modal-list" class="space-y-2.5 text-xs text-neutral-200">
-          <!-- Injecté par JS -->
-        </ul>
+        <ul id="modal-list" class="space-y-2.5 text-xs text-neutral-200"></ul>
       </div>
-
       <a href="https://discord.gg" target="_blank"
         class="w-full py-3 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs flex items-center justify-center space-x-2 transition-all shadow-md">
         <span>Acheter sur la boutique</span>
@@ -675,18 +709,12 @@
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
-
-      <!-- Conteneur dynamique relié à Supabase -->
       <div id="dynamic-news-container"
         class="py-6 overflow-y-auto custom-scrollbar space-y-4 text-xs md:text-sm text-neutral-200 leading-relaxed pr-2">
-        <!-- Chargé dynamiquement par JS -->
       </div>
-
       <div class="pt-4 border-t border-neutral-800 flex justify-end shrink-0">
         <button onclick="closeNewsModal()"
-          class="px-6 py-2.5 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-white font-semibold text-xs transition-colors">
-          Fermer
-        </button>
+          class="px-6 py-2.5 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-white font-semibold text-xs transition-colors">Fermer</button>
       </div>
     </div>
   </div>
@@ -703,41 +731,31 @@
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
-
       <div id="legal-modal-body"
         class="py-6 overflow-y-auto custom-scrollbar space-y-4 text-xs md:text-sm text-neutral-200 leading-relaxed pr-2">
-        <!-- Contenu légal injecté -->
       </div>
-
       <div class="pt-4 border-t border-neutral-800 flex justify-end shrink-0">
         <button onclick="closeLegalModal()"
-          class="px-6 py-2.5 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-white font-semibold text-xs transition-colors">
-          Fermer
-        </button>
+          class="px-6 py-2.5 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-white font-semibold text-xs transition-colors">Fermer</button>
       </div>
     </div>
   </div>
 
   <!-- Footer -->
   <footer class="relative overflow-hidden pt-10 pb-8 border-t border-neutral-900 bg-brand-dark">
-
     <div class="w-full overflow-hidden select-none pointer-events-none my-2">
       <div class="animate-marquee whitespace-nowrap flex items-center justify-center opacity-80">
         <span
-          class="font-black text-[15vw] leading-none tracking-tighter text-neutral-800 uppercase mr-12 flex items-center gap-12">
-          HEVENLY <span class="text-neutral-800 font-black text-[10vw]">•</span>
-        </span>
+          class="font-black text-[15vw] leading-none tracking-tighter text-neutral-800 uppercase mr-12 flex items-center gap-12">HEVENLY
+          <span class="text-neutral-800 font-black text-[10vw]">•</span></span>
         <span
-          class="font-black text-[15vw] leading-none tracking-tighter text-neutral-800 uppercase mr-12 flex items-center gap-12">
-          HEVENLY <span class="text-neutral-800 font-black text-[10vw]">•</span>
-        </span>
+          class="font-black text-[15vw] leading-none tracking-tighter text-neutral-800 uppercase mr-12 flex items-center gap-12">HEVENLY
+          <span class="text-neutral-800 font-black text-[10vw]">•</span></span>
         <span
-          class="font-black text-[15vw] leading-none tracking-tighter text-neutral-800 uppercase mr-12 flex items-center gap-12">
-          HEVENLY <span class="text-neutral-800 font-black text-[10vw]">•</span>
-        </span>
+          class="font-black text-[15vw] leading-none tracking-tighter text-neutral-800 uppercase mr-12 flex items-center gap-12">HEVENLY
+          <span class="text-neutral-800 font-black text-[10vw]">•</span></span>
       </div>
     </div>
-
     <div class="max-w-6xl mx-auto px-4 relative z-10">
       <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-neutral-400">
         <div class="flex items-center space-x-3">
@@ -748,7 +766,6 @@
               associated with Mojang or Microsoft</p>
           </div>
         </div>
-
         <div class="flex items-center space-x-6">
           <button onclick="openLegalModal('legal')" class="hover:text-white transition-colors">Mentions légales</button>
           <button onclick="openLegalModal('privacy')" class="hover:text-white transition-colors">Politique de
@@ -799,7 +816,6 @@
       savedNotes.forEach(note => {
         const div = document.createElement('div');
         div.className = "p-4 rounded-xl bg-neutral-800/60 border border-neutral-700/80 space-y-1.5";
-
         let titleColor = note.color && note.color !== 'text-white' ? note.color : 'text-white font-bold';
 
         div.innerHTML = `
@@ -824,7 +840,6 @@
       loadIndexNotifications();
       const backdrop = document.getElementById('news-modal-backdrop');
       const card = document.getElementById('news-modal-card');
-
       backdrop.classList.remove('hidden');
       setTimeout(() => {
         backdrop.classList.remove('opacity-0');
@@ -836,7 +851,6 @@
     function closeNewsModal() {
       const backdrop = document.getElementById('news-modal-backdrop');
       const card = document.getElementById('news-modal-card');
-
       backdrop.classList.add('opacity-0');
       card.classList.remove('modal-enter-active');
       card.classList.add('scale-95', 'opacity-0');
@@ -858,13 +872,10 @@
           <h4 class="font-bold text-white text-base">1. Éditeur du site</h4>
           <p>Le site internet Hevenly Games (accessible à l'adresse hevenly.games) est édité par l'équipe d'administration du réseau d'animation et de serveur de jeu Hevenly.</p>
           <p>Directeur de la publication : Équipe de Direction Hevenly Games.<br>Contact : via le serveur Discord officiel Hevenly Games.</p>
-          
           <h4 class="font-bold text-white text-base pt-3">2. Hébergement</h4>
           <p>Le site et le serveur de jeu sont hébergés sur des infrastructures de serveurs dédiés situés en France (OVHcloud / Pulseheberg) garantissant une conformité avec la réglementation européenne.</p>
-
           <h4 class="font-bold text-white text-base pt-3">3. Propriété intellectuelle & Avertissement Mojang / Microsoft</h4>
           <p>HEVENLY est un serveur de jeu indépendant. Minecraft est une marque déposée par Mojang Synergies AB et Microsoft Corporation. Hevenly n'est en aucun cas affilié, associé ou approuvé par Mojang AB ou Microsoft Corporation.</p>
-          <p>Tous les visuels, logos, illustrations et contenus propres créés pour Hevenly sont la propriété exclusive de leurs auteurs respectifs et ne peuvent être reproduits sans autorisation préalable.</p>
         `
       },
       privacy: {
@@ -878,12 +889,8 @@
             <li>Vos statistiques de jeu (classement ELO, nombre de victoires/défaites, ratio).</li>
             <li>Votre adresse IP (uniquement à des fins de sécurité anti-triche et prévention des attaques DDoS).</li>
           </ul>
-
           <h4 class="font-bold text-white text-base pt-3">2. Utilisation des données</h4>
           <p>Les données collectées servent exclusivement à la gestion du matchmaking compétitif, la prévention de la triche, l'attribution des rôles VIP et la mise à jour des classements publics.</p>
-
-          <h4 class="font-bold text-white text-base pt-3">3. Vos droits (RGPD)</h4>
-          <p>Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez d'un droit d'accès, de rectification et de suppression de vos données personnelles. Vous pouvez exercer ce droit à tout moment en ouvrant un ticket sur notre serveur Discord officiel.</p>
         `
       },
       cookies: {
@@ -891,16 +898,12 @@
         content: `
           <h4 class="font-bold text-white text-base">1. Qu'est-ce qu'un cookie ?</h4>
           <p>Un cookie est un petit fichier texte déposé sur votre navigateur lors de la consultation d'un site web.</p>
-
           <h4 class="font-bold text-white text-base pt-3">2. Cookies utilisés sur ce site</h4>
           <p>Notre site web utilise un nombre strictement limité de traceurs :</p>
           <ul class="list-disc pl-5 space-y-1 text-neutral-300">
             <li><strong class="text-white">Cookies de préférences (localStorage) :</strong> Utilisé uniquement pour mémoriser votre choix d'acceptation ou de refus des cookies.</li>
             <li><strong class="text-white">Mesure d'audience anonymisée :</strong> Mesure le volume de fréquentation du site sans stocker d'adresse IP en clair ni données nominatives.</li>
           </ul>
-
-          <h4 class="font-bold text-white text-base pt-3">3. Gestion de vos choix</h4>
-          <p>Vous pouvez modifier votre consentement à tout moment en supprimant le stockage local de votre navigateur ou en cliquant sur l'un des boutons de choix dans la bannière de bas de page.</p>
         `
       }
     };
@@ -908,13 +911,10 @@
     function openLegalModal(type) {
       const data = legalTexts[type];
       if (!data) return;
-
       document.getElementById('legal-modal-title').innerText = data.title;
       document.getElementById('legal-modal-body').innerHTML = data.content;
-
       const backdrop = document.getElementById('legal-modal-backdrop');
       const card = document.getElementById('legal-modal-card');
-
       backdrop.classList.remove('hidden');
       setTimeout(() => {
         backdrop.classList.remove('opacity-0');
@@ -926,7 +926,6 @@
     function closeLegalModal() {
       const backdrop = document.getElementById('legal-modal-backdrop');
       const card = document.getElementById('legal-modal-card');
-
       backdrop.classList.add('opacity-0');
       card.classList.remove('modal-enter-active');
       card.classList.add('scale-95', 'opacity-0');
@@ -946,11 +945,9 @@
 
     function setStep(index) {
       currentStep = index;
-
       for (let i = 0; i < totalSteps; i++) {
         const card = document.getElementById(`step-card-${i}`);
         const btn = document.getElementById(`step-btn-${i}`);
-
         if (card) {
           if (i === currentStep) {
             card.className = "col-start-1 row-start-1 space-y-4 slide-step opacity-100 translate-x-0";
@@ -960,7 +957,6 @@
             card.className = "col-start-1 row-start-1 space-y-4 slide-step opacity-0 translate-x-4 pointer-events-none";
           }
         }
-
         if (btn) {
           if (i === currentStep) {
             btn.className = "w-10 h-10 rounded-full bg-red-600 text-white font-extrabold text-sm flex items-center justify-center transition-all duration-300 shadow-md";
@@ -969,7 +965,6 @@
           }
         }
       }
-
       const dotsContainer = document.getElementById('slider-dots');
       if (dotsContainer) {
         const dots = dotsContainer.children;
@@ -994,7 +989,6 @@
       navigator.clipboard.writeText(ip).then(() => {
         const toast = document.getElementById('toast');
         toast.classList.remove('translate-y-20', 'opacity-0');
-
         setTimeout(() => {
           toast.classList.add('translate-y-20', 'opacity-0');
         }, 3000);
@@ -1016,10 +1010,8 @@
     function openModal(title, price, perks) {
       const backdrop = document.getElementById('modal-backdrop');
       const card = document.getElementById('modal-card');
-
       document.getElementById('modal-title').innerText = 'Grade ' + title;
       document.getElementById('modal-price').innerText = price + ' / mois';
-
       const list = document.getElementById('modal-list');
       list.innerHTML = '';
       perks.forEach(perk => {
@@ -1029,7 +1021,6 @@
         list.appendChild(li);
       });
       lucide.createIcons();
-
       backdrop.classList.remove('hidden');
       setTimeout(() => {
         backdrop.classList.remove('opacity-0');
@@ -1041,7 +1032,6 @@
     function closeModal() {
       const backdrop = document.getElementById('modal-backdrop');
       const card = document.getElementById('modal-card');
-
       backdrop.classList.add('opacity-0');
       card.classList.remove('modal-enter-active');
       card.classList.add('scale-95', 'opacity-0');
