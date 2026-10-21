@@ -25,6 +25,12 @@
   <!-- SDK Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+  <!-- Font Plus Jakarta Sans avec préchargement optimisé anti-flicker -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -52,15 +58,7 @@
   </script>
 
   <style>
-    /* Déclaration locale de la police pour un chargement instantané sans flash ni flou */
-    @font-face {
-      font-family: 'Plus Jakarta Sans';
-      src: url('./fonts/plus-jakarta-sans-v12-latin-regular.woff2') format('woff2');
-      font-weight: 400;
-      font-style: normal;
-      font-display: swap;
-    }
-
+    /* Application globale et anti-flicker de la police */
     html,
     body {
       background-color: #121212;
@@ -69,7 +67,6 @@
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-      text-rendering: optimizeLegibility;
     }
 
     body {
