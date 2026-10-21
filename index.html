@@ -4,7 +4,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hevenly Games — Serveur Minecraft Ranked Bedfight</title>
+
+  <!-- SEO & Métadonnées Avancées -->
+  <title>Hevenly Games — Serveur Minecraft Ranked Bedfight Français</title>
+  <meta name="description"
+    content="Rejoignez Hevenly Games, la meilleure plateforme compétitive Minecraft Ranked Bedfight en France. Profitez d'un PvP ultra-fluide, classements ELO et arènes inédites.">
+  <meta name="keywords"
+    content="Minecraft, Bedfight, Ranked Bedfight, Rush, Serveur Minecraft, PvP, Hevenly Games, 1.8.9, ELO, Classement">
+  <meta name="author" content="Hevenly Games">
+  <link rel="canonical" href="https://hevenly.games/">
+
+  <!-- Open Graph / Réseaux Sociaux (Discord, Twitter, etc.) -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://hevenly.games/">
+  <meta property="og:title" content="Hevenly Games — Serveur Minecraft Ranked Bedfight">
+  <meta property="og:description"
+    content="La plateforme compétitive que vous méritez. Rejoignez le serveur en version 1.8.9 et grimpez dans le classement ELO.">
+  <meta property="og:image" content="https://i.imgur.com/BYA0Cs5.png">
 
   <!-- Script pour toujours forcer le retour en haut de page au chargement -->
   <script>
@@ -734,10 +750,6 @@
     <section id="shop" class="py-16 md:py-20 border-t border-neutral-800 bg-[#141414]">
       <div class="max-w-5xl mx-auto px-4">
         <div class="text-center mb-12 reveal">
-          <div
-            class="inline-flex items-center space-x-2 px-3.5 py-1 rounded-lg bg-neutral-900 border border-neutral-800 text-xs font-semibold text-white mb-4">
-            <span>GRADES EXCLUSIFS</span>
-          </div>
           <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-3">
             Soutenez le serveur
           </h2>
@@ -955,11 +967,15 @@
       loadIndexNotifications();
       updateScrollProgress();
 
-      if (!localStorage.getItem('hevenly_cookie_consent')) {
+      // Gestion intelligente du consentement aux cookies
+      const consent = localStorage.getItem('hevenly_cookie_consent');
+      if (!consent) {
         setTimeout(() => {
           const banner = document.getElementById('cookie-banner');
           banner.classList.remove('translate-y-full', 'opacity-0');
         }, 1000);
+      } else if (consent === 'accepted') {
+        initAnalytics();
       }
     });
 
@@ -977,6 +993,26 @@
       if (progressBar) {
         progressBar.style.width = roundedPercent + '%';
       }
+    }
+
+    // Gestion réelle du refus / acceptation des cookies
+    function acceptCookies(consent) {
+      if (consent) {
+        localStorage.setItem('hevenly_cookie_consent', 'accepted');
+        initAnalytics();
+      } else {
+        localStorage.setItem('hevenly_cookie_consent', 'declined');
+        // Supprime tout stockage potentiel ou traceur si l'utilisateur refuse
+        localStorage.removeItem('hevenly_analytics');
+      }
+      const banner = document.getElementById('cookie-banner');
+      banner.classList.add('translate-y-full', 'opacity-0');
+    }
+
+    // Fonction d'activation des scripts d'analyse si acceptés
+    function initAnalytics() {
+      // Tu pourras placer ici tes scripts de mesure d'audience (ex: Google Analytics, Plausible, etc.)
+      console.log("Cookies acceptés : scripts d'analyse initialisés.");
     }
 
     // Fonction de gestion de la FAQ interactive
@@ -1025,12 +1061,6 @@
       });
     }
 
-    function acceptCookies(consent) {
-      localStorage.setItem('hevenly_cookie_consent', consent ? 'accepted' : 'declined');
-      const banner = document.getElementById('cookie-banner');
-      banner.classList.add('translate-y-full', 'opacity-0');
-    }
-
     function openNewsModal() {
       loadIndexNotifications();
       const backdrop = document.getElementById('news-modal-backdrop');
@@ -1068,7 +1098,7 @@
           <p>Le site internet Hevenly Games (accessible à l'adresse hevenly.games) est édité par l'équipe d'administration du réseau d'animation et de serveur de jeu Hevenly.</p>
           <p>Directeur de la publication : Équipe de Direction Hevenly Games.<br>Contact : via le serveur Discord officiel Hevenly Games.</p>
           <h4 class="font-bold text-white text-base pt-3">2. Hébergement</h4>
-          <p>Le site et le serveur de jeu sont hébergés sur des infrastructures de serveurs dédiés situés en France (OVHcloud / Pulseheberg) garantissant une conformité avec la réglementation européenne.</p>
+          <p>Le site et le serveur de jeu sont hébergés sur des infrastructures de serveurs dédiés garantissant une conformité avec la réglementation européenne.</p>
           <h4 class="font-bold text-white text-base pt-3">3. Propriété intellectuelle & Avertissement Mojang / Microsoft</h4>
           <p>HEVENLY est un serveur de jeu indépendant. Minecraft est une marque déposée par Mojang Synergies AB et Microsoft Corporation. Hevenly n'est en aucun cas affilié, associé ou approuvé par Mojang AB ou Microsoft Corporation.</p>
         `
@@ -1085,7 +1115,7 @@
             <li>Votre adresse IP (uniquement à des fins de sécurité anti-triche et prévention des attaques DDoS).</li>
           </ul>
           <h4 class="font-bold text-white text-base pt-3">2. Utilisation des données</h4>
-          <p>Les données collectées servent exclusivement à la gestion du matchmaking compétitif, la prévention de la triche, l'attribution des rôles VIP et la mise à jour des classements publics.</p>
+          <p>Les données collectées servent exclusivement à la gestion du matchmaking compétitif, la prévention de la triche, l'attribution des rôles et la mise à jour des classements publics.</p>
         `
       },
       cookies: {
@@ -1097,7 +1127,7 @@
           <p>Notre site web utilise un nombre strictement limité de traceurs :</p>
           <ul class="list-disc pl-5 space-y-1 text-neutral-300">
             <li><strong class="text-white">Cookies de préférences (localStorage) :</strong> Utilisé uniquement pour mémoriser votre choix d'acceptation ou de refus des cookies.</li>
-            <li><strong class="text-white">Mesure d'audience anonymisée :</strong> Mesure le volume de fréquentation du site sans stocker d'adresse IP en clair ni données nominatives.</li>
+            <li><strong class="text-white">Mesure d'audience anonymisée :</strong> Mesure le volume de fréquentation du site sans stocker d'adresse IP en clair ni données nominatives (uniquement si vous l'avez accepté).</li>
           </ul>
         `
       }
