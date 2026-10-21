@@ -58,9 +58,8 @@
   </script>
 
   <style>
-    /* Fond fixé en sombre par défaut pour empêcher le flash lumineux au chargement */
-    html,
-    body {
+    /* Fix pour stabiliser l'affichage du fond et éviter qu'il ne disparaisse */
+    html {
       background-color: #121212;
       color: #EDEDED;
       font-family: 'Plus Jakarta Sans', sans-serif;
@@ -68,8 +67,9 @@
     }
 
     body {
+      background-color: #121212;
       opacity: 0;
-      transition: opacity 0.8s ease-out;
+      transition: opacity 0.6s ease-in-out;
     }
 
     body.loaded {
@@ -165,7 +165,7 @@
   </style>
 </head>
 
-<body class="bg-[#121212] antialiased flex flex-col min-h-screen m-0 p-0">
+<body class="antialiased flex flex-col min-h-screen m-0 p-0">
 
   <!-- Bouton de Notification Flottant en Haut à Droite -->
   <div class="fixed top-5 right-5 z-40">
@@ -223,7 +223,7 @@
       class="relative min-h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden w-full">
 
       <!-- Arrière-plan épuré -->
-      <div class="absolute inset-0 top-0 left-0 right-0 -z-20 overflow-hidden">
+      <div class="absolute inset-0 top-0 left-0 right-0 -z-20 overflow-hidden pointer-events-none">
         <img src="https://i.imgur.com/xr1vqMq.jpg" alt="Hevenly Background"
           class="w-full h-full object-cover opacity-35 scale-105 object-top">
         <div class="absolute inset-0 bg-gradient-to-b from-[#121212]/40 via-[#121212]/90 to-[#121212]"></div>
@@ -644,7 +644,7 @@
                 <div class="flex items-center space-x-2.5"><i data-lucide="check"
                     class="w-4 h-4 text-red-500 shrink-0"></i><span>Permet d'héberger un événement</span></div>
                 <div class="flex items-center space-x-2.5"><i data-lucide="check"
-                    class="w-4 h-4 text-red-500 shrink-0"></i><span>Accès bêta aux nouvelles cartes et modes </span>
+                    class="w-4 h-4 text-red-500 shrink-0"></i><span>Accès bêta aux nouvelles cartes et modes</span>
                 </div>
               </div>
             </div>
