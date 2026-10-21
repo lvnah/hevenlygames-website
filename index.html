@@ -167,19 +167,9 @@
 
 <body class="antialiased flex flex-col min-h-screen m-0 p-0">
 
-  <!-- Barre de chargement / progression de scroll fixe en bas de l'écran -->
-  <div
-    class="fixed bottom-0 left-0 right-0 z-40 bg-[#161616]/90 backdrop-blur-md border-t border-neutral-800 px-4 py-2 flex items-center justify-between text-[11px] font-semibold text-neutral-300 shadow-2xl">
-    <div class="flex items-center space-x-2">
-      <span class="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
-      <span class="tracking-wider uppercase">Chargement du site</span>
-    </div>
-    <div class="flex items-center space-x-3">
-      <span id="scroll-percentage" class="font-mono text-red-500 font-bold">0%</span>
-      <div class="w-24 md:w-36 h-1.5 bg-neutral-800 rounded-full overflow-hidden">
-        <div id="scroll-progress-bar" class="h-full bg-red-600 w-0 transition-all duration-75"></div>
-      </div>
-    </div>
+  <!-- Fine barre de chargement linéaire en bas de l'écran -->
+  <div class="fixed bottom-0 left-0 right-0 z-50 h-1 bg-neutral-900 pointer-events-none">
+    <div id="scroll-progress-bar" class="h-full bg-red-600 w-0 transition-all duration-75"></div>
   </div>
 
   <!-- Bouton de Notification Flottant en Haut à Droite -->
@@ -193,14 +183,14 @@
 
   <!-- Toast Notification -->
   <div id="toast"
-    class="fixed bottom-16 right-6 z-50 transform translate-y-20 opacity-0 bg-neutral-900 border border-neutral-800 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center space-x-3">
+    class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 bg-neutral-900 border border-neutral-800 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center space-x-3">
     <i data-lucide="check-circle-2" class="w-5 h-5 text-red-500"></i>
     <span class="font-semibold text-sm text-white">Adresse IP copiée dans le presse-papier !</span>
   </div>
 
   <!-- Banner Cookie (Bas de page) -->
   <div id="cookie-banner"
-    class="fixed bottom-10 inset-x-0 z-50 bg-[#141414] border-t border-neutral-800 px-6 py-4 transition-all duration-500 transform translate-y-full opacity-0">
+    class="fixed bottom-3 inset-x-0 z-40 bg-[#141414] border-t border-neutral-800 px-6 py-4 transition-all duration-500 transform translate-y-full opacity-0">
     <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-xs">
       <div class="space-y-1.5 text-neutral-200">
         <h4 class="font-bold text-white text-sm">Cookies & mesure d'audience</h4>
@@ -232,7 +222,7 @@
     </div>
   </div>
 
-  <main class="flex-grow p-0 m-0 pb-12">
+  <main class="flex-grow p-0 m-0">
     <!-- Hero Section Plein Écran (100vh) Rigoureusement Centré avec fond CSS stable -->
     <section
       class="relative min-h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden w-full bg-[#121212]"
@@ -751,7 +741,7 @@
   </div>
 
   <!-- Footer -->
-  <footer class="relative overflow-hidden pt-10 pb-16 border-t border-neutral-900 bg-brand-dark">
+  <footer class="relative overflow-hidden pt-10 pb-8 border-t border-neutral-900 bg-brand-dark">
     <div class="w-full overflow-hidden select-none pointer-events-none my-2">
       <div class="animate-marquee whitespace-nowrap flex items-center justify-center opacity-80">
         <span
@@ -808,7 +798,7 @@
       }
     });
 
-    // Écouteur d'événement pour la barre de chargement / progression au scroll
+    // Écouteur de défilement pour la fine barre linéaire
     window.addEventListener('scroll', updateScrollProgress);
 
     function updateScrollProgress() {
@@ -817,12 +807,11 @@
       const scrollPercent = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
 
       const roundedPercent = Math.min(100, Math.max(0, Math.round(scrollPercent)));
-
       const progressBar = document.getElementById('scroll-progress-bar');
-      const progressText = document.getElementById('scroll-percentage');
 
-      if (progressBar) progressBar.style.width = roundedPercent + '%';
-      if (progressText) progressText.innerText = roundedPercent + '%';
+      if (progressBar) {
+        progressBar.style.width = roundedPercent + '%';
+      }
     }
 
     async function loadIndexNotifications() {
