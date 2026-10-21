@@ -25,7 +25,7 @@
   <!-- SDK Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <!-- Font Plus Jakarta Sans -->
+  <!-- Font Plus Jakarta Sans avec &display=swap pour éliminer le saut de police -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap"
@@ -58,13 +58,16 @@
   </script>
 
   <style>
-    /* Fond fixé en sombre par défaut pour empêcher le flash lumineux au chargement */
+    /* Forçage d'un rendu de texte net et uniforme dès la première milliseconde pour éviter le flou */
     html,
     body {
       background-color: #121212;
       color: #EDEDED;
       font-family: 'Plus Jakarta Sans', sans-serif;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
     }
 
     body {
