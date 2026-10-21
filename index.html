@@ -218,16 +218,10 @@
   </div>
 
   <main class="flex-grow p-0 m-0">
-    <!-- Hero Section Plein Écran (100vh) Rigoureusement Centré -->
+    <!-- Hero Section Plein Écran (100vh) Rigoureusement Centré avec fond CSS stable -->
     <section
-      class="relative min-h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden w-full">
-
-      <!-- Arrière-plan épuré -->
-      <div class="absolute inset-0 top-0 left-0 right-0 -z-20 overflow-hidden pointer-events-none">
-        <img src="https://i.imgur.com/xr1vqMq.jpg" alt="Hevenly Background"
-          class="w-full h-full object-cover opacity-35 scale-105 object-top">
-        <div class="absolute inset-0 bg-gradient-to-b from-[#121212]/40 via-[#121212]/90 to-[#121212]"></div>
-      </div>
+      class="relative min-h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden w-full bg-[#121212]"
+      style="background-image: linear-gradient(to bottom, rgba(18, 18, 18, 0.4), rgba(18, 18, 18, 0.9), #121212), url('https://i.imgur.com/xr1vqMq.jpg'); background-size: cover; background-position: center top;">
 
       <!-- Conteneur centralisé absolu du Hero -->
       <div
