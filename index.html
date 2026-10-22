@@ -137,41 +137,6 @@
       animation-play-state: paused;
     }
 
-    /* Animations Hero "Effet Wow" */
-    @keyframes floatSlow {
-
-      0%,
-      100% {
-        transform: translateY(0px);
-      }
-
-      50% {
-        transform: translateY(-8px);
-      }
-    }
-
-    @keyframes pulseGlow {
-
-      0%,
-      100% {
-        opacity: 0.3;
-        transform: scale(1);
-      }
-
-      50% {
-        opacity: 0.6;
-        transform: scale(1.05);
-      }
-    }
-
-    .animate-float {
-      animation: floatSlow 4s ease-in-out infinite;
-    }
-
-    .hero-glow {
-      animation: pulseGlow 5s ease-in-out infinite;
-    }
-
     /* Animations Reveal au Scroll Séquentiel (PC & Mobile) */
     .reveal {
       opacity: 0;
@@ -285,15 +250,10 @@
   </div>
 
   <main class="flex-grow p-0 m-0">
-    <!-- Hero Section Plein Écran (100vh) Rigoureusement Centré avec Effet Wow -->
+    <!-- Hero Section Plein Écran (100vh) Rigoureusement Centré avec fond CSS stable -->
     <section
       class="relative min-h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden w-full bg-[#121212]"
       style="background-image: linear-gradient(to bottom, rgba(18, 18, 18, 0.4), rgba(18, 18, 18, 0.9), #121212), url('https://i.imgur.com/xr1vqMq.jpg'); background-size: cover; background-position: center top;">
-
-      <!-- Lueur d'arrière-plan dynamique (Effet Wow) -->
-      <div
-        class="absolute w-[500px] h-[500px] md:w-[700px] md:h-[700px] bg-red-600/20 rounded-full blur-[120px] pointer-events-none hero-glow z-0">
-      </div>
 
       <!-- Conteneur centralisé absolu du Hero -->
       <div
@@ -301,49 +261,46 @@
 
         <!-- Status Indicator / En Ligne -->
         <div
-          class="inline-flex items-center justify-center space-x-2 px-4 py-1.5 rounded-full bg-neutral-900/80 backdrop-blur-md border border-neutral-800 text-[11px] font-semibold text-neutral-200 mb-6 shadow-xl reveal mx-auto transition-all hover:border-red-600/50">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          class="inline-flex items-center justify-center space-x-2 px-3.5 py-1 rounded-lg bg-neutral-900 border border-neutral-800 text-[11px] font-semibold text-neutral-200 mb-6 shadow-sm reveal mx-auto">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
           <span>0 Joueurs en ligne</span>
           <span class="text-neutral-600">-</span>
           <span class="text-neutral-300">Saison 0</span>
         </div>
 
-        <!-- Titre HEVENLY strictement centré avec logo animé en lévitation -->
-        <div class="relative inline-block mb-4 reveal delay-100 mx-auto animate-float">
+        <!-- Titre HEVENLY strictement centré avec logo positionné à gauche sans décalage -->
+        <div class="relative inline-block mb-4 reveal delay-100 mx-auto">
           <img src="https://i.imgur.com/BYA0Cs5.png" alt="Hevenly Logo"
-            class="absolute left-[-50px] md:left-[-76px] top-1/2 -translate-y-1/2 w-10 h-10 md:w-16 md:h-16 object-contain drop-shadow-[0_0_15px_rgba(255,34,34,0.4)]">
-          <h2
-            class="font-black text-4xl md:text-6xl tracking-tight text-white uppercase leading-none m-0 drop-shadow-md">
+            class="absolute left-[-50px] md:left-[-76px] top-1/2 -translate-y-1/2 w-10 h-10 md:w-16 md:h-16 object-contain">
+          <h2 class="font-black text-4xl md:text-6xl tracking-tight text-white uppercase leading-none m-0">
             HEVENLY
           </h2>
         </div>
 
         <!-- Badge Version -->
         <div
-          class="inline-flex items-center justify-center space-x-2 px-4 py-1.5 rounded-lg bg-neutral-900/90 border border-neutral-800 text-[11px] font-bold tracking-widest text-white uppercase mb-6 shadow-sm reveal delay-200 mx-auto">
+          class="inline-flex items-center justify-center space-x-2 px-4 py-1.5 rounded-lg bg-neutral-900 border border-neutral-800 text-[11px] font-bold tracking-widest text-white uppercase mb-6 shadow-sm reveal delay-200 mx-auto">
           <span>Version 1.8.9</span>
         </div>
 
-        <!-- Titre principal avec effet de texte qualitatif -->
+        <!-- Titre principal -->
         <h1
           class="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.1] mb-5 reveal delay-300 text-center mx-auto">
-          La plateforme <span
-            class="text-transparent bg-clip-text bg-gradient-to-r from-white via-red-200 to-red-600">compétitive</span>
-          que vous méritez.
+          La plateforme competitive que vous méritez.
         </h1>
 
         <!-- Sous-titre -->
         <p
-          class="text-neutral-300 text-xs sm:text-sm md:text-base max-w-lg mx-auto mb-8 leading-relaxed font-normal reveal delay-400 text-center px-2">
+          class="text-neutral-200 text-xs sm:text-sm md:text-base max-w-lg mx-auto mb-8 leading-relaxed font-normal reveal delay-400 text-center px-2">
           Hevenly propose un système compétitif complet axé sur le Bedfight, développé sur mesure pour vous
           faire progresser dans les meilleures conditions.
         </p>
 
-        <!-- Boutons CTA avec effets de survol dynamiques -->
+        <!-- Boutons CTA -->
         <div
           class="flex flex-col sm:flex-row items-center justify-center gap-4 w-full reveal delay-400 mx-auto px-4 sm:px-0">
           <a href="https://discord.gg" target="_blank"
-            class="w-full sm:w-64 py-4 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-sm transition-all duration-300 flex items-center justify-center space-x-2.5 shadow-[0_10px_25px_rgba(220,38,38,0.4)] hover:shadow-[0_15px_30px_rgba(220,38,38,0.6)] transform hover:-translate-y-0.5 active:scale-95">
+            class="w-full sm:w-64 py-4 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-sm transition-all duration-300 flex items-center justify-center space-x-2.5 shadow-lg active:scale-95">
             <svg class="w-4 h-4 shrink-0" viewBox="0 -28.5 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg"
               xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid" fill="#ffffff" stroke="#ffffff">
               <g>
@@ -355,7 +312,7 @@
             <span>Rejoindre le Discord</span>
           </a>
           <button onclick="copyIP()"
-            class="w-full sm:w-64 py-4 rounded-xl bg-neutral-900/90 hover:bg-neutral-800 text-white font-bold text-sm border border-neutral-800 hover:border-neutral-700 transition-all duration-300 active:scale-95 flex items-center justify-center space-x-2.5 shadow-lg transform hover:-translate-y-0.5">
+            class="w-full sm:w-64 py-4 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-sm border border-neutral-800 transition-all duration-300 active:scale-95 flex items-center justify-center space-x-2.5 shadow-lg">
             <i data-lucide="copy" class="w-4 h-4 text-neutral-300 shrink-0"></i>
             <span class="uppercase">hevenly.games (1.8.9)</span>
           </button>
