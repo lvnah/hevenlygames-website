@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hevenly Games — Serveur Minecraft Ranked Bedfight Français</title>
+<meta name="description" content="Rejoignez Hevenly Games, la meilleure plateforme compétitive Minecraft Ranked Bedfight en France. Profitez d'un PvP ultra-fluide, classements ELO et arènes inédites.">
+<meta name="keywords" content="Minecraft, Bedfight, Ranked Bedfight, Rush, Serveur Minecraft, PvP, Hevenly Games, 1.8.9, ELO, Classement">
+<meta name="author" content="Hevenly Games"><meta name="theme-color" content="#121212"><link rel="canonical" href="https://hevenly.games/">
+<meta property="og:type" content="website"><meta property="og:url" content="https://hevenly.games/"><meta property="og:title" content="Hevenly Games — Serveur Minecraft Ranked Bedfight"><meta property="og:description" content="La plateforme compétitive que vous méritez. Rejoignez le serveur en version 1.8.9 et grimpez dans le classement ELO."><meta property="og:image" content="https://i.imgur.com/BYA0Cs5.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='100 100 470 470'%3E%3Cpath d='M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z' fill='%23E6E6E6'/%3E%3Cpath d='M115 115h115a115 115 0 0 1-115 115z' fill='%23E10600'/%3E%3Cpath d='M555 555H440a115 115 0 0 1 115-115z' fill='%23E10600'/%3E%3C/svg%3E">
+<script>document.documentElement.classList.add('js');setTimeout(function(){var i=document.getElementById('intro');if(i){i.remove();document.body.classList.remove('lock');document.body.classList.add('go')}},9000);</script>
+<noscript><style>#intro{display:none!important}.js .h-in{opacity:1!important;transform:none!important}</style></noscript>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--ink:#121212;--ink2:#1B1B1B;--ink3:#242424;--line:#2E2E2E;--gray:#E6E6E6;--mut:#A8A8A8;--dim:#8A8A8A;--red:#E10600;--redh:#F3140D;
+  --d:'Unbounded','Arial Black',system-ui,sans-serif;--b:'Onest',system-ui,-apple-system,'Segoe UI',sans-serif;--ease:cubic-bezier(.2,.8,.2,1);--sq:22%}
+*,*::before,*::after{box-sizing:border-box;margin:0}
+html{background:var(--ink);scroll-padding-top:96px;overflow-x:clip}
+@media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{font-family:var(--b);font-size:17px;line-height:1.65;color:var(--gray);background:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:clip}
+body.lock{overflow:hidden}
+img,svg{display:block;max-width:100%}button{font:inherit;color:inherit}
+::selection{background:var(--red);color:#fff}:focus-visible{outline:3px solid var(--red);outline-offset:3px}
+.wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+h1,h2,h3{font-family:var(--d);font-weight:800;color:#fff;letter-spacing:-.035em;line-height:1.08}
+h2{font-size:clamp(1.7rem,3.5vw,2.75rem);font-weight:700;letter-spacing:-.04em;line-height:1.12}
+.sec{padding:clamp(72px,8vw,112px) 0 0}
+.lead{margin-top:20px;max-width:50ch;color:var(--mut)}
+.head{margin-bottom:44px}
+
+/* ---------- Logo (SVG) ---------- */
+.lg{width:100%;height:auto;overflow:visible}
+.lg .ring,.lg .leaf{transform-box:view-box}
+.lg .tl{transform-origin:115px 115px}.lg .br{transform-origin:555px 555px}
+.lg .hs{stroke-dasharray:1;stroke-dashoffset:0;opacity:0}
+.lg.anim .hs{stroke-dashoffset:1;opacity:1}
+.lg.anim .hf{opacity:0}
+.lg.anim .ring,.lg.anim .leaf{transform:scale(0)}
+.lg.play .hs{animation:draw 1.1s .15s cubic-bezier(.65,0,.35,1) forwards,strokeout .5s 1.15s forwards}
+.lg.play .hf{animation:fin .6s 1.0s forwards}
+.lg.play .ring.tl{animation:pop .75s 1.45s cubic-bezier(.2,1.25,.3,1) forwards}
+.lg.play .leaf.tl{animation:pop .75s 1.52s cubic-bezier(.2,1.25,.3,1) forwards}
+.lg.play .ring.br{animation:pop .75s 1.8s cubic-bezier(.2,1.25,.3,1) forwards}
+.lg.play .leaf.br{animation:pop .75s 1.87s cubic-bezier(.2,1.25,.3,1) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}@keyframes strokeout{to{opacity:0}}@keyframes fin{to{opacity:1}}@keyframes pop{to{transform:scale(1)}}
+
+/* ---------- Intro ---------- */
+#intro{position:fixed;inset:0;z-index:1000;background:var(--ink);display:grid;place-items:center;cursor:pointer}
+#intro .stage{display:grid;justify-items:center;gap:26px;width:min(52vmin,400px)}
+#intro .tag{font-family:var(--b);font-weight:500;font-size:1rem;color:var(--mut);opacity:0;animation:fin .8s 2.1s forwards;white-space:nowrap}
+#intro .skip{position:absolute;right:22px;bottom:20px;font-size:.85rem;color:var(--dim);opacity:0;animation:fin .6s 1s forwards}
+#wipe{position:absolute;inset:0;background:var(--red);clip-path:circle(0 at 0 0);pointer-events:none}
+
+/* ---------- Boutons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:56px;padding:0 28px;border:2px solid transparent;border-radius:16px;background:transparent;color:#fff;font-family:var(--b);font-weight:600;font-size:1rem;text-decoration:none;white-space:nowrap;cursor:pointer;transition:background-color .2s,border-color .2s,color .2s,transform .2s}
+.btn:active{transform:scale(.97)}
+.btn-red{background:var(--red)}.btn-red:hover{background:var(--redh)}
+.btn-line{border-color:#444}.btn-line:hover{border-color:#fff}
+.btn-sm{height:44px;padding:0 20px;font-size:.93rem;border-radius:13px}
+.ico{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+/* ---------- Navigation : un rail latéral, comme une échelle de classement ---------- */
+.rail{display:none}
+.mbar{position:fixed;top:0;left:0;right:0;z-index:60;height:68px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 20px;background:rgba(18,18,18,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);transition:transform .9s var(--ease)}
+.js .mbar{transform:translateY(-100%)}.go .mbar{transform:none;transition-delay:.5s}
+.mbar .logo{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-family:var(--d);font-weight:800;font-size:1.05rem;letter-spacing:-.04em}
+.mbar .lg{width:34px}
+.mbar-r{display:flex;gap:8px;align-items:center}
+.burger{display:grid;width:44px;height:44px;place-items:center;background:none;border:2px solid #444;border-radius:13px;cursor:pointer}
+.burger span{position:relative;width:18px;height:12px}
+.burger span::before,.burger span::after,.burger span i{content:"";position:absolute;left:0;right:0;height:2px;background:#fff;transition:transform .3s var(--ease),top .3s var(--ease),opacity .2s}
+.burger span::before{top:0}.burger span i{top:5px}.burger span::after{top:10px}
+.burger[aria-expanded=true] span::before{top:5px;transform:rotate(45deg)}.burger[aria-expanded=true] span::after{top:5px;transform:rotate(-45deg)}.burger[aria-expanded=true] span i{opacity:0}
+.drawer{position:fixed;z-index:55;inset:0;padding:92px 28px 32px;background:var(--ink);display:flex;flex-direction:column;visibility:hidden;opacity:0;transition:opacity .25s,visibility 0s .25s;overflow-y:auto}
+.drawer.open{visibility:visible;opacity:1;transition:opacity .25s}
+.drawer a.l{padding:18px 0;border-bottom:1px solid var(--line);color:#fff;text-decoration:none;font-family:var(--d);font-weight:700;font-size:1.4rem;letter-spacing:-.03em}
+.drawer .btns{display:grid;gap:10px;margin-top:28px}
+.corner{display:none}
+@media(min-width:1180px){
+  body{padding-left:176px}
+  .mbar{display:none}
+  .rail{position:fixed;z-index:60;left:0;top:0;bottom:0;width:176px;display:flex;flex-direction:column;justify-content:space-between;padding:30px 22px 26px 30px;background:var(--ink);border-right:1px solid var(--line);transition:transform .9s var(--ease)}
+  .js .rail{transform:translateX(-100%)}.go .rail{transform:none;transition-delay:.5s}
+  .rail .logo{display:grid;gap:12px;justify-items:start;color:#fff;text-decoration:none;font-family:var(--d);font-weight:800;font-size:1.05rem;letter-spacing:-.04em}
+  .rail .lg{width:48px}
+  .rl{position:relative;display:grid;gap:6px}
+  .rl .track{position:absolute;left:5px;top:20px;bottom:20px;width:2px;background:var(--line);border-radius:2px}
+  .rl .track i{position:absolute;left:0;top:0;width:100%;height:100%;background:var(--red);transform-origin:50% 0;transform:scaleY(var(--f,0));transition:transform .7s var(--ease)}
+  .rl a{position:relative;display:flex;align-items:center;gap:16px;height:40px;color:#9A9A9A;text-decoration:none;font-weight:500;font-size:.96rem;transition:color .3s,transform .4s var(--ease)}
+  .rl a s{flex:none;width:12px;height:12px;border-radius:50% 0 50% 0;background:#4A4A4A;transition:background-color .3s,transform .5s var(--ease)}
+  .rl a:hover{color:#fff;transform:translateX(4px)}
+  .rl a.on{color:#fff;font-weight:600}
+  .rl a.on s,.rl a.done s{background:var(--red)}
+  .rl a.on s{transform:scale(1.5) rotate(90deg)}
+  .railip{display:grid;gap:4px;justify-items:start;width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:var(--ink2);cursor:pointer;text-align:left;transition:border-color .25s,background-color .25s}
+  .railip small{font-size:.74rem;color:var(--mut);line-height:1.1}
+  .railip b{font-family:var(--d);font-weight:700;font-size:.72rem;letter-spacing:-.03em;color:#fff;line-height:1.2}
+  .railip:hover{border-color:var(--red);background:#1f1f1f}
+  .corner{position:fixed;z-index:50;top:20px;right:24px;display:flex;gap:8px;transition:transform .9s var(--ease)}
+  .js .corner{transform:translateY(-160%)}.go .corner{transform:none;transition-delay:.7s}
+  .corner .btn{height:46px;background-clip:padding-box;box-shadow:0 14px 30px -12px rgba(0,0,0,.7)}
+  .corner .btn-line{background:rgba(18,18,18,.82);backdrop-filter:blur(10px)}
+}
+
+/* ---------- Hero ---------- */
+.hero{--R:min(13vw,176px);position:relative;margin:14px;min-height:calc(100svh - 28px);border-radius:44px;overflow:hidden;display:flex;align-items:center;
+  background:
+   radial-gradient(circle at 0 0,var(--red) 0,var(--red) var(--R),var(--ink) var(--R),var(--ink) calc(var(--R)*1.2),transparent calc(var(--R)*1.2)),
+   radial-gradient(circle at 100% 100%,var(--red) 0,var(--red) var(--R),var(--ink) var(--R),var(--ink) calc(var(--R)*1.2),transparent calc(var(--R)*1.2)),
+   linear-gradient(90deg,rgba(18,18,18,.96) 0%,rgba(18,18,18,.78) 45%,rgba(18,18,18,.3) 100%),
+   linear-gradient(to bottom,rgba(18,18,18,.3),rgba(18,18,18,.55)),
+   url('https://i.imgur.com/xr1vqMq.jpg') center top/cover}
+.hero-in{position:relative;z-index:2;width:100%;padding:150px 56px 130px}
+.hero-txt{max-width:700px}
+.hero h1{font-size:clamp(1.9rem,4.4vw,4.1rem);letter-spacing:-.05em;line-height:1.04}
+.hero h1 span{display:block;overflow:hidden;padding:.04em 0 .1em}
+.hero h1 span>b{display:block;font-weight:800}
+.hero h1 span:nth-child(2){padding-left:clamp(24px,5vw,80px)}
+.hero h1 span:nth-child(2)>b{color:var(--red)}
+.hero p.s{margin-top:26px;max-width:46ch;font-size:1.15rem;color:#D8D8D8}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.cta .btn{transition:background-color .2s,border-color .2s,color .2s,transform .35s var(--ease)}
+.render{position:absolute;z-index:1;right:4%;bottom:0;width:min(46%,600px);pointer-events:none}
+.render img{width:100%;filter:drop-shadow(0 30px 40px rgba(0,0,0,.65));transition:translate .3s ease-out}
+.status{position:absolute;z-index:3;left:56px;max-width:52%;bottom:28px;display:flex;flex-wrap:wrap;gap:10px}
+.status>div{display:flex;align-items:center;gap:10px;padding:10px 18px;border-radius:14px;background:rgba(18,18,18,.68);backdrop-filter:blur(10px);border:1px solid #ffffff1c;color:#D8D8D8;font-size:.94rem}
+.status i{width:9px;height:9px;border-radius:50%;background:var(--red);box-shadow:0 0 0 0 rgba(225,6,0,.6);animation:ping 2.2s infinite}
+@keyframes ping{70%{box-shadow:0 0 0 10px rgba(225,6,0,0)}100%{box-shadow:0 0 0 0 rgba(225,6,0,0)}}
+.status b{font-family:var(--d);font-weight:700;color:#fff;font-size:.95rem;letter-spacing:-.02em}
+
+/* entrée du hero (le seul moment orchestré après l'intro) */
+.js .h-in{opacity:0}
+.js .render{opacity:0;transform:translateY(60px)}
+.go .render{opacity:1;transform:none;transition:opacity 1.1s var(--ease) .3s,transform 1.3s var(--ease) .3s}
+.js .hero h1 span>b{transform:translateY(110%)}
+.go .h-in{animation:hin .9s var(--ease) both;animation-delay:calc(.35s + var(--i,0)*.1s)}
+.go .hero h1 span>b{animation:up 1s var(--ease) both;animation-delay:calc(.2s + var(--i,0)*.14s)}
+@keyframes hin{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes up{from{transform:translateY(110%)}to{transform:none}}
+
+
+/* ---------- Atouts : le panneau reprend la forme du logo ---------- */
+.feat{--s:1100px;position:relative;border-radius:56px;overflow:hidden;color:var(--ink);padding:clamp(52px,7vw,96px) clamp(30px,6vw,88px);
+  background:
+   radial-gradient(circle at 0 0,var(--red) 0,var(--red) calc(170px*var(--k,1)),var(--ink) calc(170px*var(--k,1)),var(--ink) calc(204px*var(--k,1)),transparent calc(204px*var(--k,1))),
+   radial-gradient(circle at 100% 100%,var(--red) 0,var(--red) calc(170px*var(--k,1)),var(--ink) calc(170px*var(--k,1)),var(--ink) calc(204px*var(--k,1)),transparent calc(204px*var(--k,1))),
+   var(--gray)}
+.feat h2{color:var(--ink);max-width:16ch;margin-left:clamp(0px,9vw,150px)}
+.feat-grid{display:grid;grid-template-columns:1fr 1fr;margin-top:56px;border-top:2px solid var(--ink)}
+.feat-grid article{padding:34px 34px 38px 0;border-bottom:1px solid #00000026}
+.feat-grid article:nth-child(even){padding:34px 0 38px 34px;border-left:1px solid #00000026}
+.feat-grid article:nth-last-child(-n+2){border-bottom:0}
+.feat-grid h3{color:var(--ink);font-size:1.3rem;margin-bottom:12px}
+.feat-grid p{color:#3A3A3A;font-size:1rem;max-width:36ch}
+
+/* ---------- Le jeu : onglets ---------- */
+.game{display:grid;grid-template-columns:.95fr 1.05fr;gap:72px;align-items:start}
+.game h2{max-width:18ch;margin-bottom:36px}
+.tabs{display:grid;border-top:1px solid var(--line)}
+.tab{position:relative;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:26px 0;background:none;border:0;border-bottom:1px solid var(--line);text-align:left;cursor:pointer;font-family:var(--d);font-weight:700;font-size:clamp(1.3rem,2.6vw,2rem);letter-spacing:-.04em;color:var(--dim);transition:color .3s,padding .45s var(--ease)}
+.tab::before{content:"";position:absolute;left:0;top:50%;width:14px;height:14px;margin-top:-7px;border-radius:50% 0 50% 0;background:var(--red);transform:scale(0);transition:transform .4s var(--ease)}
+.tab:hover{color:#B8B8B8}
+.tab[aria-selected=true]{color:#fff;padding-left:34px}.tab[aria-selected=true]::before{transform:scale(1)}
+.pane{position:sticky;top:110px;padding:clamp(30px,4vw,52px);background:var(--ink2);border:1px solid var(--line);border-radius:36px;min-height:360px;animation:pane .6s var(--ease)}
+@keyframes pane{from{opacity:0;clip-path:inset(0 0 100% 0)}to{opacity:1;clip-path:inset(0 0 0 0)}}
+.pane[hidden]{display:none}
+.pane h3{font-size:1.5rem;margin-bottom:16px}
+.pane p{color:#C4C4C4;max-width:44ch}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
+.chips span{padding:10px 18px;border-radius:12px;background:var(--ink3);border:1px solid #333;font-weight:500;font-size:.95rem;color:#fff}
+.chips b{font-family:var(--d);color:#FF5A52;font-weight:700;margin-right:6px}
+.pane .bignum{display:flex;align-items:baseline;flex-wrap:wrap;margin-top:34px;font-family:var(--d);font-weight:800;font-size:clamp(3.4rem,8vw,6rem);letter-spacing:-.06em;line-height:1;color:#fff}
+.pane .bignum small{white-space:nowrap;font-size:.3em;letter-spacing:-.02em;color:var(--mut);margin-left:8px;font-weight:500}
+
+/* ---------- Maps : sélecteur + grande image ---------- */
+.maps{display:grid;grid-template-columns:.7fr 1.3fr;gap:56px;align-items:start}
+.mlist{display:grid;border-top:1px solid var(--line)}
+.mbtn{display:grid;gap:4px;padding:22px 0;background:none;border:0;border-bottom:1px solid var(--line);text-align:left;cursor:pointer;transition:padding .45s var(--ease)}
+.mbtn strong{font-family:var(--d);font-weight:700;font-size:clamp(1.4rem,2.8vw,2.2rem);letter-spacing:-.04em;color:var(--dim);transition:color .3s}
+.mbtn span{font-size:.92rem;color:var(--dim);transition:color .3s}
+.mbtn:hover strong{color:#B8B8B8}
+.mbtn[aria-selected=true]{padding-left:22px;box-shadow:inset 5px 0 0 var(--red)}
+.mbtn[aria-selected=true] strong{color:#fff}.mbtn[aria-selected=true] span{color:var(--mut)}
+.mview{position:relative;aspect-ratio:16/11;border-radius:44px;overflow:hidden;background:var(--ink2)}
+.mview img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;clip-path:inset(0 0 0 100%);transform:scale(1.1);transition:clip-path .9s var(--ease),transform 1.4s var(--ease);z-index:0}
+.mview img.on{clip-path:inset(0);transform:none;z-index:2}
+.mview img.prev{clip-path:inset(0);transform:none;z-index:1}
+.mcap{margin-top:22px;max-width:52ch;color:#C4C4C4;min-height:3.4em}
+
+/* ---------- Comment jouer ---------- */
+.steps{border-top:1px solid var(--line)}
+.step{display:grid;grid-template-columns:130px 1fr 1.1fr;gap:28px;align-items:baseline;padding:36px 0;border-bottom:1px solid var(--line)}
+.step .n{font-family:var(--d);font-weight:800;font-size:clamp(3.2rem,6vw,5rem);letter-spacing:-.06em;line-height:.9;color:var(--red)}
+.step h3{font-size:1.45rem}.step p{color:#C4C4C4;font-size:1rem}
+.ipbtn{position:relative;overflow:hidden;isolation:isolate;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;width:100%;margin-top:28px;padding:34px 40px;border:2px solid var(--line);border-radius:36px;background:var(--ink2);cursor:pointer;text-align:left}
+.ipbtn::before{content:"";position:absolute;z-index:-1;left:0;top:0;width:260%;aspect-ratio:1;border-radius:50%;background:var(--red);transform:translate(-50%,-50%) scale(0);transition:transform .8s var(--ease)}
+.ipbtn:hover::before,.ipbtn:focus-visible::before{transform:translate(-50%,-50%) scale(1)}
+.ipbtn small{display:block;font-size:.95rem;color:var(--mut);transition:color .3s}
+.ipbtn b{font-family:var(--d);font-weight:800;font-size:clamp(1.8rem,5.4vw,3.8rem);letter-spacing:-.05em;line-height:1.15;color:#fff}
+.ipbtn .go-c{display:inline-flex;align-items:center;gap:10px;font-weight:600;color:#fff;padding:14px 22px;border-radius:14px;background:var(--red);transition:background-color .3s,color .3s}
+.ipbtn:hover small{color:#fff}.ipbtn:hover .go-c{background:#fff;color:var(--red)}
+
+/* ---------- Actualités ---------- */
+.nl{display:grid;grid-template-columns:170px 1fr;gap:28px;padding:30px 0;border-top:1px solid var(--line);color:inherit;text-decoration:none}
+.nl:last-child{border-bottom:1px solid var(--line)}
+.nl .dt{color:var(--mut);font-size:.95rem}
+.nl .dt b{display:block;width:max-content;margin-top:8px;padding:2px 12px;border-radius:8px;border:1.5px solid var(--red);color:#fff;font-weight:500;font-size:.82rem}
+.nl h3{font-size:1.35rem;transition:color .25s}.nl:hover h3{color:var(--red)}
+.nl p{margin-top:10px;color:#BDBDBD;font-size:1rem;max-width:62ch}
+.nempty{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;padding:36px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);color:var(--mut)}
+.nempty b{display:block;margin-bottom:6px;font-family:var(--d);font-weight:700;letter-spacing:-.03em;color:#fff;font-size:1.35rem}
+
+/* ---------- FAQ ---------- */
+.faq{max-width:860px;border-top:1px solid var(--line)}
+.qa{border-bottom:1px solid var(--line)}
+.qa>button{display:flex;width:100%;align-items:center;justify-content:space-between;gap:24px;padding:28px 0;background:none;border:0;text-align:left;cursor:pointer;color:#fff;font-family:var(--d);font-weight:500;font-size:1.05rem;line-height:1.4;letter-spacing:-.02em}
+.qa>button i{position:relative;flex:none;width:36px;height:36px;border-radius:12px;background:var(--ink3);transition:background-color .3s,transform .4s var(--ease)}
+.qa>button i::before,.qa>button i::after{content:"";position:absolute;left:50%;top:50%;background:#fff;width:14px;height:2px;margin:-1px 0 0 -7px;border-radius:2px;transition:transform .4s var(--ease)}
+.qa>button i::after{transform:rotate(90deg)}
+.qa.open>button i{background:var(--red)}.qa.open>button i::after{transform:rotate(0)}
+.qa-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s var(--ease)}.qa.open .qa-body{grid-template-rows:1fr}
+.qa-body>div{overflow:hidden}.qa-body p{padding:0 60px 30px 0;max-width:60ch;color:#C4C4C4}
+.qa code{background:var(--ink3);padding:2px 9px;border-radius:7px;color:#fff;font-size:.92em}
+
+/* ---------- Boutique ---------- */
+.plans{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.plan{display:flex;flex-direction:column;padding:clamp(30px,4vw,48px);border-radius:44px;background:var(--ink2);border:1px solid var(--line)}
+.plan.main{background:var(--red);border-color:var(--red);color:#fff}
+.plan .tp{display:flex;align-items:center;justify-content:space-between;min-height:30px;font-size:.95rem;color:var(--mut)}
+.plan.main .tp{color:#FFD9D6}
+.plan .tag{padding:3px 14px;border-radius:9px;background:var(--ink);color:#fff;font-weight:600;font-size:.82rem}
+.plan h3{margin-top:16px;font-size:clamp(1.7rem,3.2vw,2.3rem)}
+.plan>p{margin-top:12px;max-width:36ch;color:#C4C4C4}.plan.main>p{color:#fff}
+.perks{list-style:none;padding:0;margin:28px 0 32px;display:grid;gap:14px}
+.perks li{position:relative;padding-left:30px;font-size:1rem}
+.perks li::before{content:"";position:absolute;left:0;top:.45em;width:12px;height:12px;border-radius:50% 0 50% 0;background:var(--red)}
+.plan.main .perks li::before{background:#fff}
+.price{margin-top:auto;font-family:var(--d);font-weight:800;font-size:clamp(2.8rem,5vw,4rem);letter-spacing:-.06em;line-height:1;color:#fff}
+.price small{font-family:var(--b);font-weight:500;font-size:1rem;letter-spacing:0;color:var(--mut)}.plan.main .price small{color:#FFD9D6}
+.plan .btn{margin-top:24px;width:100%}
+.plan.main .btn{background:#fff;color:var(--red)}.plan.main .btn:hover{background:var(--ink);color:#fff}
+
+/* ---------- Final ---------- */
+.final{position:relative;margin-top:clamp(72px,8vw,112px);padding:clamp(72px,9vw,112px) 0;text-align:center;overflow:hidden;border-top:1px solid var(--line)}
+.final-lg{width:clamp(130px,16vw,190px);margin:0 auto 34px}
+.final h2{font-size:clamp(1.9rem,4.6vw,3.8rem);max-width:15ch;margin:0 auto}
+.final p{margin:20px auto 0;max-width:44ch;color:var(--mut)}
+.final .cta{justify-content:center}
+.foot{padding:30px 0 42px;border-top:1px solid var(--line)}
+.foot .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 30px;color:var(--mut);font-size:.88rem}
+.foot .fl{display:flex;align-items:center;gap:14px;max-width:62ch}.foot .fl .lg{width:30px;flex:none}
+.foot-l{display:flex;flex-wrap:wrap;gap:8px 24px}.foot-l button{background:none;border:0;padding:0;color:inherit;cursor:pointer;font-size:inherit}.foot-l button:hover{color:#fff}
+
+/* ---------- Fenêtres ---------- */
+.overlay{position:fixed;inset:0;z-index:300;display:none;place-items:center;padding:20px;background:rgba(0,0,0,.8)}.overlay.open{display:grid}
+.panel{width:100%;max-width:480px;max-height:86vh;display:flex;flex-direction:column;background:var(--ink2);border:1px solid var(--line);border-radius:32px;padding:32px}
+.panel-wide{max-width:640px}.overlay.open .panel{animation:pop2 .3s var(--ease)}@keyframes pop2{from{opacity:0;transform:translateY(14px) scale(.98)}}
+.panel-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding-bottom:16px}
+.panel-head h3{font-size:1.45rem}
+.close{background:none;border:2px solid #444;width:42px;height:42px;flex:none;display:grid;place-items:center;border-radius:13px;cursor:pointer}.close:hover{border-color:#fff}
+.panel-body{overflow-y:auto}
+.panel-price{font-family:var(--d);font-weight:800;font-size:2rem;letter-spacing:-.05em;color:var(--red);margin-bottom:14px}
+.panel-body ul{list-style:none;padding:0;margin:0 0 24px}.panel-body li{padding:13px 0;border-top:1px solid var(--line);color:#D4D4D4}.panel-body li:last-child{border-bottom:1px solid var(--line)}
+.panel .btn{width:100%}
+.note{padding:18px 0;border-top:1px solid var(--line)}.note-meta{display:flex;justify-content:space-between;gap:12px;font-size:.88rem;color:var(--mut)}.note-meta b{color:var(--red);font-weight:600}
+.note h4{font-family:var(--d);font-weight:700;letter-spacing:-.03em;font-size:1.1rem;color:#fff;margin:8px 0 6px}
+.note p,.legal p{color:#C4C4C4;font-size:1rem}
+.legal h4{font-family:var(--d);font-weight:700;letter-spacing:-.03em;font-size:1.05rem;color:#fff;margin-top:20px}.legal h4:first-child{margin-top:0}
+.skeleton{height:72px;margin-bottom:12px;background:var(--ink3);border-radius:16px}
+.toast{position:fixed;left:20px;bottom:20px;z-index:1100;background:#fff;color:var(--ink);padding:14px 22px;font-weight:600;border-radius:14px;border-left:6px solid var(--red);transform:translateY(160%);transition:transform .35s var(--ease)}.toast.show{transform:none}
+.cookie{position:fixed;left:16px;right:16px;bottom:16px;z-index:310;max-width:780px;margin:0 auto;background:var(--ink3);border:1px solid #3A3A3A;border-radius:24px;transform:translateY(140%);transition:transform .45s var(--ease)}.cookie.show{transform:none}
+.cookie .in2{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding:18px 24px}
+.cookie p{max-width:50ch;font-size:.93rem;line-height:1.5;color:#D4D4D4}.cookie p b{display:block;color:#fff;font-family:var(--d);font-weight:700;letter-spacing:-.03em;font-size:1rem;margin-bottom:2px}
+.cookie p button{background:none;border:0;padding:0;text-decoration:underline;cursor:pointer;color:#fff}.cookie-actions{display:flex;gap:10px}
+
+/* ---------- Tablette / mobile ---------- */
+@media(max-width:1020px){
+  
+    .game,.maps{grid-template-columns:1fr;gap:36px}.pane{position:static}
+  .step{grid-template-columns:70px 1fr;gap:6px 18px}.step p{grid-column:2}
+  .plans{grid-template-columns:1fr}
+  .feat{border-radius:40px;background:
+   radial-gradient(circle at 0 0,var(--red) 0,var(--red) calc(110px*var(--k,1)),var(--ink) calc(110px*var(--k,1)),var(--ink) calc(132px*var(--k,1)),transparent calc(132px*var(--k,1))),
+   radial-gradient(circle at 100% 100%,var(--red) 0,var(--red) calc(110px*var(--k,1)),var(--ink) calc(110px*var(--k,1)),var(--ink) calc(132px*var(--k,1)),transparent calc(132px*var(--k,1))),var(--gray)}
+  .feat h2{margin-left:0;padding-top:50px}
+  .nl{grid-template-columns:1fr;gap:8px}
+}
+@media(max-width:1020px){
+  .hero{--R:min(26vw,120px);margin:8px;border-radius:32px;min-height:0;display:block}
+  .hero-in{padding:104px 24px 24px}
+  .render{position:relative;right:auto;width:min(86%,420px);margin:34px auto 0}
+  .status{position:static;max-width:none;padding:0 24px 24px}
+}
+@media(max-width:620px){
+  body{font-size:16px}.wrap{padding:0 20px}
+  .cta .btn{flex:1}
+  .feat-grid{grid-template-columns:1fr}.feat-grid article,.feat-grid article:nth-child(even){padding:26px 0;border-left:0}.feat-grid article:nth-last-child(2){border-bottom:1px solid #00000026}
+  .status>div{padding:16px 22px 16px 0;margin-right:10px}
+  .mview{border-radius:30px}.ipbtn{padding:26px 24px;border-radius:28px}.ipbtn .go-c{width:100%;justify-content:center}
+  .plan{border-radius:32px}.cookie-actions{width:100%}.cookie-actions .btn{flex:1}
+  .tab[aria-selected=true]{padding-left:30px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-delay:0s!important;transition-duration:.001ms!important}.js .h-in,.js .render{opacity:1;transform:none}.js .hero h1 span>b{transform:none}}
+
+/* ---------- Effets liés au scroll ---------- */
+.band{padding-top:clamp(40px,5vw,70px);overflow:hidden;display:grid;gap:6px;pointer-events:none;user-select:none}
+.band div{white-space:nowrap;font-family:var(--d);font-weight:800;font-size:clamp(3rem,9vw,7.5rem);letter-spacing:-.06em;line-height:1.2;color:transparent;-webkit-text-stroke:1.5px #3A3A3A;will-change:translate}
+.band div:nth-child(2){-webkit-text-stroke-color:var(--red)}
+.js h2{clip-path:inset(0 0 100% 0);transform:translateY(26px);transition:clip-path .9s var(--ease),transform .9s var(--ease)}
+.js h2.in{clip-path:inset(-10% -5% -25% -5%);transform:none}
+.steps{position:relative;--col:130px}
+.steps::before,.steps::after{content:"";position:absolute;left:calc(var(--col) - 14px);top:0;bottom:0;width:3px;border-radius:3px}
+.steps::before{background:var(--line)}
+.steps::after{background:var(--red);transform-origin:50% 0;transform:scaleY(var(--p,0))}
+.step .n{color:#444;transition:color .5s,transform .6s var(--ease);transform-origin:0 100%}
+.step.lit .n{color:var(--red);transform:scale(1.08)}
+.mview img{top:-9%;height:118%;inset:auto 0 auto 0;will-change:translate}
+@media(max-width:1020px){.steps{--col:70px}}
+@media(prefers-reduced-motion:reduce){.js h2{clip-path:none;transform:none}.step .n{color:var(--red)}}
+</style></head>
+<body class="lock">
+
+<div id="intro" role="presentation">
+  <div class="stage"><svg viewBox="0 0 667 670" class="lg anim" aria-hidden="true"><defs><clipPath id="ic"><path d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z"/></clipPath><mask id="im"><path d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="#fff"/><circle class="ring tl" cx="115" cy="115" r="137" fill="#000"/><circle class="ring br" cx="555" cy="555" r="137" fill="#000"/></mask></defs><path class="hs" d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="none" stroke="#E6E6E6" stroke-width="4" pathLength="1"/><path class="hf" d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="#E6E6E6" mask="url(#im)"/><g clip-path="url(#ic)"><circle class="leaf tl" cx="115" cy="115" r="115" fill="#E10600"/><circle class="leaf br" cx="555" cy="555" r="115" fill="#E10600"/></g></svg><div class="tag">Ranked Bedfight</div></div>
+  <div class="skip">Appuie pour passer</div>
+  <div id="wipe"></div>
+</div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
+    <symbol id="i-discord" viewBox="0 -28.5 256 256"><path fill="currentColor" stroke="none" d="M216.856339,16.5966031 C200.285002,8.84328665 182.566144,3.2084988 164.041564,0 C161.766523,4.11318106 159.108624,9.64549908 157.276099,14.0464379 C137.583995,11.0849896 118.072967,11.0849896 98.7430163,14.0464379 C96.9108417,9.64549908 94.1925838,4.11318106 91.8971895,0 C73.3526068,3.2084988 55.6133949,8.86399117 39.0420583,16.6376612 C5.61752293,67.146514 -3.4433191,116.400813 1.08711069,164.955721 C23.2560196,181.510915 44.7403634,191.567697 65.8621325,198.148576 C71.0772151,190.971126 75.7283628,183.341335 79.7352139,175.300261 C72.104019,172.400575 64.7949724,168.822202 57.8887866,164.667963 C59.7209612,163.310589 61.5131304,161.891452 63.2445898,160.431257 C105.36741,180.133187 151.134928,180.133187 192.754523,160.431257 C194.506336,161.891452 196.298154,163.310589 198.110326,164.667963 C191.183787,168.842556 183.854737,172.420929 176.223542,175.320965 C180.230393,183.341335 184.861538,190.991831 190.096624,198.16893 C211.238746,191.588051 232.743023,181.531619 254.911949,164.955721 C260.227747,108.668201 245.831087,59.8662432 216.856339,16.5966031 Z M85.4738752,135.09489 C72.8290281,135.09489 62.4592217,123.290155 62.4592217,108.914901 C62.4592217,94.5396472 72.607595,82.7145587 85.4738752,82.7145587 C98.3405064,82.7145587 108.709962,94.5189427 108.488529,108.914901 C108.508531,123.290155 98.3405064,135.09489 85.4738752,135.09489 Z M170.525237,135.09489 C157.88039,135.09489 147.510584,123.290155 147.510584,108.914901 C147.510584,94.5396472 157.658606,82.7145587 170.525237,82.7145587 C183.391518,82.7145587 193.761324,94.5189427 193.539891,108.914901 C193.539891,123.290155 183.391518,135.09489 170.525237,135.09489 Z"/></symbol>
+  </svg>
+<aside class="rail" aria-label="Navigation principale">
+  <a href="#top" class="logo" aria-label="Hevenly, accueil"><svg viewBox="0 0 667 670" class="lg " aria-hidden="true"><defs><clipPath id="hc"><path d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z"/></clipPath><mask id="hm"><path d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="#fff"/><circle class="ring tl" cx="115" cy="115" r="137" fill="#000"/><circle class="ring br" cx="555" cy="555" r="137" fill="#000"/></mask></defs><path class="hs" d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="none" stroke="#E6E6E6" stroke-width="4" pathLength="1"/><path class="hf" d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="#E6E6E6" mask="url(#hm)"/><g clip-path="url(#hc)"><circle class="leaf tl" cx="115" cy="115" r="115" fill="#E10600"/><circle class="leaf br" cx="555" cy="555" r="115" fill="#E10600"/></g></svg><span>Hevenly</span></a>
+  <nav class="rl" id="rl"><div class="track"><i></i></div><a href="#features"><s></s>Atouts</a><a href="#concept"><s></s>Le jeu</a><a href="#maps"><s></s>Maps</a><a href="#how-to-play"><s></s>Jouer</a><a href="#news"><s></s>Actualités</a><a href="#faq"><s></s>FAQ</a><a href="#shop"><s></s>Boutique</a></nav>
+  <button class="railip" onclick="copyIP()" aria-label="Copier l'adresse du serveur"><small>Copier l'IP</small><b>hevenly.games</b></button>
+</aside>
+<div class="corner"><button class="btn btn-line btn-sm" onclick="copyIP()"><svg class="ico"><use href="#i-copy"/></svg>hevenly.games</button><a href="https://discord.gg" target="_blank" rel="noopener" class="btn btn-red btn-sm"><svg class="ico" style="fill:currentColor;stroke:none"><use href="#i-discord"/></svg>Discord</a></div>
+<header class="mbar"><a href="#top" class="logo" aria-label="Hevenly, accueil"><svg viewBox="0 0 667 670" class="lg " aria-hidden="true"><defs><clipPath id="kc"><path d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z"/></clipPath><mask id="km"><path d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="#fff"/><circle class="ring tl" cx="115" cy="115" r="137" fill="#000"/><circle class="ring br" cx="555" cy="555" r="137" fill="#000"/></mask></defs><path class="hs" d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="none" stroke="#E6E6E6" stroke-width="4" pathLength="1"/><path class="hf" d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="#E6E6E6" mask="url(#km)"/><g clip-path="url(#kc)"><circle class="leaf tl" cx="115" cy="115" r="115" fill="#E10600"/><circle class="leaf br" cx="555" cy="555" r="115" fill="#E10600"/></g></svg><span>Hevenly</span></a><div class="mbar-r"><a href="https://discord.gg" target="_blank" rel="noopener" class="btn btn-red btn-sm">Discord</a><button class="burger" id="burger" aria-expanded="false" aria-controls="drawer" aria-label="Menu"><span><i></i></span></button></div></header>
+<nav class="drawer" id="drawer" aria-label="Navigation mobile"><a class="l" href="#features">Atouts</a><a class="l" href="#concept">Le jeu</a><a class="l" href="#maps">Maps</a><a class="l" href="#how-to-play">Jouer</a><a class="l" href="#news">Actualités</a><a class="l" href="#faq">FAQ</a><a class="l" href="#shop">Boutique</a>
+  <div class="btns"><a href="https://discord.gg" target="_blank" rel="noopener" class="btn btn-red">Rejoindre le Discord</a><button class="btn btn-line" onclick="copyIP()"><svg class="ico"><use href="#i-copy"/></svg>hevenly.games</button></div></nav>
+
+<main id="top">
+<section class="hero" id="hero"><div class="hero-in"><div class="hero-txt">
+  <h1><span><b style="--i:0">Protège ton lit.</b></span><span><b style="--i:1">Détruis le sien.</b></span></h1>
+  <p class="s h-in" style="--i:2">Hevenly propose un système compétitif complet axé sur le Bedfight, développé sur mesure pour vous faire progresser dans les meilleures conditions.</p>
+  <div class="cta h-in" style="--i:3"><a href="https://discord.gg" target="_blank" rel="noopener" class="btn btn-red"><svg class="ico" style="fill:currentColor;stroke:none"><use href="#i-discord"/></svg>Rejoindre le Discord</a><button class="btn btn-line" onclick="copyIP()"><svg class="ico"><use href="#i-copy"/></svg>Copier l'IP</button></div>
+</div></div>
+<div class="render"><img id="render" src="https://i.imgur.com/r8sDBMt.png" alt="Rendu Minecraft Bedfight"></div>
+<div class="status h-in" style="--i:4">
+  <div><i></i><span id="players-online">Serveur en ligne</span></div>
+  <div><b>1.8.9</b><span>Version du jeu</span></div>
+  <div><b>24/7</b><span>Serveur ouvert</span></div>
+  <div><b>Saison 0</b><span>En cours</span></div>
+</div></section>
+
+<div class="band" aria-hidden="true"><div>Ranked Bedfight Ranked Bedfight Ranked Bedfight</div><div>Protège ton lit Détruis le sien Protège ton lit</div></div>
+
+<section class="sec" id="features"><div class="wrap">
+  <div class="feat">
+    <h2>Pensé pour la compétition.</h2>
+    <div class="feat-grid">
+      <article><h3>Anti-cheat intransigeant</h3><p>Mise à jour en continu : triche détectée équivaut à un ban définitif et une blacklist totale.</p></article>
+      <article><h3>Arènes inédites</h3><p>Des terrains de jeu compétitifs, testés et peaufinés en direct par les joueurs exigeants.</p></article>
+      <article><h3>Statistiques avancées</h3><p>Analysez vos stats en temps réel, suivez votre progression et grimpez au sommet en ranked.</p></article>
+      <article><h3>PvP ultra-fluide</h3><p>Un gameplay sans latence propulsé directement par un Spigot maison optimisé pour le 1.8.9.</p></article>
+    </div>
+  </div>
+</div></section>
+
+<section class="sec" id="concept"><div class="wrap game">
+  <div>
+    <h2>Le Bedfight en France, le digne remplaçant du rush.</h2>
+    <div class="tabs" role="tablist" aria-label="Le jeu">
+      <button class="tab" role="tab" id="t0" aria-selected="true" aria-controls="p0">Le concept</button>
+      <button class="tab" role="tab" id="t1" aria-selected="false" aria-controls="p1">Shop et économie</button>
+      <button class="tab" role="tab" id="t2" aria-selected="false" aria-controls="p2">Ranked et ELO</button>
+    </div>
+  </div>
+  <div>
+    <div class="pane" role="tabpanel" id="p0" aria-labelledby="t0"><h3>Le concept</h3><p>Conçu pour les joueurs exigeants, notre infrastructure garantit des hits réguliers, une détection précise et des combos fluides pour chaque fight sans aucun compromis.</p><span class="bignum">&lt;20<small>ms de latence</small></span><div class="chips"><span><b>100 %</b>knockback optimisé</span><span>Spigot maison 1.8.9</span></div></div>
+    <div class="pane" role="tabpanel" id="p1" aria-labelledby="t1" hidden><h3>Shop et économie</h3><p>Une économie de jeu repensée et équilibrée pour favoriser le skill et l'agressivité. Récupérez vos ressources au middle et menez l'offensive.</p><div class="chips"><span>Génération équilibrée</span><span>Achat instantané</span><span>Ressources au middle</span></div></div>
+    <div class="pane" role="tabpanel" id="p2" aria-labelledby="t2" hidden><h3>Ranked et ELO</h3><p>Affrontez des adversaires à votre hauteur grâce à notre matchmaking basé sur l'ELO. Grimpez les divisions au fil des saisons.</p><div class="chips"><span>Saison 0 active</span><span>Matchmaking équilibré</span><span>Récompenses de saison</span></div></div>
+  </div>
+</div></section>
+
+<section class="sec" id="maps"><div class="wrap">
+  <div class="head"><h2>Découvrez nos maps compétitives</h2><p class="lead">Des terrains de jeu conçus sur mesure pour le Ranked, équilibrés et optimisés pour le clean build-fight.</p></div>
+  <div class="maps">
+    <div class="mlist" role="tablist" aria-label="Maps">
+      <button class="mbtn" role="tab" aria-selected="true" data-i="0"><strong>Plains</strong><span>1v1 et 2v2</span></button>
+      <button class="mbtn" role="tab" aria-selected="false" data-i="1"><strong>Celestial</strong><span>Ranked standard</span></button>
+      <button class="mbtn" role="tab" aria-selected="false" data-i="2"><strong>Frostbite</strong><span>Compétitif S0</span></button>
+    </div>
+    <div>
+      <div class="mview" id="mview">
+        <img class="on" src="https://lunr.pics/i/UzwBYAVz.png" alt="Map Plains">
+        <img src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=1400&auto=format&fit=crop" alt="Map Celestial" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1400&auto=format&fit=crop" alt="Map Frostbite" loading="lazy">
+      </div>
+      <p class="mcap" id="mcap" aria-live="polite">Une arène aux tons ténébreux, parfaite pour des duels intenses et des rushes ultra-rapides.</p>
+    </div>
+  </div>
+</div></section>
+
+<section class="sec" id="how-to-play"><div class="wrap">
+  <div class="head"><h2>Comment jouer sur le serveur ?</h2><p class="lead">Rejoins le serveur, entre en file et affronte les meilleurs joueurs pour grimper dans le classement.</p></div>
+  <div class="steps">
+    <div class="step"><span class="n">1</span><h3>Connexion en 1.8.9</h3><p>Lance ton jeu en version 1.8.9 (recommandé avec Badlion ou Lunar Client), ajoute l'adresse IP et connecte-toi.</p></div>
+    <div class="step"><span class="n">2</span><h3>Matchmaking rapide</h3><p>Utilise le menu pour entrer en file d'attente Ranked Bedfight. Un adversaire de ton niveau te sera assigné.</p></div>
+    <div class="step"><span class="n">3</span><h3>Classement et gloire</h3><p>Remporte tes duels pour gagner des points d'ELO, progresse de division et impose ton nom au sommet.</p></div>
+  </div>
+  <button class="ipbtn" onclick="copyIP()" aria-label="Copier l'adresse du serveur hevenly.games"><span><small>Adresse du serveur</small><b>hevenly.games</b></span><span class="go-c"><svg class="ico"><use href="#i-copy"/></svg>Copier l'IP</span></button>
+</div></section>
+
+<section class="sec" id="news"><div class="wrap">
+  <div class="head" style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px"><h2>Les dernières actualités</h2><button class="btn btn-line btn-sm" onclick="openNewsModal()">Tout voir</button></div>
+  <div id="nlist"></div>
+</div></section>
+
+<section class="sec" id="faq"><div class="wrap">
+  <div class="head"><h2>Tout ce que vous devez savoir</h2><p class="lead">Les réponses aux questions les plus courantes concernant le serveur et le mode Ranked.</p></div>
+  <div class="faq">
+    <div class="qa"><button aria-expanded="false"><span>Quelles versions de Minecraft sont acceptées pour se connecter ?</span><i></i></button><div class="qa-body"><div><p>Le serveur est optimisé exclusivement pour la version <strong>1.8.9</strong>, offrant le meilleur PvP. Nous conseillons Badlion Client ou Lunar Client.</p></div></div></div>
+    <div class="qa"><button aria-expanded="false"><span>Comment fonctionne le système de classement ELO et les saisons ?</span><i></i></button><div class="qa-body"><div><p>Chaque victoire en Ranked rapporte de l'ELO selon le niveau adverse. Les meilleures places de chaque saison reçoivent des récompenses exclusives.</p></div></div></div>
+    <div class="qa"><button aria-expanded="false"><span>Comment lier mon compte Discord au serveur ?</span><i></i></button><div class="qa-body"><div><p>Tapez la commande <code>/discord link</code> dans le chat du jeu pour associer votre profil.</p></div></div></div>
+    <div class="qa"><button aria-expanded="false"><span>Que faire si je rencontre un cheater ou un bug majeur ?</span><i></i></button><div class="qa-body"><div><p>Vous pouvez ouvrir un ticket de report sur notre serveur Discord officiel en fournissant les preuves vidéo nécessaires.</p></div></div></div>
+  </div>
+</div></section>
+
+<section class="sec" id="shop"><div class="wrap">
+  <div class="head"><h2>Soutenez le serveur</h2><p class="lead">Débloquez des fonctionnalités exclusives, des cosmétiques rares et soutenez directement le développement.</p></div>
+  <div class="plans">
+    <article class="plan"><div class="tp"><span>Abonnement mensuel</span></div><h3>Hevenly Plus</h3><p>Le grade idéal pour profiter de l'expérience compétitive avec priorité et cosmétiques.</p>
+      <ul class="perks"><li>Préfixe [+] distinctif</li><li>Priorité de file d'attente</li><li>Effets de victoire / mort exclusifs</li><li>Rôle Discord + salon restreint</li></ul>
+      <div class="price">2.99€ <small>/ mois</small></div>
+      <button class="btn btn-line" onclick="openModal('HEVENLY PLUS', '2.99€', ['Préfixe [+] distinctif', 'Priorité de file d\'attente', 'Effets de victoire / mort exclusifs', 'Rôle Discord + salon restreint'])">Voir les détails</button></article>
+    <article class="plan main"><div class="tp"><span>Abonnement mensuel</span><span class="tag">Populaire</span></div><h3>Hevenly Premium</h3><p>Le statut suprême débloquant la priorité absolue, toutes les customisations et l'accès bêta.</p>
+      <ul class="perks"><li>Préfixe [✦] exclusif</li><li>Avantages du + inclus</li><li>Permet d'héberger un événement</li><li>Accès bêta aux nouvelles cartes et modes</li></ul>
+      <div class="price">6.99€ <small>/ mois</small></div>
+      <button class="btn" onclick="openModal('HEVENLY PREMIUM', '6.99€', ['Préfixe [✦] exclusif', 'Avantages du + inclus', 'Permet d\'héberger un événement', 'Accès bêta aux nouvelles cartes et modes'])">Voir les détails</button></article>
+  </div>
+</div></section>
+
+<section class="final" id="join"><div class="wrap">
+  <svg viewBox="0 0 667 670" class="lg anim final-lg" aria-hidden="true"><defs><clipPath id="fc"><path d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z"/></clipPath><mask id="fm"><path d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="#fff"/><circle class="ring tl" cx="115" cy="115" r="137" fill="#000"/><circle class="ring br" cx="555" cy="555" r="137" fill="#000"/></mask></defs><path class="hs" d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="none" stroke="#E6E6E6" stroke-width="4" pathLength="1"/><path class="hf" d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="#E6E6E6" mask="url(#fm)"/><g clip-path="url(#fc)"><circle class="leaf tl" cx="115" cy="115" r="115" fill="#E10600"/><circle class="leaf br" cx="555" cy="555" r="115" fill="#E10600"/></g></svg>
+  <h2>Ton lit t'attend. Celui de l'autre aussi.</h2>
+  <p>La saison 0 est en cours. Copie l'adresse, rejoins le Discord et lance ta première partie classée.</p>
+  <div class="cta"><a href="https://discord.gg" target="_blank" rel="noopener" class="btn btn-red">Rejoindre le Discord</a><button class="btn btn-line" onclick="copyIP()">Copier l'IP</button></div>
+</div></section>
+</main>
+
+<footer class="foot"><div class="wrap">
+  <div class="fl"><svg viewBox="0 0 667 670" class="lg " aria-hidden="true"><defs><clipPath id="oc"><path d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z"/></clipPath><mask id="om"><path d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="#fff"/><circle class="ring tl" cx="115" cy="115" r="137" fill="#000"/><circle class="ring br" cx="555" cy="555" r="137" fill="#000"/></mask></defs><path class="hs" d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="none" stroke="#E6E6E6" stroke-width="4" pathLength="1"/><path class="hf" d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="#E6E6E6" mask="url(#om)"/><g clip-path="url(#oc)"><circle class="leaf tl" cx="115" cy="115" r="115" fill="#E10600"/><circle class="leaf br" cx="555" cy="555" r="115" fill="#E10600"/></g></svg><span>© 2026 Hevenly Games. Tous droits réservés. Not an official minecraft product. Not approved by or associated with Mojang or Microsoft.</span></div>
+  <div class="foot-l"><button onclick="openLegalModal('legal')">Mentions légales</button><button onclick="openLegalModal('privacy')">Confidentialité</button><button onclick="openLegalModal('cookies')">Cookies</button></div>
+</div></footer>
+
+<div class="overlay" id="modal-backdrop" onclick="closeModalOnBackdrop(event)" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="panel"><div class="panel-head"><h3 id="modal-title">Grade</h3><button class="close" onclick="closeModal()" aria-label="Fermer"><svg class="ico"><use href="#i-x"/></svg></button></div><div class="panel-body"><div class="panel-price" id="modal-price">0.00€</div><ul id="modal-list"></ul><a href="https://discord.gg" target="_blank" rel="noopener" class="btn btn-red">Acheter sur la boutique</a></div></div></div>
+<div class="overlay" id="news-modal-backdrop" onclick="closeNewsModalOnBackdrop(event)" role="dialog" aria-modal="true" aria-labelledby="news-title"><div class="panel panel-wide"><div class="panel-head"><h3 id="news-title">Dernières informations</h3><button class="close" onclick="closeNewsModal()" aria-label="Fermer"><svg class="ico"><use href="#i-x"/></svg></button></div><div class="panel-body" id="dynamic-news-container"></div></div></div>
+<div class="overlay" id="legal-modal-backdrop" onclick="closeLegalModalOnBackdrop(event)" role="dialog" aria-modal="true" aria-labelledby="legal-modal-title"><div class="panel panel-wide"><div class="panel-head"><h3 id="legal-modal-title">Document légal</h3><button class="close" onclick="closeLegalModal()" aria-label="Fermer"><svg class="ico"><use href="#i-x"/></svg></button></div><div class="panel-body legal" id="legal-modal-body"></div></div></div>
+<div class="toast" id="toast" role="status">Adresse IP copiée dans le presse-papier !</div>
+<div class="cookie" id="cookie-banner"><div class="in2"><p><b>Cookies et confidentialité</b>Nous utilisons des outils d'analyse pour mesurer l'audience et améliorer l'expérience. Détails dans notre <button onclick="openLegalModal('privacy')">politique de confidentialité</button>.</p><div class="cookie-actions"><button class="btn btn-line btn-sm" onclick="acceptCookies(false)">Refuser</button><button class="btn btn-red btn-sm" onclick="acceptCookies(true)">Tout accepter</button></div></div></div>
+
+<script>const SUPABASE_URL = "https://tawnbphpaaxjzkydeubq.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_g0M5uEmx7p6s9w7LzUID7w_bVDKjw3-";
+    let supabaseClient = null;
+    try { supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); } catch (e) { /* le site reste utilisable sans les actualités */ }
+    const $ = (s, r = document) => r.querySelector(s);
+    const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+    const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
+    /* ---------- Intro : le logo se dessine, les deux coins rouges s'affrontent, puis le rouge balaie l'écran ---------- */
+    let introDone = false;
+    function endIntro() {
+      if (introDone) return; introDone = true;
+      const i = $('#intro'); if (i) i.remove();
+      document.body.classList.remove('lock'); document.body.classList.add('go');
+    }
+    function runIntro() {
+      const intro = $('#intro'), svg = $('#intro .lg'), wipe = $('#wipe');
+      if (!intro || reduce) { endIntro(); return; }
+      window.scrollTo(0, 0);
+      svg.classList.add('play');
+      const skip = () => { if (!introDone) { document.body.classList.add('go'); endIntro(); } };
+      intro.addEventListener('click', skip); addEventListener('keydown', skip, { once: true });
+      const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      const tween = (ms, fn, cb) => { const t0 = performance.now(); (function f(t) { if (introDone) return; const p = clamp((t - t0) / ms, 0, 1); fn(ease(p)); p < 1 ? requestAnimationFrame(f) : cb && cb(); })(t0); };
+      const at = (vx, vy) => { const b = svg.getBoundingClientRect(); return [b.left + b.width * vx / 667, b.top + b.height * vy / 670]; };
+      const far = (x, y) => Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y)) + 6;
+      setTimeout(() => {
+        if (introDone) return;
+        const [x1, y1] = at(115, 115), [x2, y2] = at(555, 555), R1 = far(x1, y1), R2 = far(x2, y2);
+        tween(650, p => { wipe.style.clipPath = `circle(${R1 * p}px at ${x1}px ${y1}px)`; }, () => {
+          document.body.classList.add('go');
+          tween(850, p => { const m = `radial-gradient(circle at ${x2}px ${y2}px, transparent ${R2 * p}px, #000 ${R2 * p + 2}px)`; intro.style.webkitMaskImage = m; intro.style.maskImage = m; }, endIntro);
+        });
+      }, 3000);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      initUI(); initNav(); initScroll(); initMagnet(); initFaq(); initMenu(); initTabs(); initMaps();
+      loadNews(); loadPlayerCount(); runIntro();
+      if (!localStorage.getItem('hevenly_cookie_consent')) { const show = () => { $('#cookie-banner').classList.add('show'); removeEventListener('scroll', onFirst); }; const onFirst = () => { if (scrollY > innerHeight * .6) setTimeout(show, 800); }; addEventListener('scroll', onFirst, { passive: true }); setTimeout(show, 20000); }
+    });
+
+    function initUI() {
+      const onScroll = () => { document.body.classList.toggle('scrolled', scrollY > 40); const h = document.documentElement.scrollHeight - innerHeight; document.body.style.setProperty('--sp', h > 0 ? clamp(scrollY / h, 0, 1).toFixed(4) : 0); };
+      addEventListener('scroll', onScroll, { passive: true }); onScroll();
+      /* à la fin de la page, le logo se redessine */
+      const fl = $('.final-lg');
+      if (fl) { if (reduce) fl.classList.remove('anim'); else new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { fl.classList.add('play'); o.disconnect(); } }), { threshold: .6 }).observe(fl); }
+      /* le rendu du hero suit la souris, très légèrement */
+      const hero = $('#hero'), img = $('#render'); if (!hero || !img || reduce || !matchMedia('(hover: hover)').matches) return;
+      hero.addEventListener('pointermove', e => { const b = hero.getBoundingClientRect(), x = (e.clientX - b.left) / b.width - .5, y = (e.clientY - b.top) / b.height - .5; img.style.translate = `${(-x * 26).toFixed(1)}px ${(-y * 16).toFixed(1)}px`; });
+      hero.addEventListener('pointerleave', () => { img.style.translate = ''; });
+    }
+    function initScroll() {
+      const hs = $$('.hero h1 span'), duel = null, status = $('.status'), feat = $('.feat'), steps = $('.steps'), stepEls = $$('.step');
+      const band = $$('.band div'), bandBox = $('.band'), mimgs = $$('#mview img'), mview = $('#mview');
+      const heads = $$('h2');
+      if (reduce) { heads.forEach(h => h.classList.add('in')); return; }
+      const io = new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); o.unobserve(e.target); } }), { threshold: .2 });
+      heads.forEach(h => io.observe(h));
+      let tick = false;
+      const frame = () => {
+        tick = false;
+        const y = scrollY, vh = innerHeight;
+        if (y < vh * 1.2) {
+          hs.forEach((s, i) => { s.style.translate = `${(i ? 1 : -1) * y * .22}px 0`; });
+          if (duel) { duel.style.translate = `0 ${y * .12}px`; duel.style.rotate = `${y * .012}deg`; }
+          if (status) status.style.opacity = clamp(1 - y / (vh * .5), 0, 1);
+        }
+        if (feat) { const r = feat.getBoundingClientRect(), p = clamp((vh * .92 - r.top) / (vh * .62), 0, 1); feat.style.setProperty('--k', p.toFixed(3)); feat.style.scale = (.94 + .06 * p).toFixed(3); }
+        if (bandBox) { const r = bandBox.getBoundingClientRect(), t = (r.top + r.height / 2 - vh / 2) / vh; band.forEach((b, i) => { b.style.translate = `${(i ? 1 : -1) * t * 520 - (i ? 0 : 200)}px 0`; }); }
+        if (steps) { const r = steps.getBoundingClientRect(); steps.style.setProperty('--p', clamp((vh * .62 - r.top) / r.height, 0, 1).toFixed(3)); stepEls.forEach(s => { const q = s.getBoundingClientRect(); s.classList.toggle('lit', q.top + q.height / 2 < vh * .62); }); }
+        if (mview) { const r = mview.getBoundingClientRect(), p = clamp((vh - r.top) / (vh + r.height), 0, 1); mimgs.forEach(im => { im.style.translate = `0 ${((p - .5) * -9).toFixed(2)}%`; }); }
+      };
+      addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(frame); } }, { passive: true });
+      addEventListener('resize', frame); frame();
+    }
+    /* Rail latéral : le repère suit la section visible, la ligne rouge se remplit jusqu'à elle */
+    function initNav() {
+      const links = $$('#rl a'), fill = $('#rl .track i');
+      if (!links.length) return;
+      const secs = links.map(a => $(a.getAttribute('href')));
+      let cur = -1;
+      const spy = () => {
+        let k = -1;
+        secs.forEach((s, i) => { if (s && s.getBoundingClientRect().top <= innerHeight * .4) k = i; });
+        if (k === cur) return; cur = k;
+        links.forEach((a, i) => { a.classList.toggle('on', i === k); a.classList.toggle('done', i < k); });
+        fill.parentElement.style.setProperty('--f', k < 0 ? 0 : (k / (links.length - 1)).toFixed(3));
+      };
+      addEventListener('scroll', spy, { passive: true }); spy();
+    }
+    /* Les boutons du hero se rapprochent légèrement du curseur */
+    function initMagnet() {
+      if (reduce || !matchMedia('(hover: hover)').matches) return;
+      $$('.hero .cta .btn').forEach(b => {
+        b.addEventListener('pointermove', e => { const r = b.getBoundingClientRect(); b.style.transform = `translate(${((e.clientX - r.left) / r.width - .5) * 12}px, ${((e.clientY - r.top) / r.height - .5) * 10}px)`; });
+        b.addEventListener('pointerleave', () => { b.style.transform = ''; });
+      });
+    }
+    function initTabs() {
+      const tabs = $$('.tab'), panes = $$('.pane');
+      const sel = i => tabs.forEach((t, k) => { t.setAttribute('aria-selected', k === i); panes[k].hidden = k !== i; });
+      tabs.forEach((t, i) => { t.addEventListener('click', () => sel(i)); t.addEventListener('keydown', e => { if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { sel((i + 1) % tabs.length); tabs[(i + 1) % tabs.length].focus(); } if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') { sel((i + tabs.length - 1) % tabs.length); tabs[(i + tabs.length - 1) % tabs.length].focus(); } }); });
+    }
+    function initMaps() {
+      const btns = $$('.mbtn'), imgs = $$('#mview img'), cap = $('#mcap');
+      const txt = ["Une arène aux tons ténébreux, parfaite pour des duels intenses et des rushes ultra-rapides.", "Inspirée des grands classiques, une map lumineuse axée sur le contrôle stratégique du middle.", "Un décor givré et épuré, pensé pour offrir une visibilité maximale et zéro latence visuelle."];
+      let cur = 0;
+      btns.forEach((b, i) => b.addEventListener('click', () => {
+        if (i === cur) return;
+        imgs.forEach(im => im.classList.remove('prev'));
+        imgs[cur].classList.remove('on'); imgs[cur].classList.add('prev');
+        imgs[i].classList.add('on');
+        btns.forEach((x, k) => x.setAttribute('aria-selected', k === i)); cap.textContent = txt[i]; cur = i;
+      }));
+    }
+    function initFaq() { $$('.qa > button').forEach(b => b.addEventListener('click', () => { const qa = b.parentElement, open = !qa.classList.contains('open'); qa.classList.toggle('open', open); b.setAttribute('aria-expanded', open); })); }
+    function initMenu() {
+      const btn = $('#burger'), d = $('#drawer');
+      const set = o => { d.classList.toggle('open', o); btn.setAttribute('aria-expanded', o); document.body.style.overflow = o ? 'hidden' : ''; };
+      btn.addEventListener('click', () => set(!d.classList.contains('open')));
+      $$('a', d).forEach(a => a.addEventListener('click', () => set(false)));
+      addEventListener('keydown', e => { if (e.key === 'Escape') set(false); });
+    }
+
+    async function loadPlayerCount() {
+      const el = $('#players-online');
+      try { const d = await (await fetch('https://api.mcstatus.io/v2/status/java/hevenly.games')).json(); if (d && d.online && d.players) { const n = d.players.online; el.textContent = n + (n > 1 ? ' joueurs en ligne' : ' joueur en ligne'); } } catch (e) { /* silencieux */ }
+    }
+    function copyIP() {
+      const done = () => { const t = $('#toast'); t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2500); };
+      if (navigator.clipboard) navigator.clipboard.writeText('hevenly.games').then(done).catch(done); else done();
+    }
+    function acceptCookies(consent) { localStorage.setItem('hevenly_cookie_consent', consent ? 'accepted' : 'declined'); $('#cookie-banner').classList.remove('show'); }
+
+    /* Fenêtres */
+    function showModal(id) { const o = document.getElementById(id); o.classList.add('open'); document.body.style.overflow = 'hidden'; const c = o.querySelector('.close'); if (c) c.focus(); }
+    function hideModal(id) { document.getElementById(id).classList.remove('open'); if (!$('.overlay.open') && !$('#drawer.open')) document.body.style.overflow = ''; }
+    function openModal(title, price, perks) {
+      $('#modal-title').innerText = title; $('#modal-price').innerText = price + ' / mois';
+      const list = $('#modal-list'); list.innerHTML = '';
+      perks.forEach(p => { const li = document.createElement('li'); li.textContent = p; list.appendChild(li); });
+      showModal('modal-backdrop');
+    }
+    function closeModal() { hideModal('modal-backdrop'); }
+    function closeModalOnBackdrop(e) { if (e.target.id === 'modal-backdrop') closeModal(); }
+    function openNewsModal() { showModal('news-modal-backdrop'); }
+    function closeNewsModal() { hideModal('news-modal-backdrop'); }
+    function closeNewsModalOnBackdrop(e) { if (e.target.id === 'news-modal-backdrop') closeNewsModal(); }
+    const legalTexts = {
+      legal: { title: "Mentions légales", content: `<h4>1. Éditeur du site</h4><p>Le site Hevenly Games est édité par l'équipe d'administration du réseau Hevenly.</p><h4>2. Propriété intellectuelle et avertissement Mojang / Microsoft</h4><p>HEVENLY est un serveur indépendant. Minecraft est une marque déposée par Mojang Synergies AB et Microsoft Corporation. Hevenly n'est pas affilié à Mojang AB.</p>` },
+      privacy: { title: "Politique de confidentialité", content: `<h4>1. Données collectées</h4><p>Pseudonyme UUID Minecraft, identifiant Discord, statistiques ELO et adresse IP (uniquement à des fins de sécurité anti-triche et DDoS).</p>` },
+      cookies: { title: "Politique relative aux cookies", content: `<h4>1. Cookies utilisés</h4><p>Utilisation exclusive de préférences locales (localStorage) pour mémoriser votre choix d'acceptation de cookies.</p>` }
+    };
+    function openLegalModal(type) { const d = legalTexts[type]; if (!d) return; $('#legal-modal-title').innerText = d.title; $('#legal-modal-body').innerHTML = d.content; showModal('legal-modal-backdrop'); }
+    function closeLegalModal() { hideModal('legal-modal-backdrop'); }
+    function closeLegalModalOnBackdrop(e) { if (e.target.id === 'legal-modal-backdrop') closeLegalModal(); }
+    addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeNewsModal(); closeLegalModal(); } });
+
+    /* Actualités : lignes dans la page + fenêtre complète (Supabase) */
+    async function loadNews() {
+      const box = $('#dynamic-news-container'), list = $('#nlist');
+      box.innerHTML = '<div class="skeleton"></div><div class="skeleton"></div>';
+      const { data: notes, error } = supabaseClient ? await supabaseClient.from('notifications').select('*').order('id', { ascending: false }) : { data: null, error: true };
+      if (error || !notes || notes.length === 0) {
+        box.innerHTML = '<p style="color:var(--mut)">Aucune actualité pour le moment.</p>';
+        list.innerHTML = '<div class="nempty"><div><b>Les annonces arrivent bientôt.</b>Rejoins le Discord pour ne rien rater des saisons et des événements.</div><a href="https://discord.gg" target="_blank" rel="noopener" class="btn btn-red">Rejoindre le Discord</a></div>';
+        return;
+      }
+      list.innerHTML = notes.slice(0, 4).map(n => `<a class="nl" href="#" onclick="openNewsModal();return false"><div class="dt">${esc(n.notif_date || "Aujourd'hui")}<b>${esc(n.category)}</b></div><div><h3>${esc(n.title)}</h3><p>${esc(String(n.content || '').slice(0, 170))}${String(n.content || '').length > 170 ? '…' : ''}</p></div></a>`).join('');
+      box.innerHTML = notes.map(n => `<div class="note"><div class="note-meta"><b>${esc(n.category)}</b><span>${esc(n.notif_date || "Aujourd'hui")}</span></div><h4>${esc(n.title)}</h4><p>${esc(n.content)}</p></div>`).join('');
+    }
+  </script>
+</body></html>
