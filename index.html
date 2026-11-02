@@ -1,756 +1,1309 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="dark scroll-smooth">
+
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hevenly Games — Serveur Minecraft Ranked Bedfight Français</title>
-<meta name="description" content="Rejoignez Hevenly Games, la meilleure plateforme compétitive Minecraft Ranked Bedfight en France. Profitez d'un PvP ultra-fluide, classements ELO et arènes inédites.">
-<meta name="keywords" content="Minecraft, Bedfight, Ranked Bedfight, Rush, Serveur Minecraft, PvP, Hevenly Games, 1.8.9, ELO, Classement">
-<meta name="author" content="Hevenly Games"><meta name="theme-color" content="#121212"><link rel="canonical" href="https://hevenly.games/">
-<meta property="og:type" content="website"><meta property="og:url" content="https://hevenly.games/"><meta property="og:title" content="Hevenly Games — Serveur Minecraft Ranked Bedfight"><meta property="og:description" content="La plateforme compétitive que vous méritez. Rejoignez le serveur en version 1.8.9 et grimpez dans le classement ELO."><meta property="og:image" content="https://i.imgur.com/BYA0Cs5.png">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='100 100 470 470'%3E%3Cpath d='M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z' fill='%23E6E6E6'/%3E%3Cpath d='M115 115h115a115 115 0 0 1-115 115z' fill='%23E10600'/%3E%3Cpath d='M555 555H440a115 115 0 0 1 115-115z' fill='%23E10600'/%3E%3C/svg%3E">
-<script>document.documentElement.classList.add('js');setTimeout(function(){var i=document.getElementById('intro');if(i){i.remove();document.body.classList.remove('lock');document.body.classList.add('go')}},9000);</script>
-<noscript><style>#intro{display:none!important}.js .h-in{opacity:1!important;transform:none!important}</style></noscript>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<style>
-/* =========================================================
-   Hevenly — système de design
-   Couleurs du logo : noir #121212, gris clair #E6E6E6, rouge #E10600
-   Titres : Big Shoulders Display (condensée, esprit classement)
-   Texte  : Onest
-   ========================================================= */
-:root{
-  --ink:#121212;--ink2:#191919;--ink3:#222;--line:#2A2A2A;--line2:#3A3A3A;
-  --bone:#E6E6E6;--soft:#CFCFCF;--mut:#9C9C9C;--dim:#6E6E6E;
-  --red:#E10600;--redh:#F5180F;
-  --d:'Big Shoulders Display','Arial Narrow','Arial Black',system-ui,sans-serif;
-  --b:'Onest',system-ui,-apple-system,'Segoe UI',sans-serif;
-  --ease:cubic-bezier(.2,.8,.2,1);
-  --sec:clamp(96px,11vw,150px);
-}
-*,*::before,*::after{box-sizing:border-box;margin:0}
-html{background:var(--ink);scroll-padding-top:90px;overflow-x:clip}
-@media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
-body{font-family:var(--b);font-size:17px;line-height:1.65;color:var(--bone);background:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:clip}
-body.lock{overflow:hidden}
-img,svg{display:block;max-width:100%}
-button{font:inherit;color:inherit}
-::selection{background:var(--red);color:#fff}
-:focus-visible{outline:3px solid var(--red);outline-offset:3px}
-.wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-h1,h2,h3{font-family:var(--d);font-weight:800;color:#fff;letter-spacing:-.005em;line-height:.98}
-h2{font-size:clamp(2.6rem,5.4vw,4.6rem);max-width:16ch}
-h3{font-size:clamp(1.6rem,2.5vw,2.1rem)}
-.lead{margin-top:18px;max-width:50ch;font-size:1.1rem;color:var(--mut)}
-.sec{padding-top:var(--sec)}
-.head{margin-bottom:52px}
-.head-row{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px 40px}
+  <!-- SEO & Métadonnées Avancées -->
+  <title>Hevenly Games — Serveur Minecraft Ranked Bedfight Français</title>
+  <meta name="description"
+    content="Rejoignez Hevenly Games, la meilleure plateforme compétitive Minecraft Ranked Bedfight en France. Profitez d'un PvP ultra-fluide, classements ELO et arènes inédites.">
+  <meta name="keywords"
+    content="Minecraft, Bedfight, Ranked Bedfight, Rush, Serveur Minecraft, PvP, Hevenly Games, 1.8.9, ELO, Classement">
+  <meta name="author" content="Hevenly Games">
+  <link rel="canonical" href="https://hevenly.games/">
 
-/* ---------- Logo (SVG redessiné) ---------- */
-.lg{width:100%;height:auto;overflow:visible}
-.lg .ring,.lg .leaf{transform-box:view-box}
-.lg .tl{transform-origin:115px 115px}.lg .br{transform-origin:555px 555px}
-.lg .hs{stroke-dasharray:1;stroke-dashoffset:0;opacity:0}
-.lg.anim .hs{stroke-dashoffset:1;opacity:1}
-.lg.anim .hf{opacity:0}
-.lg.anim .ring,.lg.anim .leaf{transform:scale(0)}
-.lg.play .hs{animation:draw 1.1s .15s cubic-bezier(.65,0,.35,1) forwards,strokeout .5s 1.15s forwards}
-.lg.play .hf{animation:fin .6s 1s forwards}
-.lg.play .ring.tl{animation:pop .75s 1.45s cubic-bezier(.2,1.25,.3,1) forwards}
-.lg.play .leaf.tl{animation:pop .75s 1.52s cubic-bezier(.2,1.25,.3,1) forwards}
-.lg.play .ring.br{animation:pop .75s 1.8s cubic-bezier(.2,1.25,.3,1) forwards}
-.lg.play .leaf.br{animation:pop .75s 1.87s cubic-bezier(.2,1.25,.3,1) forwards}
-@keyframes draw{to{stroke-dashoffset:0}}@keyframes strokeout{to{opacity:0}}@keyframes fin{to{opacity:1}}@keyframes pop{to{transform:scale(1)}}
+  <!-- Open Graph / Réseaux Sociaux -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://hevenly.games/">
+  <meta property="og:title" content="Hevenly Games — Serveur Minecraft Ranked Bedfight">
+  <meta property="og:description"
+    content="La plateforme compétitive que vous méritez. Rejoignez le serveur en version 1.8.9 et grimpez dans le classement ELO.">
+  <meta property="og:image" content="https://i.imgur.com/BYA0Cs5.png">
 
-/* ---------- Intro ---------- */
-#intro{position:fixed;inset:0;z-index:1000;background:var(--ink);display:grid;place-items:center;cursor:pointer}
-#intro .stage{display:grid;justify-items:center;gap:26px;width:min(52vmin,400px)}
-#intro .tag{font-family:var(--d);font-weight:700;font-size:1.5rem;color:var(--mut);opacity:0;animation:fin .8s 2.1s forwards;white-space:nowrap}
-#intro .skip{position:absolute;right:22px;bottom:20px;font-size:.85rem;color:var(--dim);opacity:0;animation:fin .6s 1s forwards}
-#wipe{position:absolute;inset:0;background:var(--red);clip-path:circle(0 at 0 0);pointer-events:none}
-
-/* ---------- Boutons ---------- */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:56px;padding:0 28px;border:2px solid transparent;border-radius:16px;background:transparent;color:#fff;font-family:var(--b);font-weight:600;font-size:1rem;text-decoration:none;white-space:nowrap;cursor:pointer;transition:background-color .2s,border-color .2s,color .2s,transform .35s var(--ease)}
-.btn:active{transform:scale(.97)}
-.btn-red{background:var(--red)}.btn-red:hover{background:var(--redh)}
-.btn-line{border-color:var(--line2)}.btn-line:hover{border-color:#fff}
-.btn-white{background:#fff;color:var(--red)}.btn-white:hover{background:var(--ink);color:#fff}
-.btn-sm{height:44px;padding:0 20px;font-size:.93rem;border-radius:13px}
-.ico{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
-.ico.fill{fill:currentColor;stroke:none}
-
-/* ---------- En-tête : logo + un seul bouton ---------- */
-.mbar{position:fixed;top:0;left:0;right:0;z-index:70;height:84px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 clamp(20px,3.4vw,48px);border-bottom:1px solid transparent;transition:background-color .4s,border-color .4s,height .4s var(--ease),transform .9s var(--ease)}
-body.scrolled .mbar{height:68px;background:rgba(18,18,18,.84);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--line)}
-.js .mbar{transform:translateY(-100%)}.go .mbar{transform:none;transition-delay:0s,0s,0s,.5s}
-.logo{display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none;font-family:var(--d);font-weight:800;font-size:1.6rem;line-height:1}
-.mbar .lg{width:40px}
-.mbar-r{display:flex;align-items:center;gap:10px}
-.mbar-r .btn-sm{height:50px;border-radius:18px}
-.menubtn{display:inline-flex;align-items:center;gap:14px;height:50px;padding:0 8px 0 22px;border:2px solid var(--line2);border-radius:18px;background:rgba(18,18,18,.5);color:#fff;font-weight:600;cursor:pointer;transition:border-color .25s}
-.menubtn:hover{border-color:#fff}
-.menubtn .ic{display:grid;place-items:center;width:34px;height:34px;border-radius:12px;background:var(--red)}
-.menubtn .ic span{position:relative;width:16px;height:10px}
-.menubtn .ic span::before,.menubtn .ic span::after{content:"";position:absolute;left:0;right:0;height:2px;background:#fff;transition:transform .35s var(--ease),top .35s var(--ease)}
-.menubtn .ic span::before{top:0}.menubtn .ic span::after{top:8px}
-.menubtn[aria-expanded=true] .ic span::before{top:4px;transform:rotate(45deg)}
-.menubtn[aria-expanded=true] .ic span::after{top:4px;transform:rotate(-45deg)}
-
-/* ---------- Menu plein écran ---------- */
-.drawer{position:fixed;z-index:65;inset:0;display:grid;grid-template-columns:1.25fr .75fr;gap:48px;align-items:center;padding:110px clamp(24px,6vw,96px) 40px;background:var(--ink);overflow-y:auto;visibility:hidden;clip-path:circle(0 at calc(100% - 78px) 42px);transition:clip-path .85s var(--ease),visibility 0s .85s}
-.drawer.open{visibility:visible;clip-path:circle(150vmax at calc(100% - 78px) 42px);transition:clip-path .95s var(--ease)}
-.drawer::before{content:"";position:absolute;right:0;bottom:0;width:min(34vw,380px);aspect-ratio:1;background:radial-gradient(circle at 100% 100%,var(--red) 0,var(--red) 62%,var(--ink) 62%,var(--ink) 74%,transparent 74%);pointer-events:none}
-.dl{position:relative;display:grid}
-.dl a{display:flex;align-items:center;gap:20px;padding:4px 0;color:#7A7A7A;text-decoration:none;font-family:var(--d);font-weight:800;font-size:clamp(2.6rem,6.4vw,5.2rem);line-height:1.05;transform:translateY(40px);opacity:0;transition:color .3s,padding .45s var(--ease),opacity .6s var(--ease),transform .7s var(--ease)}
-.drawer.open .dl a{transform:none;opacity:1;transition-delay:0s,0s,calc(.25s + var(--i)*.05s),calc(.25s + var(--i)*.05s)}
-.dl a::before{content:"";flex:none;width:0;height:.4em;border-radius:50% 0 50% 0;background:var(--red);transition:width .45s var(--ease)}
-.dl:hover a{color:#4A4A4A}
-.dl a:hover{color:#fff;padding-left:6px}.dl a:hover::before{width:.4em}
-.dside{position:relative;z-index:1;display:grid;gap:14px;padding:30px;border:1px solid var(--line);border-radius:30px;background:rgba(25,25,25,.9);transform:translateY(30px);opacity:0;transition:opacity .6s var(--ease),transform .7s var(--ease)}
-.drawer.open .dside{transform:none;opacity:1;transition-delay:.55s}
-.dside p{color:var(--mut);font-size:.98rem}
-.dside .ip{font-family:var(--d);font-weight:800;font-size:clamp(2rem,3.4vw,2.8rem);line-height:1;color:#fff}
-
-/* ---------- Hero ---------- */
-.hero{position:relative;min-height:100svh;display:flex;align-items:center;overflow:hidden;padding:130px 0 150px;
-  background:linear-gradient(90deg,rgba(18,18,18,.94) 0%,rgba(18,18,18,.62) 48%,rgba(18,18,18,.12) 100%),linear-gradient(to bottom,rgba(18,18,18,.35) 0%,transparent 30%,transparent 60%,var(--ink) 100%),url('https://i.imgur.com/xr1vqMq.jpg') center top/cover}
-.hero-in{position:relative;z-index:2;width:100%}
-.hero-txt{max-width:780px}
-.hero h1{font-size:clamp(3.2rem,7.2vw,7.2rem);font-weight:900;line-height:.92}
-.hero h1 span{display:block;overflow:hidden;padding:.03em 0 .06em;white-space:nowrap;will-change:translate}
-.hero h1 span>b{display:block;font-weight:900}
-.hero h1 span:nth-child(2)>b{color:var(--red)}
-.hero p.s{margin-top:26px;max-width:44ch;font-size:1.15rem;color:#E0E0E0}
-.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
-.hero-r{position:absolute;z-index:1;right:max(1vw,calc((100vw - 1200px)/2 - 30px));bottom:76px;width:min(46vw,620px);pointer-events:none}
-.hero-r::before{content:"";position:absolute;inset:8% 6% 0;background:radial-gradient(closest-side,rgba(225,6,0,.5),transparent 75%)}
-.hero-r img{position:relative;width:100%;filter:drop-shadow(0 30px 40px rgba(0,0,0,.65));transition:translate .3s ease-out;animation:float 7s ease-in-out infinite}
-@keyframes float{50%{transform:translateY(-12px)}}
-.lobby{position:absolute;z-index:3;left:0;right:0;bottom:0;background:var(--ink);border-radius:34px 34px 0 0;border-top:1px solid #ffffff1f}
-.lobby .lw{display:flex;align-items:stretch}
-.lc{display:flex;align-items:center;gap:12px;padding:22px 30px 22px 0;margin-right:30px;border-right:1px solid var(--line);color:var(--mut);font-size:.95rem;white-space:nowrap}
-.lc b{font-family:var(--d);font-weight:800;font-size:1.75rem;line-height:1;color:#fff}
-.lc i{flex:none;width:9px;height:9px;border-radius:50%;background:var(--red);animation:ping 2.2s infinite}
-@keyframes ping{0%{box-shadow:0 0 0 0 rgba(225,6,0,.6)}70%{box-shadow:0 0 0 10px rgba(225,6,0,0)}100%{box-shadow:0 0 0 0 rgba(225,6,0,0)}}
-.lip{display:flex;align-items:center;gap:16px;margin-left:auto;padding:0 0 0 26px;border:0;border-left:1px solid var(--line);background:none;cursor:pointer;text-align:left;color:#fff}
-.lip small{display:block;font-size:.8rem;color:var(--mut);line-height:1.2}
-.lip strong{font-family:var(--d);font-weight:800;font-size:1.75rem;line-height:1.1}
-.lip .go-c{display:grid;place-items:center;width:46px;height:46px;border-radius:14px;background:var(--red);transition:background-color .2s,transform .3s var(--ease)}
-.lip:hover .go-c{background:var(--redh);transform:scale(1.08)}
-
-/* entrée du hero, juste après l'intro */
-.js .h-in{opacity:0}
-.js .hero h1 span>b{transform:translateY(110%)}
-.go .h-in{animation:hin .9s var(--ease) both;animation-delay:calc(.35s + var(--i,0)*.1s)}
-.go .hero h1 span>b{animation:up 1s var(--ease) both;animation-delay:calc(.2s + var(--i,0)*.14s)}
-@keyframes hin{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
-@keyframes up{from{transform:translateY(110%)}to{transform:none}}
-
-/* ---------- Bandeau géant lié au scroll ---------- */
-.band{padding-top:clamp(50px,6vw,80px);overflow:hidden;display:grid;pointer-events:none;user-select:none}
-.band div{white-space:nowrap;font-family:var(--d);font-weight:900;font-size:clamp(4.4rem,13vw,11rem);line-height:1;color:transparent;-webkit-text-stroke:1.5px #383838;will-change:translate}
-.band div:nth-child(2){-webkit-text-stroke-color:var(--red)}
-
-/* ---------- Comment se joue le Bedfight (section épinglée) ---------- */
-.how{position:relative;height:330vh;margin-top:var(--sec)}
-.how-pin{position:sticky;top:0;height:100svh;display:flex;align-items:center;padding:90px 0 30px;overflow:hidden}
-.how-grid{display:grid;grid-template-columns:minmax(280px,350px) 1fr;gap:48px;align-items:center;width:100%}
-.how h2{max-width:13ch;font-size:clamp(2.4rem,4vw,3.6rem)}
-.phases{position:relative;display:grid;gap:2px;margin-top:30px;padding-left:28px}
-.phases::before,.phases::after{content:"";position:absolute;left:0;top:8px;bottom:8px;width:3px;border-radius:3px}
-.phases::before{background:var(--line)}
-.phases::after{background:var(--red);transform-origin:50% 0;transform:scaleY(var(--hp,0))}
-.ph{padding:14px 0;opacity:.38;transition:opacity .5s}
-.ph.on{opacity:1}
-.ph b{display:flex;align-items:baseline;gap:12px;font-family:var(--d);font-weight:800;font-size:1.9rem;line-height:1;color:#fff}
-.ph b em{font-style:normal;color:var(--red)}
-.ph p{margin-top:8px;color:var(--soft);font-size:1rem;max-width:36ch}
-.stage-svg{position:relative}
-.stage-svg::before{content:"";position:absolute;left:10%;right:10%;top:30%;bottom:-10%;background:radial-gradient(closest-side,rgba(225,6,0,.16),transparent);pointer-events:none}
-#howsvg{position:relative;width:100%;height:auto;overflow:visible}
-#howsvg .blk{fill:#2E2E2E}#howsvg .blk.top{fill:#474747}
-#howsvg .bb{opacity:0;transform:translateY(-40px) scale(.6);transform-box:fill-box;transform-origin:50% 50%;transition:opacity .25s,transform .45s cubic-bezier(.2,1.4,.4,1)}
-#howsvg .bb.on{opacity:1;transform:none}
-#howsvg .bbA{fill:var(--bone)}#howsvg .bbB{fill:#7C7C7C}
-#howsvg .pos{transition:transform .35s var(--ease)}
-#howsvg .fig{transform-box:fill-box;transform-origin:50% 100%;transition:transform .7s cubic-bezier(.5,0,.75,0),opacity .7s}
-#howsvg .fall .fig{transform:translateY(260px) rotate(50deg);opacity:0}
-#howsvg .gone{opacity:0}
-#howsvg .spawn .fig{animation:spawn .5s var(--ease)}
-@keyframes spawn{from{opacity:0;transform:translateY(-20px)}}
-#howsvg .bedp{transform-box:fill-box;transform-origin:50% 50%;transition:transform .7s var(--ease),opacity .7s}
-#howsvg .broken .p1{transform:translate(-30px,40px) rotate(-35deg);opacity:0}
-#howsvg .broken .p2{transform:translate(30px,50px) rotate(40deg);opacity:0}
-#howsvg .pt{opacity:0;transform-box:fill-box;transform-origin:50% 50%}
-#howsvg .broken .pt{animation:burst .9s var(--ease) forwards}
-@keyframes burst{0%{opacity:1;transform:none}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(180deg)}}
-#howsvg .lbl{font-family:var(--b);font-size:17px;fill:var(--mut);text-anchor:middle}
-#howsvg .win{font-family:var(--d);font-weight:800;font-size:44px;fill:var(--red);text-anchor:middle;opacity:0;transform:translateY(12px);transform-box:fill-box;transition:opacity .5s,transform .6s var(--ease)}
-#howsvg .win.on{opacity:1;transform:none}
-.how-skip{display:inline-block;margin-top:26px;color:var(--mut);font-size:.92rem;text-decoration:underline;text-underline-offset:3px}
-.how-skip:hover{color:#fff}
-
-/* ---------- Atouts ---------- */
-.rows{border-top:1px solid var(--line)}
-.row2{position:relative;display:grid;grid-template-columns:.9fr 1.1fr;gap:40px;align-items:center;padding:36px 0;border-bottom:1px solid var(--line);transition:padding .5s var(--ease)}
-.row2::before{content:"";position:absolute;left:0;top:50%;width:0;height:28px;margin-top:-14px;border-radius:50% 0 50% 0;background:var(--red);transition:width .5s var(--ease)}
-.row2:hover{padding-left:46px}.row2:hover::before{width:28px}
-.row2 h3{font-size:clamp(2.2rem,4.4vw,3.6rem);line-height:1}
-.row2 p{color:var(--soft);max-width:44ch}
-
-/* ---------- Le jeu : onglets ---------- */
-.game{display:grid;grid-template-columns:.95fr 1.05fr;gap:72px;align-items:start}
-.game h2{margin-bottom:36px}
-.tabs{display:grid;border-top:1px solid var(--line)}
-.tab{position:relative;display:flex;align-items:center;padding:20px 0;background:none;border:0;border-bottom:1px solid var(--line);text-align:left;cursor:pointer;font-family:var(--d);font-weight:800;font-size:clamp(1.9rem,3.4vw,2.7rem);line-height:1;color:var(--dim);transition:color .3s,padding .45s var(--ease)}
-.tab::before{content:"";position:absolute;left:0;top:50%;width:16px;height:16px;margin-top:-8px;border-radius:50% 0 50% 0;background:var(--red);transform:scale(0);transition:transform .4s var(--ease)}
-.tab:hover{color:#B8B8B8}
-.tab[aria-selected=true]{color:#fff;padding-left:34px}
-.tab[aria-selected=true]::before{transform:scale(1)}
-.art{position:relative;margin-top:40px;display:grid;place-items:center;padding:28px;border-radius:32px;border:1px solid var(--line);background:radial-gradient(closest-side,rgba(225,6,0,.28),transparent 80%),var(--ink2)}
-.art img{width:min(100%,400px);filter:drop-shadow(0 22px 24px rgba(0,0,0,.6))}
-.pane{position:sticky;top:110px;padding:clamp(30px,4vw,50px);background:var(--ink2);border:1px solid var(--line);border-radius:32px;min-height:360px;animation:pane .6s var(--ease)}
-@keyframes pane{from{opacity:0;clip-path:inset(0 0 100% 0)}to{opacity:1;clip-path:inset(0)}}
-.pane[hidden]{display:none}
-.pane h3{font-size:2.3rem;margin-bottom:14px}
-.pane p{color:var(--soft);max-width:44ch}
-.bignum{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 12px;margin-top:30px;font-family:var(--d);font-weight:900;font-size:clamp(4.6rem,9vw,7.4rem);line-height:.9;color:#fff}
-.bignum small{font-family:var(--b);font-weight:500;font-size:1rem;color:var(--mut);white-space:nowrap}
-.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
-.chips span{padding:10px 18px;border-radius:12px;background:var(--ink3);border:1px solid var(--line2);font-weight:500;font-size:.95rem;color:#fff}
-.chips b{color:#FF5A52;margin-right:6px}
-
-/* ---------- Maps ---------- */
-.maps{display:grid;grid-template-columns:.7fr 1.3fr;gap:56px;align-items:start}
-.mlist{display:grid;border-top:1px solid var(--line)}
-.mbtn{display:grid;gap:4px;padding:20px 0;background:none;border:0;border-bottom:1px solid var(--line);text-align:left;cursor:pointer;transition:padding .45s var(--ease),box-shadow .3s}
-.mbtn strong{font-family:var(--d);font-weight:800;font-size:clamp(2.2rem,3.8vw,3rem);line-height:1;color:var(--dim);transition:color .3s}
-.mbtn span{font-size:.92rem;color:var(--dim);transition:color .3s}
-.mbtn:hover strong{color:#B8B8B8}
-.mbtn[aria-selected=true]{padding-left:22px;box-shadow:inset 5px 0 0 var(--red)}
-.mbtn[aria-selected=true] strong{color:#fff}.mbtn[aria-selected=true] span{color:var(--mut)}
-.mview{position:relative;aspect-ratio:16/11;border-radius:36px;overflow:hidden;background:var(--ink2)}
-.mview img{position:absolute;left:0;right:0;top:-9%;width:100%;height:118%;object-fit:cover;clip-path:inset(0 0 0 100%);transform:scale(1.1);transition:clip-path .9s var(--ease),transform 1.4s var(--ease);will-change:translate}
-.mview img.on{clip-path:inset(0);transform:none;z-index:2}
-.mview img.prev{clip-path:inset(0);transform:none;z-index:1}
-.mcap{margin-top:20px;max-width:52ch;color:var(--soft);min-height:3.4em}
-
-/* ---------- Comment jouer ---------- */
-.steps{position:relative;--col:130px;border-top:1px solid var(--line)}
-.steps::before,.steps::after{content:"";position:absolute;left:calc(var(--col) - 14px);top:0;bottom:0;width:3px;border-radius:3px}
-.steps::before{background:var(--line)}
-.steps::after{background:var(--red);transform-origin:50% 0;transform:scaleY(var(--p,0))}
-.step{display:grid;grid-template-columns:var(--col) 1fr 1.1fr;gap:28px;align-items:baseline;padding:34px 0;border-bottom:1px solid var(--line)}
-.step .n{font-family:var(--d);font-weight:900;font-size:clamp(4rem,7vw,6rem);line-height:.85;color:#444;transition:color .5s,transform .6s var(--ease);transform-origin:0 100%}
-.step.lit .n{color:var(--red);transform:scale(1.06)}
-.step h3{font-size:clamp(1.9rem,3vw,2.4rem)}
-.step p{color:var(--soft);font-size:1rem}
-.ipbtn{position:relative;overflow:hidden;isolation:isolate;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;width:100%;margin-top:28px;padding:30px 40px;border:2px solid var(--line);border-radius:32px;background:var(--ink2);cursor:pointer;text-align:left}
-.ipbtn::before{content:"";position:absolute;z-index:-1;left:0;top:0;width:260%;aspect-ratio:1;border-radius:50%;background:var(--red);transform:translate(-50%,-50%) scale(0);transition:transform .8s var(--ease)}
-.ipbtn:hover::before,.ipbtn:focus-visible::before{transform:translate(-50%,-50%) scale(1)}
-.ipbtn small{display:block;font-size:.95rem;color:var(--mut);transition:color .3s}
-.ipbtn b{font-family:var(--d);font-weight:900;font-size:clamp(3rem,7vw,5.4rem);line-height:1;color:#fff}
-.ipbtn .go-c{display:inline-flex;align-items:center;gap:10px;font-weight:600;color:#fff;padding:14px 22px;border-radius:14px;background:var(--red);transition:background-color .3s,color .3s}
-.ipbtn:hover small{color:#fff}.ipbtn:hover .go-c{background:#fff;color:var(--red)}
-
-/* ---------- Actualités ---------- */
-.nl{display:grid;grid-template-columns:170px 1fr;gap:28px;padding:28px 0;border-top:1px solid var(--line);color:inherit;text-decoration:none}
-.nl:last-child{border-bottom:1px solid var(--line)}
-.nl .dt{color:var(--mut);font-size:.95rem}
-.nl .dt b{display:block;width:max-content;margin-top:8px;padding:2px 12px;border-radius:8px;border:1.5px solid var(--red);color:#fff;font-weight:500;font-size:.82rem}
-.nl h3{font-size:2rem;transition:color .25s}.nl:hover h3{color:var(--red)}
-.nl p{margin-top:8px;color:var(--soft);font-size:1rem;max-width:62ch}
-.nempty{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;padding:34px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);color:var(--mut)}
-.nempty b{display:block;margin-bottom:6px;font-family:var(--d);font-weight:800;color:#fff;font-size:2rem;line-height:1}
-
-/* ---------- Boutique ---------- */
-.plans{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.plan{display:flex;flex-direction:column;padding:clamp(30px,4vw,46px);border-radius:36px;background:var(--ink2);border:1px solid var(--line)}
-.plan.main{background:var(--red);border-color:var(--red);color:#fff}
-.plan .tp{display:flex;align-items:center;justify-content:space-between;min-height:30px;font-size:.95rem;color:var(--mut)}
-.plan.main .tp{color:#FFD9D6}
-.plan .tag{padding:3px 14px;border-radius:9px;background:var(--ink);color:#fff;font-weight:600;font-size:.82rem}
-.plan h3{margin-top:14px;font-size:clamp(2.4rem,4vw,3.2rem)}
-.plan>p{margin-top:12px;max-width:36ch;color:var(--soft)}.plan.main>p{color:#fff}
-.perks{list-style:none;padding:0;margin:26px 0 30px;display:grid;gap:13px}
-.perks li{position:relative;padding-left:28px}
-.perks li::before{content:"";position:absolute;left:0;top:.45em;width:12px;height:12px;border-radius:50% 0 50% 0;background:var(--red)}
-.plan.main .perks li::before{background:#fff}
-.price{margin-top:auto;font-family:var(--d);font-weight:900;font-size:clamp(4rem,7vw,5.6rem);line-height:.9;color:#fff}
-.price small{font-family:var(--b);font-weight:500;font-size:1rem;color:var(--mut)}.plan.main .price small{color:#FFD9D6}
-.plan .btn{margin-top:24px;width:100%}
-
-/* ---------- FAQ ---------- */
-.faq{max-width:880px;border-top:1px solid var(--line)}
-.qa{border-bottom:1px solid var(--line)}
-.qa>button{display:flex;width:100%;align-items:center;justify-content:space-between;gap:24px;padding:24px 0;background:none;border:0;text-align:left;cursor:pointer;color:#fff;font-family:var(--d);font-weight:700;font-size:clamp(1.5rem,2.4vw,1.9rem);line-height:1.15}
-.qa>button i{position:relative;flex:none;width:38px;height:38px;border-radius:12px;background:var(--ink3);transition:background-color .3s}
-.qa>button i::before,.qa>button i::after{content:"";position:absolute;left:50%;top:50%;width:14px;height:2px;margin:-1px 0 0 -7px;border-radius:2px;background:#fff;transition:transform .4s var(--ease)}
-.qa>button i::after{transform:rotate(90deg)}
-.qa.open>button i{background:var(--red)}.qa.open>button i::after{transform:rotate(0)}
-.qa-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s var(--ease)}.qa.open .qa-body{grid-template-rows:1fr}
-.qa-body>div{overflow:hidden}.qa-body p{padding:0 60px 28px 0;max-width:60ch;color:var(--soft)}
-.qa code{background:var(--ink3);padding:2px 9px;border-radius:7px;color:#fff;font-size:.92em}
-
-/* ---------- Fin de page ---------- */
-.final{position:relative;margin-top:var(--sec);padding:clamp(80px,10vw,130px) 0;text-align:center;overflow:hidden;border-top:1px solid var(--line)}
-.final-lg{width:clamp(120px,14vw,170px);margin:0 auto 32px}
-.final h2{font-size:clamp(3.2rem,8vw,7rem);max-width:14ch;margin:0 auto}
-.final p{margin:20px auto 0;max-width:44ch;color:var(--mut)}
-.final .cta{justify-content:center}
-.foot{padding:30px 0 42px;border-top:1px solid var(--line)}
-.foot .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 30px;color:var(--mut);font-size:.88rem}
-.foot .fl{display:flex;align-items:center;gap:14px;max-width:62ch}.foot .fl .lg{width:30px;flex:none}
-.foot-l{display:flex;flex-wrap:wrap;gap:8px 24px}
-.foot-l button{background:none;border:0;padding:0;color:inherit;cursor:pointer;font-size:inherit}.foot-l button:hover{color:#fff}
-
-/* ---------- Titres révélés au scroll ---------- */
-.js .sec h2,.js .final h2{clip-path:inset(0 0 100% 0);transform:translateY(26px);transition:clip-path .9s var(--ease),transform .9s var(--ease)}
-.js h2.in{clip-path:inset(-10% -5% -25% -5%)!important;transform:none!important}
-
-/* ---------- Fenêtres, toast, cookies ---------- */
-.overlay{position:fixed;inset:0;z-index:300;display:none;place-items:center;padding:20px;background:rgba(0,0,0,.8)}.overlay.open{display:grid}
-.panel{width:100%;max-width:480px;max-height:86vh;display:flex;flex-direction:column;background:var(--ink2);border:1px solid var(--line);border-radius:30px;padding:32px}
-.panel-wide{max-width:640px}.overlay.open .panel{animation:pop2 .3s var(--ease)}
-@keyframes pop2{from{opacity:0;transform:translateY(14px) scale(.98)}}
-.panel-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding-bottom:16px}
-.panel-head h3{font-size:2.2rem}
-.close{background:none;border:2px solid var(--line2);width:42px;height:42px;flex:none;display:grid;place-items:center;border-radius:13px;cursor:pointer}.close:hover{border-color:#fff}
-.panel-body{overflow-y:auto}
-.panel-price{font-family:var(--d);font-weight:900;font-size:3rem;line-height:1;color:var(--red);margin-bottom:16px}
-.panel-body ul{list-style:none;padding:0;margin:0 0 24px}
-.panel-body li{padding:13px 0;border-top:1px solid var(--line);color:var(--soft)}.panel-body li:last-child{border-bottom:1px solid var(--line)}
-.panel .btn{width:100%}
-.note{padding:18px 0;border-top:1px solid var(--line)}
-.note-meta{display:flex;justify-content:space-between;gap:12px;font-size:.88rem;color:var(--mut)}.note-meta b{color:var(--red);font-weight:600}
-.note h4{font-family:var(--d);font-weight:800;font-size:1.6rem;line-height:1.05;color:#fff;margin:8px 0 6px}
-.note p,.legal p{color:var(--soft);font-size:1rem}
-.legal h4{font-family:var(--d);font-weight:800;font-size:1.5rem;color:#fff;margin-top:20px}.legal h4:first-child{margin-top:0}
-.skeleton{height:72px;margin-bottom:12px;background:var(--ink3);border-radius:16px}
-.toast{position:fixed;left:20px;bottom:20px;z-index:1100;background:#fff;color:var(--ink);padding:14px 22px;font-weight:600;border-radius:14px;border-left:6px solid var(--red);transform:translateY(160%);transition:transform .35s var(--ease)}.toast.show{transform:none}
-.cookie{position:fixed;left:16px;right:16px;bottom:16px;z-index:310;max-width:780px;margin:0 auto;background:var(--ink3);border:1px solid var(--line2);border-radius:24px;transform:translateY(140%);transition:transform .45s var(--ease)}.cookie.show{transform:none}
-.cookie .in2{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding:18px 24px}
-.cookie p{max-width:50ch;font-size:.93rem;line-height:1.5;color:var(--soft)}
-.cookie p b{display:block;color:#fff;font-family:var(--d);font-weight:800;font-size:1.4rem;line-height:1.1;margin-bottom:2px}
-.cookie p button{background:none;border:0;padding:0;text-decoration:underline;cursor:pointer;color:#fff}
-.cookie-actions{display:flex;gap:10px}
-
-/* ---------- Tablette ---------- */
-@media(max-width:1020px){
-  .mbar-r .dcb{display:none}
-  .hero{display:block;padding:112px 0 0}
-  .hero-r{position:relative;right:auto;bottom:auto;width:min(92%,460px);margin:10px auto -20px}
-  .lobby{position:relative;border-radius:28px 28px 0 0}
-  .lobby .lw{flex-wrap:wrap;padding-top:6px}
-  .lc{padding:14px 20px 14px 0;margin-right:20px;border-right:0}
-  .lip{width:100%;margin:6px 0 0;padding:16px 0 18px;border-left:0;border-top:1px solid var(--line);justify-content:space-between}
-  .how{height:300vh}
-  .how-pin{align-items:flex-start;padding-top:96px}
-  .how-grid{grid-template-columns:1fr;gap:18px}
-  .how h2{max-width:none;font-size:clamp(2.4rem,9vw,3.4rem)}
-  .phases{margin-top:16px;min-height:9.5em}
-  .ph{position:absolute;left:28px;right:0;top:0;padding:4px 0;opacity:0;transform:translateY(10px);transition:opacity .4s,transform .5s var(--ease)}
-  .ph.on{opacity:1;transform:none}
-  .how-pin{align-items:center}
-  .how-skip{display:none}
-  .row2{grid-template-columns:1fr;gap:10px;padding:28px 0}.row2:hover{padding-left:0}.row2::before{display:none}
-  .game,.maps{grid-template-columns:1fr;gap:34px}.pane{position:static}
-  .steps{--col:70px}.step{gap:6px 18px}.step p{grid-column:2}
-  .plans{grid-template-columns:1fr}
-  .nl{grid-template-columns:1fr;gap:8px}
-  .drawer{grid-template-columns:1fr;gap:30px;align-content:start}.dside{padding:22px}.drawer::before{width:44vw}
-}
-@media(min-width:1021px){.how .phases{min-height:0}}
-/* ---------- Mobile ---------- */
-@media(max-width:620px){
-  body{font-size:16px}.wrap{padding:0 20px}
-  .hero h1 span{white-space:normal}
-  .cta .btn{flex:1}
-  .mview{border-radius:26px}.ipbtn{padding:24px;border-radius:26px}.ipbtn .go-c{width:100%;justify-content:center}
-  .plan{border-radius:28px}
-  .qa-body p{padding-right:0}
-  .cookie-actions{width:100%}.cookie-actions .btn{flex:1}
-  .menubtn{padding-left:16px}
-}
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.001ms!important;animation-delay:0s!important;transition-duration:.001ms!important}
-  .js .h-in{opacity:1}.js .hero h1 span>b{transform:none}
-  .js .sec h2,.js .final h2{clip-path:none;transform:none}
-  .how{height:auto}.how-pin{position:relative;height:auto;padding:0}
-  .ph{opacity:1;position:static;transform:none}.phases::after{transform:none}.phases{min-height:0}
-  .step .n{color:var(--red)}
-}
-</style></head>
-<body class="lock">
-
-<div id="intro" role="presentation">
-  <div class="stage"><svg viewBox="0 0 667 670" class="lg anim" aria-hidden="true"><defs><clipPath id="ic"><path d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z"/></clipPath><mask id="im"><path d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="#fff"/><circle class="ring tl" cx="115" cy="115" r="137" fill="#000"/><circle class="ring br" cx="555" cy="555" r="137" fill="#000"/></mask></defs><path class="hs" d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="none" stroke="#E6E6E6" stroke-width="4" pathLength="1"/><path class="hf" d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="#E6E6E6" mask="url(#im)"/><g clip-path="url(#ic)"><circle class="leaf tl" cx="115" cy="115" r="115" fill="#E10600"/><circle class="leaf br" cx="555" cy="555" r="115" fill="#E10600"/></g></svg><div class="tag">Ranked Bedfight</div></div>
-  <div class="skip">Appuie pour passer</div>
-  <div id="wipe"></div>
-</div>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
-    <symbol id="i-copy" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
-    <symbol id="i-discord" viewBox="0 -28.5 256 256"><path fill="currentColor" stroke="none" d="M216.856339,16.5966031 C200.285002,8.84328665 182.566144,3.2084988 164.041564,0 C161.766523,4.11318106 159.108624,9.64549908 157.276099,14.0464379 C137.583995,11.0849896 118.072967,11.0849896 98.7430163,14.0464379 C96.9108417,9.64549908 94.1925838,4.11318106 91.8971895,0 C73.3526068,3.2084988 55.6133949,8.86399117 39.0420583,16.6376612 C5.61752293,67.146514 -3.4433191,116.400813 1.08711069,164.955721 C23.2560196,181.510915 44.7403634,191.567697 65.8621325,198.148576 C71.0772151,190.971126 75.7283628,183.341335 79.7352139,175.300261 C72.104019,172.400575 64.7949724,168.822202 57.8887866,164.667963 C59.7209612,163.310589 61.5131304,161.891452 63.2445898,160.431257 C105.36741,180.133187 151.134928,180.133187 192.754523,160.431257 C194.506336,161.891452 196.298154,163.310589 198.110326,164.667963 C191.183787,168.842556 183.854737,172.420929 176.223542,175.320965 C180.230393,183.341335 184.861538,190.991831 190.096624,198.16893 C211.238746,191.588051 232.743023,181.531619 254.911949,164.955721 C260.227747,108.668201 245.831087,59.8662432 216.856339,16.5966031 Z M85.4738752,135.09489 C72.8290281,135.09489 62.4592217,123.290155 62.4592217,108.914901 C62.4592217,94.5396472 72.607595,82.7145587 85.4738752,82.7145587 C98.3405064,82.7145587 108.709962,94.5189427 108.488529,108.914901 C108.508531,123.290155 98.3405064,135.09489 85.4738752,135.09489 Z M170.525237,135.09489 C157.88039,135.09489 147.510584,123.290155 147.510584,108.914901 C147.510584,94.5396472 157.658606,82.7145587 170.525237,82.7145587 C183.391518,82.7145587 193.761324,94.5189427 193.539891,108.914901 C193.539891,123.290155 183.391518,135.09489 170.525237,135.09489 Z"/></symbol>
-  </svg>
-<header class="mbar">
-  <a href="#top" class="logo" aria-label="Hevenly, accueil"><svg viewBox="0 0 667 670" class="lg " aria-hidden="true"><defs><clipPath id="hc"><path d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z"/></clipPath><mask id="hm"><path d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="#fff"/><circle class="ring tl" cx="115" cy="115" r="137" fill="#000"/><circle class="ring br" cx="555" cy="555" r="137" fill="#000"/></mask></defs><path class="hs" d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="none" stroke="#E6E6E6" stroke-width="4" pathLength="1"/><path class="hf" d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="#E6E6E6" mask="url(#hm)"/><g clip-path="url(#hc)"><circle class="leaf tl" cx="115" cy="115" r="115" fill="#E10600"/><circle class="leaf br" cx="555" cy="555" r="115" fill="#E10600"/></g></svg><span>Hevenly</span></a>
-  <div class="mbar-r">
-    <a href="https://discord.gg" target="_blank" rel="noopener" class="btn btn-red btn-sm dcb"><svg class="ico fill"><use href="#i-discord"/></svg>Discord</a>
-    <button class="menubtn" id="burger" aria-expanded="false" aria-controls="drawer"><span id="menutxt">Menu</span><i class="ic"><span></span></i></button>
-  </div>
-</header>
-<div class="drawer" id="drawer" role="dialog" aria-label="Menu">
-  <nav class="dl" aria-label="Navigation principale"><a href="#bedfight" style="--i:0">Le Bedfight</a><a href="#features" style="--i:1">Atouts</a><a href="#concept" style="--i:2">Le jeu</a><a href="#maps" style="--i:3">Maps</a><a href="#how-to-play" style="--i:4">Jouer</a><a href="#news" style="--i:5">Actualités</a><a href="#shop" style="--i:6">Boutique</a><a href="#faq" style="--i:7">FAQ</a></nav>
-  <div class="dside"><p>Adresse du serveur, en Minecraft 1.8.9</p><div class="ip">hevenly.games</div><button class="btn btn-red" onclick="copyIP()"><svg class="ico"><use href="#i-copy"/></svg>Copier l'IP</button><a href="https://discord.gg" target="_blank" rel="noopener" class="btn btn-line"><svg class="ico fill"><use href="#i-discord"/></svg>Rejoindre le Discord</a></div>
-</div>
-
-<main id="top">
-<section class="hero" id="hero">
-  <div class="hero-in wrap"><div class="hero-txt">
-    <h1><span><b style="--i:0">Protège ton lit.</b></span><span><b style="--i:1">Détruis le sien.</b></span></h1>
-    <p class="s h-in" style="--i:2">Hevenly propose un système compétitif complet axé sur le Bedfight, développé sur mesure pour vous faire progresser dans les meilleures conditions.</p>
-    <div class="cta h-in" style="--i:3"><a href="https://discord.gg" target="_blank" rel="noopener" class="btn btn-red"><svg class="ico fill"><use href="#i-discord"/></svg>Rejoindre le Discord</a><a href="#bedfight" class="btn btn-line">Comment ça se joue</a></div>
-  </div></div>
-  <div class="hero-r h-in" style="--i:2"><img id="render" src="https://i.imgur.com/r8sDBMt.png" alt="Rendu Minecraft Bedfight"></div>
-  <div class="lobby h-in" style="--i:4"><div class="wrap lw">
-    <div class="lc"><i></i><span id="players-online">Serveur en ligne</span></div>
-    <div class="lc"><b>1.8.9</b><span>Version du jeu</span></div>
-    <div class="lc"><b>24/7</b><span>Serveur ouvert</span></div>
-    <div class="lc"><b>Saison 0</b><span>En cours</span></div>
-    <button class="lip" onclick="copyIP()" aria-label="Copier l'adresse du serveur hevenly.games"><span><small>Adresse du serveur</small><strong>hevenly.games</strong></span><span class="go-c"><svg class="ico"><use href="#i-copy"/></svg></span></button>
-  </div></div>
-</section>
-
-<div class="band" aria-hidden="true"><div>Ranked Bedfight Ranked Bedfight Ranked Bedfight</div><div>Protège ton lit Détruis le sien Protège ton lit</div></div>
-
-<section class="how" id="bedfight"><div class="how-pin"><div class="wrap how-grid">
-  <div>
-    <h2>Comment se joue le Bedfight</h2>
-    <div class="phases" id="phases">
-      <div class="ph on"><b><em>1</em>Chacun son île</b><p>Deux joueurs, deux îles. Chacun apparaît à côté de son lit, et tant que ce lit tient, il réapparaît après chaque mort.</p></div>
-      <div class="ph"><b><em>2</em>Construis et affronte</b><p>Les deux joueurs posent des blocs pour relier les îles. Le combat se joue sur ce pont, au moindre faux pas.</p></div>
-      <div class="ph"><b><em>3</em>Casse son lit</b><p>Une fois son lit détruit, ton adversaire ne réapparaît plus. Élimine-le une dernière fois pour gagner.</p></div>
-    </div>
-    <a class="how-skip" href="#features">Passer l'animation</a>
-  </div>
-  <div class="stage-svg"><svg id="howsvg" viewBox="60 150 1080 340" role="img" aria-label="Schéma d'une partie : deux îles avec un lit chacune, un pont construit entre les deux, puis un lit détruit."></svg></div>
-</div></div></section>
-
-<section class="sec" id="features"><div class="wrap">
-  <div class="head"><h2>Pensé pour la compétition.</h2></div>
-  <div class="rows">
-    <article class="row2"><h3>Anti-cheat intransigeant</h3><p>Mise à jour en continu : triche détectée équivaut à un ban définitif et une blacklist totale.</p></article>
-    <article class="row2"><h3>Arènes inédites</h3><p>Des terrains de jeu compétitifs, testés et peaufinés en direct par les joueurs exigeants.</p></article>
-    <article class="row2"><h3>Statistiques avancées</h3><p>Analysez vos stats en temps réel, suivez votre progression et grimpez au sommet en ranked.</p></article>
-    <article class="row2"><h3>PvP ultra-fluide</h3><p>Un gameplay sans latence propulsé directement par un Spigot maison optimisé pour le 1.8.9.</p></article>
-  </div>
-</div></section>
-
-<section class="sec" id="concept"><div class="wrap game">
-  <div>
-    <h2>Le digne remplaçant du rush.</h2>
-    <div class="tabs" role="tablist" aria-label="Le jeu">
-      <button class="tab" role="tab" id="t0" aria-selected="true" aria-controls="p0">Le concept</button>
-      <button class="tab" role="tab" id="t1" aria-selected="false" aria-controls="p1" tabindex="-1">Shop et économie</button>
-      <button class="tab" role="tab" id="t2" aria-selected="false" aria-controls="p2" tabindex="-1">Ranked et ELO</button>
-    </div>
-  </div>
-  <div>
-    <div class="pane" role="tabpanel" id="p0" aria-labelledby="t0"><h3>Le concept</h3><p>Conçu pour les joueurs exigeants, notre infrastructure garantit des hits réguliers, une détection précise et des combos fluides pour chaque fight sans aucun compromis.</p><div class="bignum">&lt;20 ms<small>de latence serveur</small></div><div class="chips"><span><b>100 %</b>knockback optimisé</span><span>Spigot maison 1.8.9</span></div></div>
-    <div class="pane" role="tabpanel" id="p1" aria-labelledby="t1" hidden><h3>Shop et économie</h3><p>Une économie de jeu repensée et équilibrée pour favoriser le skill et l'agressivité. Récupérez vos ressources et menez l'offensive.</p><div class="chips"><span>Génération équilibrée</span><span>Achat instantané</span></div></div>
-    <div class="pane" role="tabpanel" id="p2" aria-labelledby="t2" hidden><h3>Ranked et ELO</h3><p>Affrontez des adversaires à votre hauteur grâce à notre matchmaking basé sur l'ELO. Grimpez les divisions au fil des saisons.</p><div class="chips"><span>Saison 0 active</span><span>Matchmaking équilibré</span><span>Récompenses de saison</span></div></div>
-  </div>
-</div></section>
-
-<section class="sec" id="maps"><div class="wrap">
-  <div class="head"><h2>Les maps</h2><p class="lead">Des terrains de jeu conçus sur mesure pour le Ranked, équilibrés et optimisés pour le clean build-fight.</p></div>
-  <div class="maps">
-    <div class="mlist" role="tablist" aria-label="Maps">
-      <button class="mbtn" role="tab" aria-selected="true"><strong>Plains</strong><span>1v1 et 2v2</span></button>
-      <button class="mbtn" role="tab" aria-selected="false"><strong>Celestial</strong><span>Ranked standard</span></button>
-      <button class="mbtn" role="tab" aria-selected="false"><strong>Frostbite</strong><span>Compétitif S0</span></button>
-    </div>
-    <div>
-      <div class="mview" id="mview">
-        <img class="on" src="https://lunr.pics/i/UzwBYAVz.png" alt="Map Plains">
-        <img src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=1400&auto=format&fit=crop" alt="Map Celestial" loading="lazy">
-        <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1400&auto=format&fit=crop" alt="Map Frostbite" loading="lazy">
-      </div>
-      <p class="mcap" id="mcap" aria-live="polite">Une arène aux tons ténébreux, parfaite pour des duels intenses et des rushes ultra-rapides.</p>
-    </div>
-  </div>
-</div></section>
-
-<section class="sec" id="how-to-play"><div class="wrap">
-  <div class="head"><h2>Rejoindre une partie</h2><p class="lead">Rejoins le serveur, entre en file et affronte les meilleurs joueurs pour grimper dans le classement.</p></div>
-  <div class="steps">
-    <div class="step"><span class="n">1</span><h3>Connexion en 1.8.9</h3><p>Lance ton jeu en version 1.8.9 (recommandé avec Badlion ou Lunar Client), ajoute l'adresse IP et connecte-toi.</p></div>
-    <div class="step"><span class="n">2</span><h3>Matchmaking rapide</h3><p>Utilise le menu pour entrer en file d'attente Ranked Bedfight. Un adversaire de ton niveau te sera assigné.</p></div>
-    <div class="step"><span class="n">3</span><h3>Classement et gloire</h3><p>Remporte tes duels pour gagner des points d'ELO, progresse de division et impose ton nom au sommet.</p></div>
-  </div>
-  <button class="ipbtn" onclick="copyIP()" aria-label="Copier l'adresse du serveur hevenly.games"><span><small>Adresse du serveur</small><b>hevenly.games</b></span><span class="go-c"><svg class="ico"><use href="#i-copy"/></svg>Copier l'IP</span></button>
-</div></section>
-
-<section class="sec" id="news"><div class="wrap">
-  <div class="head head-row"><h2>Actualités</h2><button class="btn btn-line btn-sm" onclick="openNewsModal()">Tout voir</button></div>
-  <div id="nlist"></div>
-</div></section>
-
-<section class="sec" id="shop"><div class="wrap">
-  <div class="head"><h2>Soutenez le serveur</h2><p class="lead">Débloquez des fonctionnalités exclusives, des cosmétiques rares et soutenez directement le développement.</p></div>
-  <div class="plans">
-    <article class="plan"><div class="tp"><span>Abonnement mensuel</span></div><h3>Hevenly Plus</h3><p>Le grade idéal pour profiter de l'expérience compétitive avec priorité et cosmétiques.</p>
-      <ul class="perks"><li>Préfixe [+] distinctif</li><li>Priorité de file d'attente</li><li>Effets de victoire / mort exclusifs</li><li>Rôle Discord + salon restreint</li></ul>
-      <div class="price">2.99€ <small>/ mois</small></div>
-      <button class="btn btn-line" onclick="openModal('Hevenly Plus', '2.99€', ['Préfixe [+] distinctif', 'Priorité de file d\'attente', 'Effets de victoire / mort exclusifs', 'Rôle Discord + salon restreint'])">Voir les détails</button></article>
-    <article class="plan main"><div class="tp"><span>Abonnement mensuel</span><span class="tag">Populaire</span></div><h3>Hevenly Premium</h3><p>Le statut suprême débloquant la priorité absolue, toutes les customisations et l'accès bêta.</p>
-      <ul class="perks"><li>Préfixe [✦] exclusif</li><li>Avantages du + inclus</li><li>Permet d'héberger un événement</li><li>Accès bêta aux nouvelles cartes et modes</li></ul>
-      <div class="price">6.99€ <small>/ mois</small></div>
-      <button class="btn btn-white" onclick="openModal('Hevenly Premium', '6.99€', ['Préfixe [✦] exclusif', 'Avantages du + inclus', 'Permet d\'héberger un événement', 'Accès bêta aux nouvelles cartes et modes'])">Voir les détails</button></article>
-  </div>
-</div></section>
-
-<section class="sec" id="faq"><div class="wrap">
-  <div class="head"><h2>Questions fréquentes</h2></div>
-  <div class="faq">
-    <div class="qa"><button aria-expanded="false"><span>Quelles versions de Minecraft sont acceptées ?</span><i></i></button><div class="qa-body"><div><p>Le serveur est optimisé exclusivement pour la version <strong>1.8.9</strong>, offrant le meilleur PvP. Nous conseillons Badlion Client ou Lunar Client.</p></div></div></div>
-    <div class="qa"><button aria-expanded="false"><span>Comment fonctionnent l'ELO et les saisons ?</span><i></i></button><div class="qa-body"><div><p>Chaque victoire en Ranked rapporte de l'ELO selon le niveau adverse. Les meilleures places de chaque saison reçoivent des récompenses exclusives.</p></div></div></div>
-    <div class="qa"><button aria-expanded="false"><span>Comment lier mon compte Discord au serveur ?</span><i></i></button><div class="qa-body"><div><p>Tapez la commande <code>/discord link</code> dans le chat du jeu pour associer votre profil.</p></div></div></div>
-    <div class="qa"><button aria-expanded="false"><span>Que faire si je rencontre un cheater ou un bug ?</span><i></i></button><div class="qa-body"><div><p>Vous pouvez ouvrir un ticket de report sur notre serveur Discord officiel en fournissant les preuves vidéo nécessaires.</p></div></div></div>
-  </div>
-</div></section>
-
-<section class="final" id="join"><div class="wrap">
-  <svg viewBox="0 0 667 670" class="lg anim final-lg" aria-hidden="true"><defs><clipPath id="fc"><path d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z"/></clipPath><mask id="fm"><path d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="#fff"/><circle class="ring tl" cx="115" cy="115" r="137" fill="#000"/><circle class="ring br" cx="555" cy="555" r="137" fill="#000"/></mask></defs><path class="hs" d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="none" stroke="#E6E6E6" stroke-width="4" pathLength="1"/><path class="hf" d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="#E6E6E6" mask="url(#fm)"/><g clip-path="url(#fc)"><circle class="leaf tl" cx="115" cy="115" r="115" fill="#E10600"/><circle class="leaf br" cx="555" cy="555" r="115" fill="#E10600"/></g></svg>
-  <h2>Ton lit t'attend.</h2>
-  <p>La saison 0 est en cours. Copie l'adresse, rejoins le Discord et lance ta première partie classée.</p>
-  <div class="cta"><a href="https://discord.gg" target="_blank" rel="noopener" class="btn btn-red"><svg class="ico fill"><use href="#i-discord"/></svg>Rejoindre le Discord</a><button class="btn btn-line" onclick="copyIP()"><svg class="ico"><use href="#i-copy"/></svg>Copier l'IP</button></div>
-</div></section>
-</main>
-
-<footer class="foot"><div class="wrap">
-  <div class="fl"><svg viewBox="0 0 667 670" class="lg " aria-hidden="true"><defs><clipPath id="oc"><path d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z"/></clipPath><mask id="om"><path d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="#fff"/><circle class="ring tl" cx="115" cy="115" r="137" fill="#000"/><circle class="ring br" cx="555" cy="555" r="137" fill="#000"/></mask></defs><path class="hs" d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="none" stroke="#E6E6E6" stroke-width="4" pathLength="1"/><path class="hf" d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="#E6E6E6" mask="url(#om)"/><g clip-path="url(#oc)"><circle class="leaf tl" cx="115" cy="115" r="115" fill="#E10600"/><circle class="leaf br" cx="555" cy="555" r="115" fill="#E10600"/></g></svg><span>© 2026 Hevenly Games. Tous droits réservés. Not an official minecraft product. Not approved by or associated with Mojang or Microsoft.</span></div>
-  <div class="foot-l"><button onclick="openLegalModal('legal')">Mentions légales</button><button onclick="openLegalModal('privacy')">Confidentialité</button><button onclick="openLegalModal('cookies')">Cookies</button></div>
-</div></footer>
-
-<div class="overlay" id="modal-backdrop" onclick="closeModalOnBackdrop(event)" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="panel"><div class="panel-head"><h3 id="modal-title">Grade</h3><button class="close" onclick="closeModal()" aria-label="Fermer"><svg class="ico"><use href="#i-x"/></svg></button></div><div class="panel-body"><div class="panel-price" id="modal-price">0.00€</div><ul id="modal-list"></ul><a href="https://discord.gg" target="_blank" rel="noopener" class="btn btn-red">Acheter sur la boutique</a></div></div></div>
-<div class="overlay" id="news-modal-backdrop" onclick="closeNewsModalOnBackdrop(event)" role="dialog" aria-modal="true" aria-labelledby="news-title"><div class="panel panel-wide"><div class="panel-head"><h3 id="news-title">Toutes les actualités</h3><button class="close" onclick="closeNewsModal()" aria-label="Fermer"><svg class="ico"><use href="#i-x"/></svg></button></div><div class="panel-body" id="dynamic-news-container"></div></div></div>
-<div class="overlay" id="legal-modal-backdrop" onclick="closeLegalModalOnBackdrop(event)" role="dialog" aria-modal="true" aria-labelledby="legal-modal-title"><div class="panel panel-wide"><div class="panel-head"><h3 id="legal-modal-title">Document légal</h3><button class="close" onclick="closeLegalModal()" aria-label="Fermer"><svg class="ico"><use href="#i-x"/></svg></button></div><div class="panel-body legal" id="legal-modal-body"></div></div></div>
-<div class="toast" id="toast" role="status">Adresse IP copiée : hevenly.games</div>
-<div class="cookie" id="cookie-banner"><div class="in2"><p><b>Cookies et confidentialité</b>Nous utilisons des outils d'analyse pour mesurer l'audience et améliorer l'expérience. Détails dans notre <button onclick="openLegalModal('privacy')">politique de confidentialité</button>.</p><div class="cookie-actions"><button class="btn btn-line btn-sm" onclick="acceptCookies(false)">Refuser</button><button class="btn btn-red btn-sm" onclick="acceptCookies(true)">Tout accepter</button></div></div></div>
-
-<script>const SUPABASE_URL = "https://tawnbphpaaxjzkydeubq.supabase.co";
-    const SUPABASE_ANON_KEY = "sb_publishable_g0M5uEmx7p6s9w7LzUID7w_bVDKjw3-";
-    let supabaseClient = null;
-    try { supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); } catch (e) { /* le site reste utilisable sans les actualités */ }
-    const $ = (s, r = document) => r.querySelector(s);
-    const $$ = (s, r = document) => [...r.querySelectorAll(s)];
-    const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
-    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-
-    /* ---------- Intro : le logo se dessine, les deux coins rouges s'affrontent, puis le rouge balaie l'écran ---------- */
-    let introDone = false;
-    function endIntro() {
-      if (introDone) return; introDone = true;
-      const i = $('#intro'); if (i) i.remove();
-      document.body.classList.remove('lock'); document.body.classList.add('go');
+  <!-- Script pour forcer le retour en haut -->
+  <script>
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
     }
-    function runIntro() {
-      const intro = $('#intro'), svg = $('#intro .lg'), wipe = $('#wipe');
-      if (!intro || reduce) { endIntro(); return; }
+    window.onbeforeunload = function () {
       window.scrollTo(0, 0);
-      svg.classList.add('play');
-      const skip = () => { if (!introDone) { document.body.classList.add('go'); endIntro(); } };
-      intro.addEventListener('click', skip); addEventListener('keydown', skip, { once: true });
-      const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-      const tween = (ms, fn, cb) => { const t0 = performance.now(); (function f(t) { if (introDone) return; const p = clamp((t - t0) / ms, 0, 1); fn(ease(p)); p < 1 ? requestAnimationFrame(f) : cb && cb(); })(t0); };
-      const at = (vx, vy) => { const b = svg.getBoundingClientRect(); return [b.left + b.width * vx / 667, b.top + b.height * vy / 670]; };
-      const far = (x, y) => Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y)) + 6;
-      setTimeout(() => {
-        if (introDone) return;
-        const [x1, y1] = at(115, 115), [x2, y2] = at(555, 555), R1 = far(x1, y1), R2 = far(x2, y2);
-        tween(650, p => { wipe.style.clipPath = `circle(${R1 * p}px at ${x1}px ${y1}px)`; }, () => {
-          document.body.classList.add('go');
-          tween(850, p => { const m = `radial-gradient(circle at ${x2}px ${y2}px, transparent ${R2 * p}px, #000 ${R2 * p + 2}px)`; intro.style.webkitMaskImage = m; intro.style.maskImage = m; }, endIntro);
-        });
-      }, 3000);
+    };
+  </script>
+
+  <!-- Favicon Logo -->
+  <link rel="icon" type="image/png" href="https://i.imgur.com/BYA0Cs5.png">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- SDK Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Font Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              DEFAULT: '#AA0000',
+              hover: '#880000',
+              light: '#FF2222',
+              dark: '#0A0A0A',
+              card: '#121212',
+              border: '#1F1F1F'
+            }
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          }
+        }
+      }
     }
+  </script>
+
+  <style>
+    html {
+      background-color: #0A0A0A;
+      color: #EDEDED;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    body {
+      background-color: #0A0A0A;
+      opacity: 0;
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    body.loaded {
+      opacity: 1;
+    }
+
+    /* Scrollbar minimaliste raffinée */
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #0A0A0A;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #262626;
+      border-radius: 9999px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #AA0000;
+    }
+
+    /* Cartes au design épuré high-end */
+    .clean-glass-card {
+      background: linear-gradient(135deg, rgba(20, 20, 20, 0.9) 0%, rgba(12, 12, 12, 0.95) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .clean-glass-card:hover {
+      border-color: rgba(170, 0, 0, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 20px 40px -15px rgba(170, 0, 0, 0.15);
+    }
+
+    /* Défilement infini Footer */
+    @keyframes marquee {
+      0% {
+        transform: translateX(0%);
+      }
+
+      100% {
+        transform: translateX(-33.333%);
+      }
+    }
+
+    .animate-marquee {
+      display: flex;
+      width: max-content;
+      animation: marquee 35s linear infinite;
+    }
+
+    .animate-marquee:hover {
+      animation-play-state: paused;
+    }
+
+    /* Animations d'apparition UI fluides */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .delay-100 {
+      transition-delay: 100ms;
+    }
+
+    .delay-200 {
+      transition-delay: 200ms;
+    }
+
+    .delay-300 {
+      transition-delay: 300ms;
+    }
+
+    .delay-400 {
+      transition-delay: 400ms;
+    }
+
+    /* Modales */
+    .modal-enter-active {
+      opacity: 1;
+      transform: scale(1);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .slide-step {
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .bedfight-tab-content {
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+  </style>
+
+<style id="hv-intro-css">
+  body.intro-lock{overflow:hidden!important}
+  #hv-intro{position:fixed;inset:0;z-index:2000;background:#0A0A0A;display:grid;place-items:center;cursor:default}
+  #hv-intro .stage{display:grid;justify-items:center;gap:26px;width:min(52vmin,400px)}
+  #hv-intro .tag{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.8rem;letter-spacing:.32em;text-transform:uppercase;color:#9C9C9C;opacity:0;animation:hvfin .8s 2.1s forwards;white-space:nowrap}
+  #hv-intro .big{width:100%}
+  #hv-wipe{position:absolute;inset:0;background:#E10600;clip-path:circle(0 at 0 0);pointer-events:none}
+  #hv-intro .lg{width:100%;height:auto;overflow:visible}
+  #hv-intro .lg .ring,#hv-intro .lg .leaf{transform-box:view-box}
+  #hv-intro .lg .tl{transform-origin:115px 115px}#hv-intro .lg .br{transform-origin:555px 555px}
+  #hv-intro .lg .hs{stroke-dasharray:1;stroke-dashoffset:1;opacity:1}
+  #hv-intro .lg .hf{opacity:0}
+  #hv-intro .lg .ring,#hv-intro .lg .leaf{transform:scale(0)}
+  #hv-intro .lg.play .hs{animation:hvdraw 1.1s .15s cubic-bezier(.65,0,.35,1) forwards,hvstrokeout .5s 1.15s forwards}
+  #hv-intro .lg.play .hf{animation:hvfin .6s 1s forwards}
+  #hv-intro .lg.play .ring.tl{animation:hvpop .75s 1.45s cubic-bezier(.2,1.25,.3,1) forwards}
+  #hv-intro .lg.play .leaf.tl{animation:hvpop .75s 1.52s cubic-bezier(.2,1.25,.3,1) forwards}
+  #hv-intro .lg.play .ring.br{animation:hvpop .75s 1.8s cubic-bezier(.2,1.25,.3,1) forwards}
+  #hv-intro .lg.play .leaf.br{animation:hvpop .75s 1.87s cubic-bezier(.2,1.25,.3,1) forwards}
+  @keyframes hvdraw{to{stroke-dashoffset:0}}@keyframes hvstrokeout{to{opacity:0}}@keyframes hvfin{to{opacity:1}}@keyframes hvpop{to{transform:scale(1)}}
+  #hv-flyer{position:fixed;z-index:2100;pointer-events:none;transform-origin:0 0;display:none}
+  #hv-flyer .lg{width:100%;height:auto}
+  #hv-flyer .hs{display:none}
+  /* navbar */
+  #hv-nav{position:fixed;top:0;left:0;right:0;z-index:1500;height:76px;display:flex;align-items:center;gap:28px;padding:0 clamp(18px,3.4vw,46px) 0 clamp(18px,3.4vw,46px);transform:translateY(-100%);transition:transform .8s cubic-bezier(.2,.8,.2,1),background-color .4s,border-color .4s,backdrop-filter .4s;border-bottom:1px solid transparent}
+  #hv-nav.show{transform:none}
+  #hv-nav.scrolled{background:rgba(10,10,10,.85);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:#1F1F1F}
+  #hv-nav .brand{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-weight:800;font-size:1.05rem;letter-spacing:-.02em}
+  #hv-nav .brand .slot{width:34px;height:34px}
+  #hv-nav .brand .slot .lg{width:34px;height:34px}
+  #hv-nav .links{display:flex;gap:4px;margin-left:auto}
+  #hv-nav .links a{padding:8px 13px;border-radius:10px;color:#CFCFCF;text-decoration:none;font-size:.9rem;font-weight:500;transition:background-color .2s,color .2s}
+  #hv-nav .links a:hover{background:#ffffff12;color:#fff}
+  #hv-nav .ip{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 14px;border-radius:12px;border:1px solid #333;background:transparent;color:#fff;font-size:.88rem;font-weight:600;cursor:pointer;transition:border-color .2s}
+  #hv-nav .ip:hover{border-color:#E10600}
+  #hv-nav .dc{display:inline-flex;align-items:center;height:40px;padding:0 16px;border-radius:12px;background:#E10600;color:#fff;text-decoration:none;font-size:.88rem;font-weight:700}
+  #hv-nav .dc:hover{background:#F5180F}
+  #hv-nav{padding-right:76px}
+  @media(max-width:760px){#hv-nav .links{display:none}#hv-nav .ip{display:none}}
+  @media(prefers-reduced-motion:reduce){#hv-intro .lg .hs,#hv-intro .lg .hf,#hv-intro .lg .ring,#hv-intro .lg .leaf{animation:none!important;transition:none!important}}
+</style>
+
+</head>
+
+<body class="antialiased flex flex-col min-h-screen m-0 p-0 selection:bg-red-600 selection:text-white">
+<div id="hv-intro" role="presentation" aria-hidden="true">
+  <div class="stage"><div class="big"><svg viewBox="0 0 667 670" class="lg play-pending" aria-hidden="true"><defs><clipPath id="hic"><path d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z"/></clipPath><mask id="him"><path d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="#fff"/><circle class="ring tl" cx="115" cy="115" r="137" fill="#000"/><circle class="ring br" cx="555" cy="555" r="137" fill="#000"/></mask></defs><path class="hs" d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="none" stroke="#E6E6E6" stroke-width="4" pathLength="1"/><path class="hf" d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="#E6E6E6" mask="url(#him)"/><g clip-path="url(#hic)"><circle class="leaf tl" cx="115" cy="115" r="115" fill="#E10600"/><circle class="leaf br" cx="555" cy="555" r="115" fill="#E10600"/></g></svg></div><div class="tag">Ranked Bedfight</div></div>
+  <div id="hv-wipe"></div>
+</div>
+<div id="hv-flyer" aria-hidden="true"><svg viewBox="0 0 667 670" class="lg " aria-hidden="true"><defs><clipPath id="hfc"><path d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z"/></clipPath><mask id="hfm"><path d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="#fff"/><circle class="ring tl" cx="115" cy="115" r="137" fill="#000"/><circle class="ring br" cx="555" cy="555" r="137" fill="#000"/></mask></defs><path class="hs" d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="none" stroke="#E6E6E6" stroke-width="4" pathLength="1"/><path class="hf" d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="#E6E6E6" mask="url(#hfm)"/><g clip-path="url(#hfc)"><circle class="leaf tl" cx="115" cy="115" r="115" fill="#E10600"/><circle class="leaf br" cx="555" cy="555" r="115" fill="#E10600"/></g></svg></div>
+<header id="hv-nav">
+  <a href="#top" class="brand" aria-label="Hevenly, accueil"><span class="slot" id="hv-slot"><svg viewBox="0 0 667 670" class="lg " aria-hidden="true"><defs><clipPath id="hnc"><path d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z"/></clipPath><mask id="hnm"><path d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="#fff"/><circle class="ring tl" cx="115" cy="115" r="137" fill="#000"/><circle class="ring br" cx="555" cy="555" r="137" fill="#000"/></mask></defs><path class="hs" d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="none" stroke="#E6E6E6" stroke-width="4" pathLength="1"/><path class="hf" d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="#E6E6E6" mask="url(#hnm)"/><g clip-path="url(#hnc)"><circle class="leaf tl" cx="115" cy="115" r="115" fill="#E10600"/><circle class="leaf br" cx="555" cy="555" r="115" fill="#E10600"/></g></svg></span><span>Hevenly</span></a>
+  <nav class="links" aria-label="Navigation principale"><a href="#features">Atouts</a><a href="#bed-tab-btn-0">Le jeu</a><a href="#maps">Maps</a><a href="#how-to-play">Jouer</a><a href="#faq">FAQ</a><a href="#shop">Boutique</a></nav>
+  <button class="ip" onclick="copyIP()"><i data-lucide="copy" class="w-4 h-4"></i>hevenly.games</button>
+  <a class="dc" href="https://discord.gg" target="_blank" rel="noopener">Discord</a>
+</header>
+
+
+  <!-- Fine barre de progression linéaire en haut -->
+  <div class="fixed top-0 left-0 right-0 z-50 h-[2px] bg-neutral-900 pointer-events-none">
+    <div id="scroll-progress-bar" class="h-full bg-red-600 w-0 transition-all duration-75"></div>
+  </div>
+
+  <!-- Bouton de Notification Flottant -->
+  <div class="fixed top-5 right-5 z-40">
+    <button onclick="openNewsModal()"
+      class="relative flex items-center justify-center w-11 h-11 rounded-xl bg-[#141414] hover:bg-[#1C1C1C] border border-[#222222] text-neutral-300 hover:text-white transition-all shadow-lg hover:scale-105 active:scale-95">
+      <i data-lucide="bell" class="w-4 h-4"></i>
+      <span class="absolute top-2 right-2 w-2 h-2 bg-red-600 rounded-full animate-pulse"></span>
+    </button>
+  </div>
+
+  <!-- Bouton "Retour en haut" -->
+  <button id="back-to-top" onclick="scrollToTop()"
+    class="fixed bottom-6 right-6 z-40 flex items-center justify-center w-11 h-11 rounded-xl bg-[#141414] hover:bg-[#1C1C1C] border border-[#222222] text-neutral-300 hover:text-white shadow-2xl transition-all duration-300 transform translate-y-20 opacity-0 pointer-events-none hover:scale-105 active:scale-95">
+    <i data-lucide="arrow-up" class="w-4 h-4"></i>
+  </button>
+
+  <!-- Toast Notification -->
+  <div id="toast"
+    class="fixed bottom-6 left-6 z-50 transform translate-y-20 opacity-0 bg-[#141414] border border-[#222222] text-white px-4 py-3 rounded-xl shadow-2xl flex items-center space-x-3 text-xs">
+    <div class="w-6 h-6 rounded-full bg-red-500/20 text-red-500 flex items-center justify-center shrink-0">
+      <i data-lucide="check" class="w-3.5 h-3.5"></i>
+    </div>
+    <span class="font-semibold text-neutral-200">Adresse IP copiée dans le presse-papier !</span>
+  </div>
+
+  <!-- Banner Cookie (Bas de page) -->
+  <div id="cookie-banner"
+    class="fixed bottom-0 inset-x-0 z-40 bg-[#121212]/95 backdrop-blur-md border-t border-[#1F1F1F] px-6 py-4 transition-all duration-500 transform translate-y-full">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-xs">
+      <div class="space-y-1 text-neutral-300">
+        <h4 class="font-bold text-white text-sm">Gestion des cookies & confidentialité</h4>
+        <p class="text-neutral-400 max-w-2xl leading-relaxed">
+          Nous utilisons des outils d'analyse pour mesurer l'audience et améliorer l'expérience. En savoir plus via
+          notre <button onclick="openLegalModal('privacy')"
+            class="underline text-neutral-200 hover:text-white">politique de confidentialité</button>.
+        </p>
+      </div>
+      <div class="flex items-center space-x-3 shrink-0 w-full md:w-auto justify-end">
+        <button onclick="acceptCookies(false)"
+          class="px-4 py-2.5 rounded-lg bg-[#1A1A1A] hover:bg-[#242424] text-neutral-300 font-medium transition-colors text-xs">
+          Refuser
+        </button>
+        <button onclick="acceptCookies(true)"
+          class="px-4 py-2.5 rounded-lg bg-red-600 hover:bg-red-500 text-white font-bold transition-all text-xs shadow-md">
+          Tout accepter
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <main class="flex-grow">
+    <!-- Hero Section Plein Écran Épuré -->
+    <section
+      class="relative min-h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden bg-[#0A0A0A]"
+      style="background-image: linear-gradient(to bottom, rgba(10, 10, 10, 0.3), rgba(10, 10, 10, 0.95), #0A0A0A), url('https://i.imgur.com/xr1vqMq.jpg'); background-size: cover; background-position: center top;">
+
+      <div class="w-full max-w-3xl mx-auto relative z-10 flex flex-col items-center justify-center text-center py-24">
+
+        <!-- Status Indicator -->
+        <div
+          class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-[#121212]/80 backdrop-blur border border-[#1F1F1F] text-xs font-medium text-neutral-300 mb-6 shadow-sm reveal">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>0 Joueurs en ligne</span>
+          <span class="text-neutral-600">•</span>
+          <span class="text-neutral-400">Saison 0 Active</span>
+        </div>
+
+        <!-- Titre HEVENLY avec logo intégré proprement -->
+        <div class="relative inline-flex items-center justify-center space-x-3 mb-4 reveal delay-100">
+          <img src="https://i.imgur.com/BYA0Cs5.png" alt="Hevenly Logo"
+            class="w-10 h-10 md:w-14 md:h-14 object-contain">
+          <h1 class="font-black text-4xl md:text-6xl tracking-tight text-white uppercase m-0">
+            HEVENLY
+          </h1>
+        </div>
+
+        <!-- Badge Version -->
+        <div
+          class="inline-flex items-center px-3 py-1 rounded-md bg-[#121212] border border-[#1F1F1F] text-[11px] font-mono tracking-widest text-red-400 uppercase mb-6 reveal delay-200">
+          <span>VERSION 1.8.9 • RANKED BEDFIGHT</span>
+        </div>
+
+        <!-- Titre principal -->
+        <h2
+          class="text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-[1.1] mb-6 reveal delay-300">
+          La plateforme compétitive que vous méritez.
+        </h2>
+
+        <!-- Sous-titre -->
+        <p
+          class="text-neutral-300 text-xs sm:text-sm md:text-base max-w-lg mx-auto mb-10 leading-relaxed font-normal reveal delay-400">
+          Hevenly propose un système compétitif complet axé sur le Bedfight, développé sur mesure pour vous faire
+          progresser dans les meilleures conditions.
+        </p>
+
+        <!-- Boutons CTA -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3 w-full reveal delay-400">
+          <a href="https://discord.gg" target="_blank"
+            class="w-full sm:w-56 py-3.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs tracking-wide transition-all duration-200 flex items-center justify-center space-x-2.5 shadow-lg shadow-red-600/20 active:scale-95">
+            <svg class="w-4 h-4 shrink-0 fill-current" viewBox="0 -28.5 256 256" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M216.856339,16.5966031 C200.285002,8.84328665 182.566144,3.2084988 164.041564,0 C161.766523,4.11318106 159.108624,9.64549908 157.276099,14.0464379 C137.583995,11.0849896 118.072967,11.0849896 98.7430163,14.0464379 C96.9108417,9.64549908 94.1925838,4.11318106 91.8971895,0 C73.3526068,3.2084988 55.6133949,8.86399117 39.0420583,16.6376612 C5.61752293,67.146514 -3.4433191,116.400813 1.08711069,164.955721 C23.2560196,181.510915 44.7403634,191.567697 65.8621325,198.148576 C71.0772151,190.971126 75.7283628,183.341335 79.7352139,175.300261 C72.104019,172.400575 64.7949724,168.822202 57.8887866,164.667963 C59.7209612,163.310589 61.5131304,161.891452 63.2445898,160.431257 C105.36741,180.133187 151.134928,180.133187 192.754523,160.431257 C194.506336,161.891452 196.298154,163.310589 198.110326,164.667963 C191.183787,168.842556 183.854737,172.420929 176.223542,175.320965 C180.230393,183.341335 184.861538,190.991831 190.096624,198.16893 C211.238746,191.588051 232.743023,181.531619 254.911949,164.955721 C260.227747,108.668201 245.831087,59.8662432 216.856339,16.5966031 Z M85.4738752,135.09489 C72.8290281,135.09489 62.4592217,123.290155 62.4592217,108.914901 C62.4592217,94.5396472 72.607595,82.7145587 85.4738752,82.7145587 C98.3405064,82.7145587 108.709962,94.5189427 108.488529,108.914901 C108.508531,123.290155 98.3405064,135.09489 85.4738752,135.09489 Z M170.525237,135.09489 C157.88039,135.09489 147.510584,123.290155 147.510584,108.914901 C147.510584,94.5396472 157.658606,82.7145587 170.525237,82.7145587 C183.391518,82.7145587 193.761324,94.5189427 193.539891,108.914901 C193.539891,123.290155 183.391518,135.09489 170.525237,135.09489 Z" />
+            </svg>
+            <span>Rejoindre le Discord</span>
+          </a>
+          <button onclick="copyIP()"
+            class="w-full sm:w-56 py-3.5 rounded-xl bg-[#141414] hover:bg-[#1C1C1C] text-white font-bold text-xs border border-[#222222] transition-all duration-200 active:scale-95 flex items-center justify-center space-x-2">
+            <i data-lucide="copy" class="w-4 h-4 text-neutral-400 shrink-0"></i>
+            <span class="font-mono">hevenly.games</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-16 md:py-20 border-t border-[#1F1F1F] bg-[#0E0E0E]">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+          <div class="clean-glass-card p-6 rounded-2xl reveal">
+            <div
+              class="w-10 h-10 rounded-xl bg-red-500/10 text-red-500 flex items-center justify-center mb-4 border border-red-500/20">
+              <i data-lucide="shield-check" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-sm font-bold text-white mb-2">Anti-cheat Intransigeant</h3>
+            <p class="text-xs text-neutral-400 leading-relaxed">
+              Mise à jour en continu : triche détectée équivaut à un ban définitif et une blacklist totale.
+            </p>
+          </div>
+
+          <div class="clean-glass-card p-6 rounded-2xl reveal delay-100">
+            <div
+              class="w-10 h-10 rounded-xl bg-red-500/10 text-red-500 flex items-center justify-center mb-4 border border-red-500/20">
+              <i data-lucide="map" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-sm font-bold text-white mb-2">Arènes Inédites</h3>
+            <p class="text-xs text-neutral-400 leading-relaxed">
+              Des terrains de jeu compétitifs, testés et peaufinés en direct par les joueurs exigeants.
+            </p>
+          </div>
+
+          <div class="clean-glass-card p-6 rounded-2xl reveal delay-200">
+            <div
+              class="w-10 h-10 rounded-xl bg-red-500/10 text-red-500 flex items-center justify-center mb-4 border border-red-500/20">
+              <i data-lucide="trending-up" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-sm font-bold text-white mb-2">Statistiques Avancées</h3>
+            <p class="text-xs text-neutral-400 leading-relaxed">
+              Analysez vos stats en temps réel, suivez votre progression et grimpez au sommet en ranked.
+            </p>
+          </div>
+
+          <div class="clean-glass-card p-6 rounded-2xl reveal delay-300">
+            <div
+              class="w-10 h-10 rounded-xl bg-red-500/10 text-red-500 flex items-center justify-center mb-4 border border-red-500/20">
+              <i data-lucide="zap" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-sm font-bold text-white mb-2">PvP Ultra-Fluide</h3>
+            <p class="text-xs text-neutral-400 leading-relaxed">
+              Un gameplay sans latence propulsé directement par un Spigot maison optimisé pour le 1.8.9.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Showcase Onglets Bedfight -->
+    <section class="py-20 relative overflow-hidden bg-[#0A0A0A] border-t border-[#1F1F1F]">
+      <div class="max-w-6xl mx-auto px-4 relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+          <!-- Texte à gauche -->
+          <div class="lg:col-span-7 space-y-6 text-left reveal">
+            <div
+              class="inline-flex items-center space-x-2 px-3 py-1 rounded-md bg-[#141414] border border-[#1F1F1F] text-xs font-mono text-neutral-300 uppercase">
+              <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+              <span>BEDFIGHT NEXT-GEN</span>
+            </div>
+
+            <h2 class="text-2xl sm:text-3xl md:text-5xl font-black text-white tracking-tight leading-tight">
+              Le Bedfight en France, le digne remplaçant du rush.
+            </h2>
+
+            <!-- Boutons d'onglets épurés -->
+            <div class="flex flex-wrap gap-2 pt-2 border-b border-[#1F1F1F] pb-4">
+              <button onclick="switchBedfightTab(0)" id="bed-tab-btn-0"
+                class="px-4 py-2 rounded-xl text-xs font-bold bg-red-600 text-white transition-all shadow-md">
+                Le Concept
+              </button>
+              <button onclick="switchBedfightTab(1)" id="bed-tab-btn-1"
+                class="px-4 py-2 rounded-xl text-xs font-semibold bg-[#141414] text-neutral-400 border border-[#1F1F1F] hover:text-white transition-all">
+                Shop & Économie
+              </button>
+              <button onclick="switchBedfightTab(2)" id="bed-tab-btn-2"
+                class="px-4 py-2 rounded-xl text-xs font-semibold bg-[#141414] text-neutral-400 border border-[#1F1F1F] hover:text-white transition-all">
+                Ranked & ELO
+              </button>
+            </div>
+
+            <!-- Contenu des onglets -->
+            <div class="min-h-[130px]">
+              <div id="bed-tab-content-0" class="bedfight-tab-content space-y-4 opacity-100">
+                <p class="text-neutral-300 text-xs sm:text-sm md:text-base leading-relaxed">
+                  Conçu pour les joueurs exigeants, notre infrastructure garantit des hits réguliers, une détection
+                  précise et des combos fluides pour chaque fight sans aucun compromis.
+                </p>
+                <div class="grid grid-cols-2 gap-4 pt-2">
+                  <div class="p-4 rounded-xl bg-[#121212] border border-[#1F1F1F]">
+                    <div class="text-xl md:text-2xl font-black text-white mb-1">100%</div>
+                    <p class="text-xs text-neutral-400 font-medium">Knockback Optimisé</p>
+                  </div>
+                  <div class="p-4 rounded-xl bg-[#121212] border border-[#1F1F1F]">
+                    <div class="text-xl md:text-2xl font-black text-white mb-1">&lt; 20ms</div>
+                    <p class="text-xs text-neutral-400 font-medium">Latence Serveur</p>
+                  </div>
+                </div>
+              </div>
+
+              <div id="bed-tab-content-1" class="bedfight-tab-content space-y-4 opacity-0 hidden">
+                <p class="text-neutral-300 text-xs sm:text-sm md:text-base leading-relaxed">
+                  Une économie de jeu repensée et équilibrée pour favoriser le skill et l'agressivité. Récupérez vos
+                  ressources au middle et menez l'offensive.
+                </p>
+                <div class="grid grid-cols-2 gap-4 pt-2">
+                  <div class="p-4 rounded-xl bg-[#121212] border border-[#1F1F1F]">
+                    <div class="text-xl md:text-2xl font-black text-red-500 mb-1">Équilibré</div>
+                    <p class="text-xs text-neutral-400 font-medium">Génération de ressources</p>
+                  </div>
+                  <div class="p-4 rounded-xl bg-[#121212] border border-[#1F1F1F]">
+                    <div class="text-xl md:text-2xl font-black text-white mb-1">Dynamique</div>
+                    <p class="text-xs text-neutral-400 font-medium">Achat instantané</p>
+                  </div>
+                </div>
+              </div>
+
+              <div id="bed-tab-content-2" class="bedfight-tab-content space-y-4 opacity-0 hidden">
+                <p class="text-neutral-300 text-xs sm:text-sm md:text-base leading-relaxed">
+                  Affrontez des adversaires à votre hauteur grâce à notre matchmaking basé sur l'ELO. Grimpez les
+                  divisions au fil des saisons.
+                </p>
+                <div class="grid grid-cols-2 gap-4 pt-2">
+                  <div class="p-4 rounded-xl bg-[#121212] border border-[#1F1F1F]">
+                    <div class="text-xl md:text-2xl font-black text-amber-400 mb-1">Saison 0</div>
+                    <p class="text-xs text-neutral-400 font-medium">Phase compétitive active</p>
+                  </div>
+                  <div class="p-4 rounded-xl bg-[#121212] border border-[#1F1F1F]">
+                    <div class="text-xl md:text-2xl font-black text-white mb-1">Fair-play</div>
+                    <p class="text-xs text-neutral-400 font-medium">Matchmaking équilibré</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Visuel Minecraft Render à droite avec effet discret -->
+          <div class="lg:col-span-5 relative flex justify-center items-center reveal delay-100">
+            <div
+              class="absolute w-72 h-72 md:w-80 md:h-80 bg-red-600/10 rounded-full blur-3xl -z-10 pointer-events-none">
+            </div>
+            <img src="https://i.imgur.com/r8sDBMt.png" alt="Minecraft Bedfight Render"
+              class="relative z-10 w-full max-w-sm object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)]">
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Arènes / Maps Bedfight -->
+    <section id="maps" class="py-20 md:py-28 max-w-6xl mx-auto px-4 border-t border-[#1F1F1F]">
+      <div class="text-center mb-16 reveal">
+        <div
+          class="inline-flex items-center space-x-2 px-3.5 py-1 rounded-md bg-[#141414] border border-[#1F1F1F] text-xs font-mono text-neutral-300 mb-4">
+          <span>ARÈNES OFFICIELLES</span>
+        </div>
+        <h2 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-3">
+          Découvrez nos maps compétitives
+        </h2>
+        <p class="text-neutral-400 text-xs sm:text-sm max-w-xl mx-auto">
+          Des terrains de jeu conçus sur mesure pour le Ranked, équilibrés et optimisés pour le clean build-fight.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal delay-100">
+        <!-- Map 1 -->
+        <div class="clean-glass-card rounded-2xl overflow-hidden group">
+          <div class="relative h-48 overflow-hidden bg-[#161616]">
+            <img src="https://lunr.pics/i/UzwBYAVz.png" alt="Map Plains"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80">
+            <span
+              class="absolute top-3 right-3 px-2.5 py-1 rounded-lg bg-black/70 backdrop-blur-md text-[11px] font-bold text-white border border-white/10">1v1
+              & 2v2</span>
+          </div>
+          <div class="p-6 space-y-2">
+            <h4 class="text-lg font-bold text-white">Plains</h4>
+            <p class="text-xs text-neutral-400 leading-relaxed">Une arène aux tons ténébreux, parfaite pour des duels
+              intenses et des rushes ultra-rapides.</p>
+          </div>
+        </div>
+
+        <!-- Map 2 -->
+        <div class="clean-glass-card rounded-2xl overflow-hidden group">
+          <div class="relative h-48 overflow-hidden bg-[#161616]">
+            <img src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=600&auto=format&fit=crop"
+              alt="Map Celestial"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80">
+            <span
+              class="absolute top-3 right-3 px-2.5 py-1 rounded-lg bg-black/70 backdrop-blur-md text-[11px] font-bold text-white border border-white/10">Ranked
+              Standard</span>
+          </div>
+          <div class="p-6 space-y-2">
+            <h4 class="text-lg font-bold text-white">Celestial</h4>
+            <p class="text-xs text-neutral-400 leading-relaxed">Inspirée des grands classiques, une map lumineuse axée
+              sur le contrôle stratégique du middle.</p>
+          </div>
+        </div>
+
+        <!-- Map 3 -->
+        <div class="clean-glass-card rounded-2xl overflow-hidden group">
+          <div class="relative h-48 overflow-hidden bg-[#161616]">
+            <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=600&auto=format&fit=crop"
+              alt="Map Frostbite"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80">
+            <span
+              class="absolute top-3 right-3 px-2.5 py-1 rounded-lg bg-black/70 backdrop-blur-md text-[11px] font-bold text-white border border-white/10">Compétitif
+              S0</span>
+          </div>
+          <div class="p-6 space-y-2">
+            <h4 class="text-lg font-bold text-white">Frostbite</h4>
+            <p class="text-xs text-neutral-400 leading-relaxed">Un décor givré et épuré, pensé pour offrir une
+              visibilité maximale et zéro latence visuelle.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Guide / How to Play -->
+    <section id="how-to-play" class="py-20 md:py-28 max-w-6xl mx-auto px-4 border-t border-[#1F1F1F]">
+      <div class="text-center mb-16 reveal">
+        <div
+          class="inline-flex items-center space-x-2 px-3.5 py-1 rounded-md bg-[#141414] border border-[#1F1F1F] text-xs font-mono text-neutral-300 mb-4">
+          <span>GUIDE RAPIDE</span>
+        </div>
+        <h2 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-3">
+          Comment jouer sur le serveur ?
+        </h2>
+        <p class="text-neutral-400 text-xs sm:text-sm max-w-xl mx-auto">
+          Rejoins le serveur, entre en file et affronte les meilleurs joueurs pour grimper dans le classement.
+        </p>
+      </div>
+
+      <!-- Desktop Grid -->
+      <div class="hidden md:grid grid-cols-3 gap-6 reveal delay-100">
+        <div class="clean-glass-card rounded-2xl p-8 flex flex-col justify-between relative overflow-hidden group">
+          <div class="absolute top-4 right-4 text-5xl font-black text-neutral-800/40 select-none">01</div>
+          <div class="space-y-4 relative z-10">
+            <div
+              class="w-11 h-11 rounded-xl bg-neutral-900 border border-[#222222] flex items-center justify-center text-red-500">
+              <i data-lucide="disc" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h4 class="text-base font-bold text-white mb-1">Connexion en 1.8.9</h4>
+              <p class="text-xs text-red-400 font-mono font-bold">hevenly.games</p>
+            </div>
+            <p class="text-xs text-neutral-400 leading-relaxed">
+              Lance ton jeu en version 1.8.9 (recommandé avec Badlion ou Lunar Client), ajoute l'adresse IP et
+              connecte-toi.
+            </p>
+          </div>
+          <div class="pt-6 mt-6 border-t border-[#1F1F1F] flex items-center text-xs text-neutral-400 font-medium">
+            <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 mr-2"></i>
+            <span>Serveur ouvert 24/7</span>
+          </div>
+        </div>
+
+        <div class="clean-glass-card rounded-2xl p-8 flex flex-col justify-between relative overflow-hidden group">
+          <div class="absolute top-4 right-4 text-5xl font-black text-neutral-800/40 select-none">02</div>
+          <div class="space-y-4 relative z-10">
+            <div
+              class="w-11 h-11 rounded-xl bg-neutral-900 border border-[#222222] flex items-center justify-center text-red-500">
+              <i data-lucide="swords" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h4 class="text-base font-bold text-white mb-1">Matchmaking Rapide</h4>
+              <p class="text-xs text-neutral-400 font-medium">File d'attente automatisée</p>
+            </div>
+            <p class="text-xs text-neutral-400 leading-relaxed">
+              Utilise le menu pour entrer en file d'attente Ranked Bedfight. Un adversaire de ton niveau te sera
+              assigné.
+            </p>
+          </div>
+          <div class="pt-6 mt-6 border-t border-[#1F1F1F] flex items-center text-xs text-neutral-400 font-medium">
+            <i data-lucide="zap" class="w-4 h-4 text-red-500 mr-2"></i>
+            <span>Recherche instantanée</span>
+          </div>
+        </div>
+
+        <div class="clean-glass-card rounded-2xl p-8 flex flex-col justify-between relative overflow-hidden group">
+          <div class="absolute top-4 right-4 text-5xl font-black text-neutral-800/40 select-none">03</div>
+          <div class="space-y-4 relative z-10">
+            <div
+              class="w-11 h-11 rounded-xl bg-neutral-900 border border-[#222222] flex items-center justify-center text-red-500">
+              <i data-lucide="trophy" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h4 class="text-base font-bold text-white mb-1">Classement & Gloire</h4>
+              <p class="text-xs text-neutral-400 font-medium">Leaderboard compétitif</p>
+            </div>
+            <p class="text-xs text-neutral-400 leading-relaxed">
+              Remporte tes duels pour gagner des points d'ELO, progresse de division et impose ton nom au sommet.
+            </p>
+          </div>
+          <div class="pt-6 mt-6 border-t border-[#1F1F1F] flex items-center text-xs text-neutral-400 font-medium">
+            <i data-lucide="award" class="w-4 h-4 text-amber-400 mr-2"></i>
+            <span>Récompenses de saison</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Slider -->
+      <div class="md:hidden">
+        <div class="relative flex items-center justify-between max-w-xs mx-auto mb-6">
+          <div class="absolute top-1/2 left-6 right-6 h-[1px] bg-[#1F1F1F] -z-10 -translate-y-1/2"></div>
+          <button onclick="setStep(0)" id="step-btn-0"
+            class="w-9 h-9 rounded-xl bg-red-600 text-white font-bold text-xs flex items-center justify-center shadow">01</button>
+          <button onclick="setStep(1)" id="step-btn-1"
+            class="w-9 h-9 rounded-xl bg-[#141414] text-neutral-400 border border-[#1F1F1F] font-bold text-xs flex items-center justify-center">02</button>
+          <button onclick="setStep(2)" id="step-btn-2"
+            class="w-9 h-9 rounded-xl bg-[#141414] text-neutral-400 border border-[#1F1F1F] font-bold text-xs flex items-center justify-center">03</button>
+        </div>
+
+        <div class="clean-glass-card rounded-2xl p-6 relative max-w-xl mx-auto shadow-xl">
+          <div id="step-card-0" class="slide-step space-y-3 opacity-150">
+            <h4 class="text-sm font-bold text-white flex items-center space-x-2"><i data-lucide="disc"
+                class="w-4 h-4 text-red-500"></i><span>Connexion en 1.8.9</span></h4>
+            <p class="text-xs text-neutral-400 leading-relaxed">Connecte-toi au serveur via l'adresse <strong
+                class="text-white font-mono">hevenly.games</strong> en version 1.8.9.</p>
+          </div>
+          <div id="step-card-1" class="slide-step space-y-3 opacity-0 hidden">
+            <h4 class="text-sm font-bold text-white flex items-center space-x-2"><i data-lucide="swords"
+                class="w-4 h-4 text-red-500"></i><span>Matchmaking Rapide</span></h4>
+            <p class="text-xs text-neutral-400 leading-relaxed">entre en file d'attente Ranked Bedfight pour affronter
+              un adversaire de ton niveau.</p>
+          </div>
+          <div id="step-card-2" class="slide-step space-y-3 opacity-0 hidden">
+            <h4 class="text-sm font-bold text-white flex items-center space-x-2"><i data-lucide="trophy"
+                class="w-4 h-4 text-red-500"></i><span>Classement ELO</span></h4>
+            <p class="text-xs text-neutral-400 leading-relaxed">Remporte tes duels pour engranger de l'ELO et grimper
+              dans le classement général.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ (Foire aux Questions) -->
+    <section id="faq" class="py-20 md:py-28 max-w-3xl mx-auto px-4 border-t border-[#1F1F1F]">
+      <div class="text-center mb-16 reveal">
+        <div
+          class="inline-flex items-center space-x-2 px-3.5 py-1 rounded-md bg-[#141414] border border-[#1F1F1F] text-xs font-mono text-neutral-300 mb-4">
+          <span>FAQ</span>
+        </div>
+        <h2 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-3">
+          Tout ce que vous devez savoir
+        </h2>
+        <p class="text-neutral-400 text-xs sm:text-sm max-w-lg mx-auto">
+          Retrouvez les réponses aux questions les plus courantes concernant le serveur et le mode Ranked.
+        </p>
+      </div>
+
+      <div class="space-y-3 reveal delay-100">
+        <div class="clean-glass-card rounded-2xl overflow-hidden">
+          <button onclick="toggleFaq(1)" class="w-full p-6 text-left flex items-center justify-between space-x-4">
+            <span class="text-xs sm:text-sm font-bold text-white">Quelles versions de Minecraft sont acceptées pour se
+              connecter ?</span>
+            <i data-lucide="chevron-down" id="faq-icon-1"
+              class="w-4 h-4 text-neutral-400 shrink-0 transition-transform duration-300"></i>
+          </button>
+          <div id="faq-content-1"
+            class="hidden px-6 pb-6 text-xs text-neutral-300 leading-relaxed border-t border-[#1F1F1F] pt-4">
+            Le serveur est optimisé exclusivement pour la version <strong class="text-white">1.8.9</strong>, offrant le
+            meilleur PvP. Nous conseillons Badlion Client ou Lunar Client.
+          </div>
+        </div>
+
+        <div class="clean-glass-card rounded-2xl overflow-hidden">
+          <button onclick="toggleFaq(2)" class="w-full p-6 text-left flex items-center justify-between space-x-4">
+            <span class="text-xs sm:text-sm font-bold text-white">Comment fonctionne le système de classement ELO et les
+              saisons ?</span>
+            <i data-lucide="chevron-down" id="faq-icon-2"
+              class="w-4 h-4 text-neutral-400 shrink-0 transition-transform duration-300"></i>
+          </button>
+          <div id="faq-content-2"
+            class="hidden px-6 pb-6 text-xs text-neutral-300 leading-relaxed border-t border-[#1F1F1F] pt-4">
+            Chaque victoire en Ranked rapporte de l'ELO selon le niveau adverse. Les meilleures places de chaque saison
+            reçoivent des récompenses exclusives.
+          </div>
+        </div>
+
+        <div class="clean-glass-card rounded-2xl overflow-hidden">
+          <button onclick="toggleFaq(3)" class="w-full p-6 text-left flex items-center justify-between space-x-4">
+            <span class="text-xs sm:text-sm font-bold text-white">Comment lier mon compte Discord au serveur ?</span>
+            <i data-lucide="chevron-down" id="faq-icon-3"
+              class="w-4 h-4 text-neutral-400 shrink-0 transition-transform duration-300"></i>
+          </button>
+          <div id="faq-content-3"
+            class="hidden px-6 pb-6 text-xs text-neutral-300 leading-relaxed border-t border-[#1F1F1F] pt-4">
+            Tapez la commande <code class="bg-[#1A1A1A] px-2 py-0.5 rounded text-red-400 font-mono">/discord link</code>
+            dans le chat du jeu pour associer votre profil.
+          </div>
+        </div>
+
+        <div class="clean-glass-card rounded-2xl overflow-hidden">
+          <button onclick="toggleFaq(4)" class="w-full p-6 text-left flex items-center justify-between space-x-4">
+            <span class="text-xs sm:text-sm font-bold text-white">Que faire si je rencontre un cheater ou un bug majeur
+              ?</span>
+            <i data-lucide="chevron-down" id="faq-icon-4"
+              class="w-4 h-4 text-neutral-400 shrink-0 transition-transform duration-300"></i>
+          </button>
+          <div id="faq-content-4"
+            class="hidden px-6 pb-6 text-xs text-neutral-300 leading-relaxed border-t border-[#1F1F1F] pt-4">
+            Vous pouvez ouvrir un ticket de report sur notre serveur Discord officiel en fournissant les preuves vidéo
+            nécessaires.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Boutique Section -->
+    <section id="shop" class="py-20 md:py-28 border-t border-[#1F1F1F] bg-[#0E0E0E]">
+      <div class="max-w-5xl mx-auto px-4">
+        <div class="text-center mb-16 reveal">
+          <div
+            class="inline-flex items-center space-x-2 px-3.5 py-1 rounded-md bg-[#141414] border border-[#1F1F1F] text-xs font-mono text-neutral-300 mb-4">
+            <span>BOUTIQUE</span>
+          </div>
+          <h2 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-3">
+            Soutenez le serveur
+          </h2>
+          <p class="text-neutral-400 text-xs sm:text-sm max-w-lg mx-auto">
+            Débloquez des fonctionnalités exclusives, des cosmétiques rares et soutenez directement le développement.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 reveal delay-100">
+          <!-- Carte 1 -->
+          <div class="clean-glass-card rounded-2xl p-8 flex flex-col justify-between">
+            <div class="space-y-6">
+              <div class="flex items-center justify-between">
+                <span
+                  class="px-3 py-1 rounded-lg bg-neutral-900 text-neutral-300 text-[11px] font-bold border border-[#222222]">Mensuel</span>
+                <span class="text-xs font-mono text-white font-bold tracking-wider">PLUS</span>
+              </div>
+              <div>
+                <h3 class="text-2xl font-black text-white mb-2">HEVENLY PLUS</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">Le grade idéal pour profiter de l'expérience
+                  compétitive avec priorité et cosmétiques.</p>
+              </div>
+              <div class="space-y-2.5 text-xs text-neutral-300">
+                <div class="flex items-center space-x-2.5"><i data-lucide="check"
+                    class="w-4 h-4 text-red-500 shrink-0"></i><span>Préfixe <strong class="text-white">[+]</strong>
+                    distinctif</span></div>
+                <div class="flex items-center space-x-2.5"><i data-lucide="check"
+                    class="w-4 h-4 text-red-500 shrink-0"></i><span>Priorité de file d'attente</span></div>
+                <div class="flex items-center space-x-2.5"><i data-lucide="check"
+                    class="w-4 h-4 text-red-500 shrink-0"></i><span>Effets de victoire / mort exclusifs</span></div>
+                <div class="flex items-center space-x-2.5"><i data-lucide="check"
+                    class="w-4 h-4 text-red-500 shrink-0"></i><span>Rôle Discord + Salon restreint</span></div>
+              </div>
+            </div>
+
+            <div class="pt-8 mt-8 border-t border-[#1F1F1F]">
+              <div class="flex items-baseline justify-between mb-4">
+                <span class="text-xs text-neutral-400 font-medium">Prix</span>
+                <span class="text-2xl font-black text-white">2.99€ <span class="text-xs text-neutral-500 font-normal">/
+                    mois</span></span>
+              </div>
+              <button
+                onclick="openModal('HEVENLY PLUS', '2.99€', ['Prefixe [+] distinctif', 'Priorité de file d attente', 'Effets de victoire / mort exclusifs', 'Rôle Discord + Salon restreint'])"
+                class="w-full py-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs border border-[#222222] transition-all flex items-center justify-center space-x-2 active:scale-95">
+                <span>Voir les détails</span>
+                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Carte 2 -->
+          <div class="clean-glass-card rounded-2xl p-8 flex flex-col justify-between border-red-900/30">
+            <div class="space-y-6">
+              <div class="flex items-center justify-between">
+                <span
+                  class="px-3 py-1 rounded-lg bg-red-950/60 text-red-400 text-[11px] font-bold border border-red-900/40">Populaire</span>
+                <span class="text-xs font-mono text-red-400 font-bold tracking-wider">PREMIUM</span>
+              </div>
+              <div>
+                <h3 class="text-2xl font-black text-white mb-2">HEVENLY PREMIUM</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">Le statut suprême débloquant la priorité absolue,
+                  toutes les customisations et l'accès bêta.</p>
+              </div>
+              <div class="space-y-2.5 text-xs text-neutral-300">
+                <div class="flex items-center space-x-2.5"><i data-lucide="check"
+                    class="w-4 h-4 text-red-500 shrink-0"></i><span>Préfixe <strong class="text-white">[✦]</strong>
+                    exclusif</span></div>
+                <div class="flex items-center space-x-2.5"><i data-lucide="check"
+                    class="w-4 h-4 text-red-500 shrink-0"></i><span>Avantage du + inclus</span></div>
+                <div class="flex items-center space-x-2.5"><i data-lucide="check"
+                    class="w-4 h-4 text-red-500 shrink-0"></i><span>Permet d'héberger un événement</span></div>
+                <div class="flex items-center space-x-2.5"><i data-lucide="check"
+                    class="w-4 h-4 text-red-500 shrink-0"></i><span>Accès bêta aux nouvelles cartes et modes</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-8 mt-8 border-t border-[#1F1F1F]">
+              <div class="flex items-baseline justify-between mb-4">
+                <span class="text-xs text-neutral-400 font-medium">Prix</span>
+                <span class="text-2xl font-black text-white">6.99€ <span class="text-xs text-neutral-500 font-normal">/
+                    mois</span></span>
+              </div>
+              <button
+                onclick="openModal('HEVENLY PREMIUM', '6.99€', ['Prefixe [✦] exclusif', 'Avantage du + inclus', 'Permet d héberger un événement', 'Accès bêta aux nouvelles cartes et modes'])"
+                class="w-full py-3 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs transition-all shadow-lg shadow-red-600/20 flex items-center justify-center space-x-2 active:scale-95">
+                <span>Voir les détails</span>
+                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modale Détails Grade -->
+  <div id="modal-backdrop" onclick="closeModalOnBackdrop(event)"
+    class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4 transition-opacity duration-300 opacity-0">
+    <div id="modal-card"
+      class="clean-glass-card rounded-2xl p-6 md:p-8 max-w-md w-full shadow-2xl scale-95 opacity-0 transition-all duration-300">
+      <div class="flex items-center justify-between mb-3">
+        <h3 id="modal-title" class="text-xl font-black text-white">Grade</h3>
+        <button onclick="closeModal()"
+          class="text-neutral-400 hover:text-white p-1 rounded-lg hover:bg-neutral-800 transition-colors">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div id="modal-price" class="text-base font-bold text-red-400 mb-6">0.00€</div>
+      <div class="space-y-3 mb-8">
+        <h4 class="text-xs font-bold text-neutral-400 uppercase tracking-wider">Avantages inclus :</h4>
+        <ul id="modal-list" class="space-y-2.5 text-xs text-neutral-200"></ul>
+      </div>
+      <a href="https://discord.gg" target="_blank"
+        class="w-full py-3 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs flex items-center justify-center space-x-2 transition-all shadow-md">
+        <span>Acheter sur la boutique</span>
+        <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- Modale Actualités -->
+  <div id="news-modal-backdrop" onclick="closeNewsModalOnBackdrop(event)"
+    class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4 transition-opacity duration-300 opacity-0">
+    <div id="news-modal-card"
+      class="clean-glass-card rounded-2xl p-6 md:p-8 max-w-lg w-full shadow-2xl scale-95 opacity-0 transition-all duration-300 flex flex-col max-h-[85vh]">
+      <div class="flex items-center justify-between pb-4 border-b border-[#1F1F1F] shrink-0">
+        <div class="flex items-center space-x-2.5">
+          <div class="p-2 rounded-lg bg-red-500/10 text-red-500">
+            <i data-lucide="bell" class="w-4 h-4"></i>
+          </div>
+          <h3 class="text-lg font-black text-white">Dernières Informations</h3>
+        </div>
+        <button onclick="closeNewsModal()"
+          class="text-neutral-400 hover:text-white p-1 rounded-lg hover:bg-neutral-800 transition-colors">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div id="dynamic-news-container"
+        class="py-6 overflow-y-auto custom-scrollbar space-y-4 text-xs md:text-sm text-neutral-300 leading-relaxed pr-2">
+      </div>
+      <div class="pt-4 border-t border-[#1F1F1F] flex justify-end shrink-0">
+        <button onclick="closeNewsModal()"
+          class="px-5 py-2 rounded-xl bg-[#1A1A1A] hover:bg-[#242424] text-white font-semibold text-xs transition-colors">Fermer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modale Légale -->
+  <div id="legal-modal-backdrop" onclick="closeLegalModalOnBackdrop(event)"
+    class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4 transition-opacity duration-300 opacity-0">
+    <div id="legal-modal-card"
+      class="clean-glass-card rounded-2xl p-6 md:p-8 max-w-2xl w-full shadow-2xl scale-95 opacity-0 transition-all duration-300 flex flex-col max-h-[85vh]">
+      <div class="flex items-center justify-between pb-4 border-b border-[#1F1F1F] shrink-0">
+        <h3 id="legal-modal-title" class="text-lg md:text-xl font-black text-white">Document Légal</h3>
+        <button onclick="closeLegalModal()"
+          class="text-neutral-400 hover:text-white p-1 rounded-lg hover:bg-neutral-800 transition-colors">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div id="legal-modal-body"
+        class="py-6 overflow-y-auto custom-scrollbar space-y-4 text-xs md:text-sm text-neutral-300 leading-relaxed pr-2">
+      </div>
+      <div class="pt-4 border-t border-[#1F1F1F] flex justify-end shrink-0">
+        <button onclick="closeLegalModal()"
+          class="px-5 py-2 rounded-xl bg-[#1A1A1A] hover:bg-[#242424] text-white font-semibold text-xs transition-colors">Fermer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Pro -->
+  <footer class="relative overflow-hidden pt-12 pb-8 border-t border-[#1F1F1F] bg-[#0A0A0A]">
+    <div class="w-full overflow-hidden select-none pointer-events-none mb-6">
+      <div class="animate-marquee whitespace-nowrap flex items-center justify-center opacity-40">
+        <span
+          class="font-black text-[12vw] leading-none tracking-tighter text-neutral-800 uppercase mr-12 flex items-center gap-12">HEVENLY
+          <span class="text-red-900">•</span></span>
+        <span
+          class="font-black text-[12vw] leading-none tracking-tighter text-neutral-800 uppercase mr-12 flex items-center gap-12">HEVENLY
+          <span class="text-red-900">•</span></span>
+        <span
+          class="font-black text-[12vw] leading-none tracking-tighter text-neutral-800 uppercase mr-12 flex items-center gap-12">HEVENLY
+          <span class="text-red-900">•</span></span>
+      </div>
+    </div>
+    <div class="max-w-6xl mx-auto px-4 relative z-10">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-neutral-400">
+        <div class="flex items-center space-x-3">
+          <img src="https://i.imgur.com/BYA0Cs5.png" alt="Hevenly Logo" class="w-6 h-6 object-contain opacity-70">
+          <div>
+            <p>© 2026 Hevenly Games. Tous droits réservés.</p>
+            <p class="mt-0.5 text-[11px] text-neutral-500">Not an official minecraft product. Not approved by or
+              associated with Mojang or Microsoft.</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-6 text-neutral-400">
+          <button onclick="openLegalModal('legal')" class="hover:text-white transition-colors">Mentions légales</button>
+          <button onclick="openLegalModal('privacy')"
+            class="hover:text-white transition-colors">Confidentialité</button>
+          <button onclick="openLegalModal('cookies')" class="hover:text-white transition-colors">Cookies</button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const SUPABASE_URL = "https://tawnbphpaaxjzkydeubq.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_g0M5uEmx7p6s9w7LzUID7w_bVDKjw3-";
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    window.scrollTo(0, 0);
 
     window.addEventListener('DOMContentLoaded', () => {
-      buildHow();
-      initHeader(); initMenu(); initScroll(); initTabs(); initMaps(); initFaq(); initFinalLogo(); initPointer();
-      loadNews(); loadPlayerCount(); runIntro();
-      if (!localStorage.getItem('hevenly_cookie_consent')) {
-        const show = () => { $('#cookie-banner').classList.add('show'); removeEventListener('scroll', onFirst); };
-        const onFirst = () => { if (scrollY > innerHeight * .6) setTimeout(show, 800); };
-        addEventListener('scroll', onFirst, { passive: true }); setTimeout(show, 20000);
+      window.scrollTo(0, 0);
+      document.body.classList.add('loaded');
+      lucide.createIcons();
+      loadIndexNotifications();
+      updateScrollProgress();
+
+      const consent = localStorage.getItem('hevenly_cookie_consent');
+      if (!consent) {
+        setTimeout(() => {
+          document.getElementById('cookie-banner').classList.remove('translate-y-full');
+        }, 1000);
       }
     });
 
-    function initHeader() {
-      const f = () => document.body.classList.toggle('scrolled', scrollY > 40);
-      addEventListener('scroll', f, { passive: true }); f();
-    }
-    function initMenu() {
-      const btn = $('#burger'), d = $('#drawer'), tx = $('#menutxt');
-      const set = o => { d.classList.toggle('open', o); btn.setAttribute('aria-expanded', o); tx.textContent = o ? 'Fermer' : 'Menu'; document.body.style.overflow = o ? 'hidden' : ''; if (o) setTimeout(() => $('.dl a', d).focus({ preventScroll: true }), 300); };
-      btn.addEventListener('click', () => set(!d.classList.contains('open')));
-      $$('.dl a, .dside .btn', d).forEach(a => a.addEventListener('click', () => set(false)));
-      addEventListener('keydown', e => { if (e.key === 'Escape' && d.classList.contains('open')) { set(false); btn.focus(); } });
-    }
-    function initPointer() {
-      const hero = $('#hero'), img = $('#render');
-      if (!hero || !img || reduce || !matchMedia('(hover: hover)').matches) return;
-      hero.addEventListener('pointermove', e => { const b = hero.getBoundingClientRect(), x = (e.clientX - b.left) / b.width - .5, y = (e.clientY - b.top) / b.height - .5; img.style.translate = `${(-x * 30).toFixed(1)}px ${(-y * 18).toFixed(1)}px`; });
-      hero.addEventListener('pointerleave', () => { img.style.translate = ''; });
-    }
-    function initFinalLogo() {
-      const fl = $('.final-lg'); if (!fl) return;
-      if (reduce) { fl.classList.remove('anim'); return; }
-      new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { fl.classList.add('play'); o.disconnect(); } }), { threshold: .6 }).observe(fl);
-    }
+    window.addEventListener('scroll', () => {
+      updateScrollProgress();
+      toggleBackToTopButton();
+    });
 
-    /* ---------- Schéma « Comment se joue le Bedfight » ---------- */
-    const NS = 'http://www.w3.org/2000/svg';
-    const el = (tag, attrs, parent) => { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); if (parent) parent.appendChild(n); return n; };
-    const how = {};
-    function buildHow() {
-      const svg = $('#howsvg'); if (!svg) return;
-      const S = 40, TOP = 320; svg.setAttribute('viewBox', '60 150 1080 340');
-      /* îles : 6 blocs en haut, puis 4, puis 2 */
-      const island = x0 => { [[0, 6], [1, 4], [2, 2]].forEach(([r, n]) => { const off = (6 - n) / 2; for (let i = 0; i < n; i++) el('rect', { class: 'blk' + (r ? '' : ' top'), x: x0 + (off + i) * S + 1, y: TOP + r * S + 1, width: S - 2, height: S - 2, rx: 5 }, svg); }); };
-      island(80); island(880);
-      el('text', { class: 'lbl', x: 200, y: 470 }, svg).textContent = 'Ton île';
-      el('text', { class: 'lbl', x: 1000, y: 470 }, svg).textContent = 'Île adverse';
-      /* pont : 7 blocs posés par chaque joueur */
-      how.bA = []; how.bB = [];
-      for (let i = 0; i < 7; i++) {
-        how.bA.push(el('rect', { class: 'bb bbA', x: 320 + i * S + 1, y: TOP + 1, width: S - 2, height: S - 2, rx: 5 }, svg));
-        how.bB.push(el('rect', { class: 'bb bbB', x: 840 - i * S + 1, y: TOP + 1, width: S - 2, height: S - 2, rx: 5 }, svg));
+    function updateScrollProgress() {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrollPercent = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+      const roundedPercent = Math.min(100, Math.max(0, Math.round(scrollPercent)));
+      const progressBar = document.getElementById('scroll-progress-bar');
+      if (progressBar) {
+        progressBar.style.width = roundedPercent + '%';
       }
-      /* lits */
-      const bed = (x, id) => { const g = el('g', { id }, svg); el('rect', { class: 'bedp p1', x, y: TOP - 22, width: 34, height: 22, rx: 4, fill: '#E10600' }, g); el('rect', { class: 'bedp p2', x: x + 34, y: TOP - 22, width: 34, height: 22, rx: 4, fill: '#E10600' }, g); el('rect', { class: 'bedp p1', x: x + 5, y: TOP - 17, width: 18, height: 11, rx: 3, fill: '#E6E6E6' }, g); return g; };
-      how.bedA = bed(116, 'bedA'); how.bedB = bed(1016, 'bedB');
-      for (let i = 0; i < 10; i++) { const a = i / 10 * Math.PI * 2, r = 70 + (i % 3) * 25; const p = el('rect', { class: 'pt', x: 1046, y: TOP - 16, width: 10, height: 10, rx: 2, fill: i % 2 ? '#E10600' : '#E6E6E6' }, how.bedB); p.style.setProperty('--dx', (Math.cos(a) * r).toFixed(0) + 'px'); p.style.setProperty('--dy', (Math.sin(a) * r - 30).toFixed(0) + 'px'); }
-      /* joueurs */
-      const player = (fill, id) => { const pos = el('g', { class: 'pos', id }, svg), fig = el('g', { class: 'fig' }, pos); el('rect', { x: -9, y: -48, width: 18, height: 18, rx: 4, fill }, fig); el('rect', { x: -11, y: -28, width: 22, height: 28, rx: 5, fill }, fig); return pos; };
-      how.pA = player('#E6E6E6', 'pA'); how.pB = player('#7C7C7C', 'pB');
-      how.win = el('text', { class: 'win', x: 1000, y: 222 }, svg); how.win.textContent = 'Victoire';
-      how.phases = $$('#phases .ph'); how.box = $('#phases'); how.sec = $('#bedfight');
-      renderHow(reduce ? .7 : 0);
-    }
-    function renderHow(p) {
-      if (!how.sec) return;
-      const n = Math.round(clamp((p - .12) / .44, 0, 1) * 7);
-      how.bA.forEach((b, i) => b.classList.toggle('on', i < n));
-      how.bB.forEach((b, i) => b.classList.toggle('on', i < n));
-      let xA = 300 + n * 40, xB = 900 - n * 40;
-      if (p >= .64) xA = 580 + clamp((p - .64) / .16, 0, 1) * 410;
-      const fallB = (p >= .58 && p < .68) || p >= .9, back = p >= .68;
-      if (back) xB = 1110;
-      how.pA.style.transform = `translate(${xA}px, 320px)`;
-      how.pB.style.transform = `translate(${fallB && !back ? 620 : xB}px, 320px)`;
-      how.pB.classList.toggle('fall', fallB);
-      how.bedB.classList.toggle('broken', p >= .82);
-      how.win.classList.toggle('on', p >= .94);
-      const ph = p < .12 ? 0 : p < .58 ? 1 : 2;
-      how.phases.forEach((e, i) => e.classList.toggle('on', i === ph));
-      how.box.style.setProperty('--hp', clamp(p / .95, 0, 1).toFixed(3));
     }
 
-    /* ---------- Effets liés au scroll ---------- */
-    function initScroll() {
-      const heads = $$('.sec h2, .final h2');
-      if (reduce) { heads.forEach(h => h.classList.add('in')); return; }
-      const io = new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); o.unobserve(e.target); } }), { threshold: .2 });
-      heads.forEach(h => io.observe(h));
-      const hs = $$('.hero h1 span'), band = $$('.band div'), bandBox = $('.band'), steps = $('.steps'), stepEls = $$('.step'), mview = $('#mview'), mimgs = $$('#mview img');
-      let tick = false;
-      const frame = () => {
-        tick = false;
-        const y = scrollY, vh = innerHeight;
-        if (y < vh * 1.2) hs.forEach((s, i) => { s.style.translate = `${(i ? 1 : -1) * y * .2}px 0`; });
-        if (bandBox) { const r = bandBox.getBoundingClientRect(); if (r.bottom > -200 && r.top < vh + 200) { const t = (r.top + r.height / 2 - vh / 2) / vh; band.forEach((b, i) => { b.style.translate = `${((i ? 1 : -1) * t * 520 - (i ? 0 : 200)).toFixed(1)}px 0`; }); } }
-        if (how.sec) { const r = how.sec.getBoundingClientRect(), total = r.height - vh; renderHow(clamp(-r.top / total, 0, 1)); }
-        if (steps) { const r = steps.getBoundingClientRect(); steps.style.setProperty('--p', clamp((vh * .62 - r.top) / r.height, 0, 1).toFixed(3)); stepEls.forEach(s => { const q = s.getBoundingClientRect(); s.classList.toggle('lit', q.top + q.height / 2 < vh * .62); }); }
-        if (mview) { const r = mview.getBoundingClientRect(), p = clamp((vh - r.top) / (vh + r.height), 0, 1); mimgs.forEach(im => { im.style.translate = `0 ${((p - .5) * -9).toFixed(2)}%`; }); }
-      };
-      addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(frame); } }, { passive: true });
-      addEventListener('resize', frame); frame();
+    function toggleBackToTopButton() {
+      const btn = document.getElementById('back-to-top');
+      if (window.scrollY > 400) {
+        btn.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+        btn.classList.add('translate-y-0', 'opacity-100');
+      } else {
+        btn.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+        btn.classList.remove('translate-y-0', 'opacity-100');
+      }
     }
 
-    function initTabs() {
-      const tabs = $$('.tab'), panes = $$('.pane');
-      const sel = (i, focus) => { tabs.forEach((t, k) => { t.setAttribute('aria-selected', k === i); t.tabIndex = k === i ? 0 : -1; panes[k].hidden = k !== i; }); if (focus) tabs[i].focus(); };
-      tabs.forEach((t, i) => {
-        t.addEventListener('click', () => sel(i));
-        t.addEventListener('keydown', e => { const n = tabs.length; if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { e.preventDefault(); sel((i + 1) % n, true); } if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') { e.preventDefault(); sel((i + n - 1) % n, true); } });
-      });
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-    function initMaps() {
-      const btns = $$('.mbtn'), imgs = $$('#mview img'), cap = $('#mcap');
-      const txt = ["Une arène aux tons ténébreux, parfaite pour des duels intenses et des rushes ultra-rapides.", "Inspirée des grands classiques, une map lumineuse axée sur le contrôle stratégique du pont.", "Un décor givré et épuré, pensé pour offrir une visibilité maximale et zéro latence visuelle."];
-      let cur = 0;
-      btns.forEach((b, i) => b.addEventListener('click', () => {
-        if (i === cur) return;
-        imgs.forEach(im => im.classList.remove('prev'));
-        imgs[cur].classList.remove('on'); imgs[cur].classList.add('prev'); imgs[i].classList.add('on');
-        btns.forEach((x, k) => x.setAttribute('aria-selected', k === i)); cap.textContent = txt[i]; cur = i;
-      }));
-    }
-    function initFaq() { $$('.qa > button').forEach(b => b.addEventListener('click', () => { const qa = b.parentElement, open = !qa.classList.contains('open'); qa.classList.toggle('open', open); b.setAttribute('aria-expanded', open); })); }
 
-    async function loadPlayerCount() {
-      const el = $('#players-online');
-      try { const d = await (await fetch('https://api.mcstatus.io/v2/status/java/hevenly.games')).json(); if (d && d.online && d.players) { const n = d.players.online; el.textContent = n + (n > 1 ? ' joueurs en ligne' : ' joueur en ligne'); } } catch (e) { /* silencieux */ }
+    function switchBedfightTab(index) {
+      for (let i = 0; i < 3; i++) {
+        const content = document.getElementById(`bed-tab-content-${i}`);
+        const btn = document.getElementById(`bed-tab-btn-${i}`);
+        if (i === index) {
+          content.classList.remove('hidden', 'opacity-0');
+          content.classList.add('opacity-100');
+          btn.className = "px-4 py-2 rounded-xl text-xs font-bold bg-red-600 text-white transition-all shadow-md";
+        } else {
+          content.classList.add('hidden', 'opacity-0');
+          content.classList.remove('opacity-100');
+          btn.className = "px-4 py-2 rounded-xl text-xs font-semibold bg-[#141414] text-neutral-400 border border-[#1F1F1F] hover:text-white transition-all";
+        }
+      }
     }
-    function copyIP() {
-      const done = () => { const t = $('#toast'); t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2500); };
-      if (navigator.clipboard) navigator.clipboard.writeText('hevenly.games').then(done).catch(done); else done();
-    }
-    function acceptCookies(consent) { localStorage.setItem('hevenly_cookie_consent', consent ? 'accepted' : 'declined'); $('#cookie-banner').classList.remove('show'); }
 
-    /* Fenêtres */
-    function showModal(id) { const o = document.getElementById(id); o.classList.add('open'); document.body.style.overflow = 'hidden'; const c = o.querySelector('.close'); if (c) c.focus(); }
-    function hideModal(id) { document.getElementById(id).classList.remove('open'); if (!$('.overlay.open') && !$('#drawer.open')) document.body.style.overflow = ''; }
-    function openModal(title, price, perks) {
-      $('#modal-title').innerText = title; $('#modal-price').innerText = price + ' / mois';
-      const list = $('#modal-list'); list.innerHTML = '';
-      perks.forEach(p => { const li = document.createElement('li'); li.textContent = p; list.appendChild(li); });
-      showModal('modal-backdrop');
+    function acceptCookies(consent) {
+      localStorage.setItem('hevenly_cookie_consent', consent ? 'accepted' : 'declined');
+      document.getElementById('cookie-banner').classList.add('translate-y-full');
     }
-    function closeModal() { hideModal('modal-backdrop'); }
-    function closeModalOnBackdrop(e) { if (e.target.id === 'modal-backdrop') closeModal(); }
-    function openNewsModal() { showModal('news-modal-backdrop'); }
-    function closeNewsModal() { hideModal('news-modal-backdrop'); }
-    function closeNewsModalOnBackdrop(e) { if (e.target.id === 'news-modal-backdrop') closeNewsModal(); }
-    const legalTexts = {
-      legal: { title: "Mentions légales", content: `<h4>1. Éditeur du site</h4><p>Le site Hevenly Games est édité par l'équipe d'administration du réseau Hevenly.</p><h4>2. Propriété intellectuelle et avertissement Mojang / Microsoft</h4><p>HEVENLY est un serveur indépendant. Minecraft est une marque déposée par Mojang Synergies AB et Microsoft Corporation. Hevenly n'est pas affilié à Mojang AB.</p>` },
-      privacy: { title: "Politique de confidentialité", content: `<h4>1. Données collectées</h4><p>Pseudonyme UUID Minecraft, identifiant Discord, statistiques ELO et adresse IP (uniquement à des fins de sécurité anti-triche et DDoS).</p>` },
-      cookies: { title: "Politique relative aux cookies", content: `<h4>1. Cookies utilisés</h4><p>Utilisation exclusive de préférences locales (localStorage) pour mémoriser votre choix d'acceptation de cookies.</p>` }
-    };
-    function openLegalModal(type) { const d = legalTexts[type]; if (!d) return; $('#legal-modal-title').innerText = d.title; $('#legal-modal-body').innerHTML = d.content; showModal('legal-modal-backdrop'); }
-    function closeLegalModal() { hideModal('legal-modal-backdrop'); }
-    function closeLegalModalOnBackdrop(e) { if (e.target.id === 'legal-modal-backdrop') closeLegalModal(); }
-    addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeNewsModal(); closeLegalModal(); } });
 
-    /* Actualités : lignes dans la page + fenêtre complète (Supabase) */
-    async function loadNews() {
-      const box = $('#dynamic-news-container'), list = $('#nlist');
-      box.innerHTML = '<div class="skeleton"></div><div class="skeleton"></div>';
-      const { data: notes, error } = supabaseClient ? await supabaseClient.from('notifications').select('*').order('id', { ascending: false }) : { data: null, error: true };
-      if (error || !notes || notes.length === 0) {
-        box.innerHTML = '<p style="color:var(--mut)">Aucune actualité pour le moment.</p>';
-        list.innerHTML = '<div class="nempty"><div><b>Les annonces arrivent bientôt.</b>Rejoins le Discord pour ne rien rater des saisons et des événements.</div><a href="https://discord.gg" target="_blank" rel="noopener" class="btn btn-red">Rejoindre le Discord</a></div>';
+    function toggleFaq(id) {
+      const content = document.getElementById(`faq-content-${id}`);
+      const icon = document.getElementById(`faq-icon-${id}`);
+      if (content.classList.contains('hidden')) {
+        content.classList.remove('hidden');
+        icon.style.transform = 'rotate(180deg)';
+      } else {
+        content.classList.add('hidden');
+        icon.style.transform = 'rotate(0deg)';
+      }
+    }
+
+    async function loadIndexNotifications() {
+      const container = document.getElementById('dynamic-news-container');
+      container.innerHTML = '<p class="text-neutral-400 text-center py-4">Chargement...</p>';
+      const { data: savedNotes, error } = await supabaseClient
+        .from('notifications')
+        .select('*')
+        .order('id', { ascending: false });
+
+      if (error || !savedNotes || savedNotes.length === 0) {
+        container.innerHTML = '<p class="text-neutral-400 text-center py-4">Aucune notification pour le moment.</p>';
         return;
       }
-      list.innerHTML = notes.slice(0, 4).map(n => `<a class="nl" href="#" onclick="openNewsModal();return false"><div class="dt">${esc(n.notif_date || "Aujourd'hui")}<b>${esc(n.category)}</b></div><div><h3>${esc(n.title)}</h3><p>${esc(String(n.content || '').slice(0, 170))}${String(n.content || '').length > 170 ? '…' : ''}</p></div></a>`).join('');
-      box.innerHTML = notes.map(n => `<div class="note"><div class="note-meta"><b>${esc(n.category)}</b><span>${esc(n.notif_date || "Aujourd'hui")}</span></div><h4>${esc(n.title)}</h4><p>${esc(n.content)}</p></div>`).join('');
+
+      container.innerHTML = '';
+      savedNotes.forEach(note => {
+        const div = document.createElement('div');
+        div.className = "p-4 rounded-xl bg-[#141414] border border-[#1F1F1F] space-y-1.5";
+        div.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-mono font-bold text-white uppercase tracking-wide bg-neutral-900 px-2 py-0.5 rounded border border-[#222222]">${note.category}</span>
+            <span class="text-[11px] text-neutral-400 font-mono">${note.notif_date || 'Aujourd\'hui'}</span>
+          </div>
+          <h4 class="text-white font-bold text-xs pt-1">${note.title}</h4>
+          <p class="text-neutral-300 text-xs leading-relaxed">${note.content}</p>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function openNewsModal() {
+      loadIndexNotifications();
+      const backdrop = document.getElementById('news-modal-backdrop');
+      const card = document.getElementById('news-modal-card');
+      backdrop.classList.remove('hidden');
+      setTimeout(() => {
+        backdrop.classList.remove('opacity-0');
+        card.classList.remove('scale-95', 'opacity-0');
+        card.classList.add('modal-enter-active');
+      }, 10);
+    }
+
+    function closeNewsModal() {
+      const backdrop = document.getElementById('news-modal-backdrop');
+      const card = document.getElementById('news-modal-card');
+      backdrop.classList.add('opacity-0');
+      card.classList.remove('modal-enter-active');
+      card.classList.add('scale-95', 'opacity-0');
+      setTimeout(() => backdrop.classList.add('hidden'), 250);
+    }
+
+    function closeNewsModalOnBackdrop(e) {
+      if (e.target.id === 'news-modal-backdrop') closeNewsModal();
+    }
+
+    const legalTexts = {
+      legal: {
+        title: "Mentions Légales",
+        content: `<h4 class="font-bold text-white text-xs">1. Éditeur du site</h4><p>Le site Hevenly Games est édité par l'équipe d'administration du réseau Hevenly.</p><h4 class="font-bold text-white text-xs pt-2">2. Propriété intellectuelle & Avertissement Mojang / Microsoft</h4><p>HEVENLY est un serveur indépendant. Minecraft est une marque déposée par Mojang Synergies AB et Microsoft Corporation. Hevenly n'est pas affilié à Mojang AB.</p>`
+      },
+      privacy: {
+        title: "Politique de Confidentialité",
+        content: `<h4 class="font-bold text-white text-xs">1. Données collectées</h4><p>Pseudonyme UUID Minecraft, identifiant Discord, statistiques ELO et adresse IP (uniquement à des fins de sécurité anti-triche et DDoS).</p>`
+      },
+      cookies: {
+        title: "Politique relative aux Cookies",
+        content: `<h4 class="font-bold text-white text-xs">1. Cookies utilisés</h4><p>Utilisation exclusive de préférences locales (localStorage) pour mémoriser votre choix d'acceptation de cookies.</p>`
+      }
+    };
+
+    function openLegalModal(type) {
+      const data = legalTexts[type];
+      if (!data) return;
+      document.getElementById('legal-modal-title').innerText = data.title;
+      document.getElementById('legal-modal-body').innerHTML = data.content;
+      const backdrop = document.getElementById('legal-modal-backdrop');
+      const card = document.getElementById('legal-modal-card');
+      backdrop.classList.remove('hidden');
+      setTimeout(() => {
+        backdrop.classList.remove('opacity-0');
+        card.classList.remove('scale-95', 'opacity-0');
+        card.classList.add('modal-enter-active');
+      }, 10);
+    }
+
+    function closeLegalModal() {
+      const backdrop = document.getElementById('legal-modal-backdrop');
+      const card = document.getElementById('legal-modal-card');
+      backdrop.classList.add('opacity-0');
+      card.classList.remove('modal-enter-active');
+      card.classList.add('scale-95', 'opacity-0');
+      setTimeout(() => backdrop.classList.add('hidden'), 250);
+    }
+
+    function closeLegalModalOnBackdrop(e) {
+      if (e.target.id === 'legal-modal-backdrop') closeLegalModal();
+    }
+
+    let currentStep = 0;
+    const totalSteps = 3;
+
+    function setStep(index) {
+      currentStep = index;
+      for (let i = 0; i < totalSteps; i++) {
+        const card = document.getElementById(`step-card-${i}`);
+        const btn = document.getElementById(`step-btn-${i}`);
+        if (card) {
+          if (i === currentStep) {
+            card.classList.remove('hidden', 'opacity-0');
+            card.classList.add('opacity-100');
+          } else {
+            card.classList.add('hidden', 'opacity-0');
+            card.classList.remove('opacity-100');
+          }
+        }
+        if (btn) {
+          if (i === currentStep) {
+            btn.className = "w-9 h-9 rounded-xl bg-red-600 text-white font-bold text-xs flex items-center justify-center shadow";
+          } else {
+            btn.className = "w-9 h-9 rounded-xl bg-[#141414] text-neutral-400 border border-[#1F1F1F] font-bold text-xs flex items-center justify-center";
+          }
+        }
+      }
+    }
+
+    function copyIP() {
+      navigator.clipboard.writeText('hevenly.games').then(() => {
+        const toast = document.getElementById('toast');
+        toast.classList.remove('translate-y-20', 'opacity-0');
+        setTimeout(() => toast.classList.add('translate-y-20', 'opacity-0'), 2500);
+      });
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    function openModal(title, price, perks) {
+      const backdrop = document.getElementById('modal-backdrop');
+      const card = document.getElementById('modal-card');
+      document.getElementById('modal-title').innerText = title;
+      document.getElementById('modal-price').innerText = price + ' / mois';
+      const list = document.getElementById('modal-list');
+      list.innerHTML = '';
+      perks.forEach(perk => {
+        const li = document.createElement('li');
+        li.className = 'flex items-center space-x-2.5';
+        li.innerHTML = `<i data-lucide="check" class="w-4 h-4 text-red-500 shrink-0"></i><span>${perk}</span>`;
+        list.appendChild(li);
+      });
+      lucide.createIcons();
+      backdrop.classList.remove('hidden');
+      setTimeout(() => {
+        backdrop.classList.remove('opacity-0');
+        card.classList.remove('scale-95', 'opacity-0');
+        card.classList.add('modal-enter-active');
+      }, 10);
+    }
+
+    function closeModal() {
+      const backdrop = document.getElementById('modal-backdrop');
+      const card = document.getElementById('modal-card');
+      backdrop.classList.add('opacity-0');
+      card.classList.remove('modal-enter-active');
+      card.classList.add('scale-95', 'opacity-0');
+      setTimeout(() => backdrop.classList.add('hidden'), 250);
+    }
+
+    function closeModalOnBackdrop(e) {
+      if (e.target.id === 'modal-backdrop') closeModal();
     }
   </script>
-</body></html>
+
+<script id="hv-intro-js">
+(function(){
+  var intro=document.getElementById('hv-intro'), wipe=document.getElementById('hv-wipe');
+  var flyer=document.getElementById('hv-flyer'), nav=document.getElementById('hv-nav');
+  var big=intro.querySelector('.lg'), slot=document.getElementById('hv-slot');
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.body.classList.add('intro-lock','loaded');
+  function finish(){
+    document.body.classList.remove('intro-lock');
+    ['wheel','touchmove','keydown'].forEach(function(t){ removeEventListener(t,block); });
+    nav.classList.add('show');
+    intro.remove(); flyer.remove();
+    window.dispatchEvent(new Event('hv-intro-done'));
+  }
+  if(reduce){ intro.remove(); flyer.remove(); document.body.classList.remove('intro-lock'); nav.classList.add('show'); return; }
+  // Empêche tout passage de l'intro : pas de clic, pas de touche, pas de scroll pendant l'animation.
+  var block=function(e){ e.preventDefault(); };
+  ['wheel','touchmove','keydown'].forEach(function(t){ addEventListener(t,block,{passive:false}); });
+  var ease=function(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;};
+  function tween(ms,fn,cb){ var t0=performance.now(); (function f(t){ var p=Math.min(1,(t-t0)/ms); fn(ease(p)); if(p<1) requestAnimationFrame(f); else if(cb) cb(); })(t0); }
+  setTimeout(function(){ big.classList.add('play'); }, 50);
+  // 3.0 s : la vague rouge part du logo et balaie l'écran
+  setTimeout(function(){
+    var r=big.getBoundingClientRect(), cx=r.left+r.width*.5, cy=r.top+r.height*.5;
+    var R=Math.hypot(Math.max(cx,innerWidth-cx),Math.max(cy,innerHeight-cy))+8;
+    tween(650,function(p){ wipe.style.clipPath='circle('+(R*p)+'px at '+cx+'px '+cy+'px)'; },function(){
+      // 3.7 s : le fond redevient noir, le logo rouge vole vers la navbar
+      intro.style.background='#0A0A0A'; wipe.style.display='none';
+      var from=big.getBoundingClientRect(), to=slot.getBoundingClientRect();
+      flyer.style.display='block'; flyer.style.left=from.left+'px'; flyer.style.top=from.top+'px'; flyer.style.width=from.width+'px'; flyer.style.height=from.height+'px';
+      big.style.visibility='hidden';
+      var sx=to.width/from.width, dx=to.left-from.left, dy=to.top-from.top;
+      var anim=flyer.animate([
+        {transform:'translate(0px,0px) scale(1)'},
+        {transform:'translate('+dx+'px,'+dy+'px) scale('+sx+')'}
+      ],{duration:900,easing:'cubic-bezier(.7,0,.2,1)',fill:'forwards'});
+      nav.classList.add('show');
+      intro.style.transition='opacity .4s'; intro.style.opacity='0';
+      anim.onfinish=function(){ slot.style.visibility='visible'; finish(); };
+    });
+  }, 3000);
+  // le logo de la navbar reste caché pendant le vol
+  slot.style.visibility='hidden';
+  // copie du logo rouge (vol) : même dessin, en rouge
+  addEventListener('scroll',function(){ nav.classList.toggle('scrolled', scrollY>40); },{passive:true});
+})();
+</script>
+
+</body>
+
+</html>
