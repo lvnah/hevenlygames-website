@@ -11,26 +11,44 @@
 <script>document.documentElement.classList.add('js');setTimeout(function(){var i=document.getElementById('intro');if(i){i.remove();document.body.classList.remove('lock');document.body.classList.add('go')}},9000);</script>
 <noscript><style>#intro{display:none!important}.js .h-in{opacity:1!important;transform:none!important}</style></noscript>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root{--ink:#121212;--ink2:#1B1B1B;--ink3:#242424;--line:#2E2E2E;--gray:#E6E6E6;--mut:#A8A8A8;--dim:#8A8A8A;--red:#E10600;--redh:#F3140D;
-  --d:'Unbounded','Arial Black',system-ui,sans-serif;--b:'Onest',system-ui,-apple-system,'Segoe UI',sans-serif;--ease:cubic-bezier(.2,.8,.2,1);--sq:22%}
+/* =========================================================
+   Hevenly — système de design
+   Couleurs du logo : noir #121212, gris clair #E6E6E6, rouge #E10600
+   Titres : Big Shoulders Display (condensée, esprit classement)
+   Texte  : Onest
+   ========================================================= */
+:root{
+  --ink:#121212;--ink2:#191919;--ink3:#222;--line:#2A2A2A;--line2:#3A3A3A;
+  --bone:#E6E6E6;--soft:#CFCFCF;--mut:#9C9C9C;--dim:#6E6E6E;
+  --red:#E10600;--redh:#F5180F;
+  --d:'Big Shoulders Display','Arial Narrow','Arial Black',system-ui,sans-serif;
+  --b:'Onest',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --ease:cubic-bezier(.2,.8,.2,1);
+  --sec:clamp(96px,11vw,150px);
+}
 *,*::before,*::after{box-sizing:border-box;margin:0}
-html{background:var(--ink);scroll-padding-top:96px;overflow-x:clip}
+html{background:var(--ink);scroll-padding-top:90px;overflow-x:clip}
 @media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
-body{font-family:var(--b);font-size:17px;line-height:1.65;color:var(--gray);background:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:clip}
+body{font-family:var(--b);font-size:17px;line-height:1.65;color:var(--bone);background:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:clip}
 body.lock{overflow:hidden}
-img,svg{display:block;max-width:100%}button{font:inherit;color:inherit}
-::selection{background:var(--red);color:#fff}:focus-visible{outline:3px solid var(--red);outline-offset:3px}
+img,svg{display:block;max-width:100%}
+button{font:inherit;color:inherit}
+::selection{background:var(--red);color:#fff}
+:focus-visible{outline:3px solid var(--red);outline-offset:3px}
 .wrap{max-width:1200px;margin:0 auto;padding:0 32px}
-h1,h2,h3{font-family:var(--d);font-weight:800;color:#fff;letter-spacing:-.035em;line-height:1.08}
-h2{font-size:clamp(1.7rem,3.5vw,2.75rem);font-weight:700;letter-spacing:-.04em;line-height:1.12}
-.sec{padding:clamp(72px,8vw,112px) 0 0}
-.lead{margin-top:20px;max-width:50ch;color:var(--mut)}
-.head{margin-bottom:44px}
 
-/* ---------- Logo (SVG) ---------- */
+h1,h2,h3{font-family:var(--d);font-weight:800;color:#fff;letter-spacing:-.005em;line-height:.98}
+h2{font-size:clamp(2.6rem,5.4vw,4.6rem);max-width:16ch}
+h3{font-size:clamp(1.6rem,2.5vw,2.1rem)}
+.lead{margin-top:18px;max-width:50ch;font-size:1.1rem;color:var(--mut)}
+.sec{padding-top:var(--sec)}
+.head{margin-bottom:52px}
+.head-row{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px 40px}
+
+/* ---------- Logo (SVG redessiné) ---------- */
 .lg{width:100%;height:auto;overflow:visible}
 .lg .ring,.lg .leaf{transform-box:view-box}
 .lg .tl{transform-origin:115px 115px}.lg .br{transform-origin:555px 555px}
@@ -39,7 +57,7 @@ h2{font-size:clamp(1.7rem,3.5vw,2.75rem);font-weight:700;letter-spacing:-.04em;l
 .lg.anim .hf{opacity:0}
 .lg.anim .ring,.lg.anim .leaf{transform:scale(0)}
 .lg.play .hs{animation:draw 1.1s .15s cubic-bezier(.65,0,.35,1) forwards,strokeout .5s 1.15s forwards}
-.lg.play .hf{animation:fin .6s 1.0s forwards}
+.lg.play .hf{animation:fin .6s 1s forwards}
 .lg.play .ring.tl{animation:pop .75s 1.45s cubic-bezier(.2,1.25,.3,1) forwards}
 .lg.play .leaf.tl{animation:pop .75s 1.52s cubic-bezier(.2,1.25,.3,1) forwards}
 .lg.play .ring.br{animation:pop .75s 1.8s cubic-bezier(.2,1.25,.3,1) forwards}
@@ -49,68 +67,80 @@ h2{font-size:clamp(1.7rem,3.5vw,2.75rem);font-weight:700;letter-spacing:-.04em;l
 /* ---------- Intro ---------- */
 #intro{position:fixed;inset:0;z-index:1000;background:var(--ink);display:grid;place-items:center;cursor:pointer}
 #intro .stage{display:grid;justify-items:center;gap:26px;width:min(52vmin,400px)}
-#intro .tag{font-family:var(--b);font-weight:500;font-size:1rem;color:var(--mut);opacity:0;animation:fin .8s 2.1s forwards;white-space:nowrap}
+#intro .tag{font-family:var(--d);font-weight:700;font-size:1.5rem;color:var(--mut);opacity:0;animation:fin .8s 2.1s forwards;white-space:nowrap}
 #intro .skip{position:absolute;right:22px;bottom:20px;font-size:.85rem;color:var(--dim);opacity:0;animation:fin .6s 1s forwards}
 #wipe{position:absolute;inset:0;background:var(--red);clip-path:circle(0 at 0 0);pointer-events:none}
 
 /* ---------- Boutons ---------- */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:56px;padding:0 28px;border:2px solid transparent;border-radius:16px;background:transparent;color:#fff;font-family:var(--b);font-weight:600;font-size:1rem;text-decoration:none;white-space:nowrap;cursor:pointer;transition:background-color .2s,border-color .2s,color .2s,transform .2s}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:56px;padding:0 28px;border:2px solid transparent;border-radius:16px;background:transparent;color:#fff;font-family:var(--b);font-weight:600;font-size:1rem;text-decoration:none;white-space:nowrap;cursor:pointer;transition:background-color .2s,border-color .2s,color .2s,transform .35s var(--ease)}
 .btn:active{transform:scale(.97)}
 .btn-red{background:var(--red)}.btn-red:hover{background:var(--redh)}
-.btn-line{border-color:#444}.btn-line:hover{border-color:#fff}
+.btn-line{border-color:var(--line2)}.btn-line:hover{border-color:#fff}
+.btn-white{background:#fff;color:var(--red)}.btn-white:hover{background:var(--ink);color:#fff}
 .btn-sm{height:44px;padding:0 20px;font-size:.93rem;border-radius:13px}
 .ico{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ico.fill{fill:currentColor;stroke:none}
 
-/* ---------- Navigation : le logo et un seul bouton, le reste dans un menu plein écran ---------- */
+/* ---------- En-tête : logo + un seul bouton ---------- */
 .mbar{position:fixed;top:0;left:0;right:0;z-index:70;height:84px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 clamp(20px,3.4vw,48px);border-bottom:1px solid transparent;transition:background-color .4s,border-color .4s,height .4s var(--ease),transform .9s var(--ease)}
-body.scrolled .mbar{height:68px;background:rgba(18,18,18,.82);backdrop-filter:blur(14px);border-color:var(--line)}
+body.scrolled .mbar{height:68px;background:rgba(18,18,18,.84);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--line)}
 .js .mbar{transform:translateY(-100%)}.go .mbar{transform:none;transition-delay:0s,0s,0s,.5s}
-.mbar .logo{display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none;font-family:var(--d);font-weight:800;font-size:1.1rem;letter-spacing:-.04em}
+.logo{display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none;font-family:var(--d);font-weight:800;font-size:1.6rem;line-height:1}
 .mbar .lg{width:40px}
-.menubtn{display:inline-flex;align-items:center;gap:14px;height:50px;padding:0 8px 0 24px;border:2px solid #4A4A4A;border-radius:18px;background:rgba(18,18,18,.5);backdrop-filter:blur(8px);color:#fff;font-family:var(--b);font-weight:600;font-size:1rem;cursor:pointer;transition:border-color .25s,background-color .25s}
+.mbar-r{display:flex;align-items:center;gap:10px}
+.mbar-r .btn-sm{height:50px;border-radius:18px}
+.menubtn{display:inline-flex;align-items:center;gap:14px;height:50px;padding:0 8px 0 22px;border:2px solid var(--line2);border-radius:18px;background:rgba(18,18,18,.5);color:#fff;font-weight:600;cursor:pointer;transition:border-color .25s}
 .menubtn:hover{border-color:#fff}
-.menubtn .ic{position:relative;display:grid;place-items:center;width:34px;height:34px;border-radius:12px;background:var(--red)}
+.menubtn .ic{display:grid;place-items:center;width:34px;height:34px;border-radius:12px;background:var(--red)}
 .menubtn .ic span{position:relative;width:16px;height:10px}
 .menubtn .ic span::before,.menubtn .ic span::after{content:"";position:absolute;left:0;right:0;height:2px;background:#fff;transition:transform .35s var(--ease),top .35s var(--ease)}
 .menubtn .ic span::before{top:0}.menubtn .ic span::after{top:8px}
-.menubtn[aria-expanded=true] .ic span::before{top:4px;transform:rotate(45deg)}.menubtn[aria-expanded=true] .ic span::after{top:4px;transform:rotate(-45deg)}
+.menubtn[aria-expanded=true] .ic span::before{top:4px;transform:rotate(45deg)}
+.menubtn[aria-expanded=true] .ic span::after{top:4px;transform:rotate(-45deg)}
+
+/* ---------- Menu plein écran ---------- */
 .drawer{position:fixed;z-index:65;inset:0;display:grid;grid-template-columns:1.25fr .75fr;gap:48px;align-items:center;padding:110px clamp(24px,6vw,96px) 40px;background:var(--ink);overflow-y:auto;visibility:hidden;clip-path:circle(0 at calc(100% - 78px) 42px);transition:clip-path .85s var(--ease),visibility 0s .85s}
 .drawer.open{visibility:visible;clip-path:circle(150vmax at calc(100% - 78px) 42px);transition:clip-path .95s var(--ease)}
 .drawer::before{content:"";position:absolute;right:0;bottom:0;width:min(34vw,380px);aspect-ratio:1;background:radial-gradient(circle at 100% 100%,var(--red) 0,var(--red) 62%,var(--ink) 62%,var(--ink) 74%,transparent 74%);pointer-events:none}
 .dl{position:relative;display:grid}
-.dl a{display:flex;align-items:center;gap:20px;padding:10px 0;color:#7A7A7A;text-decoration:none;font-family:var(--d);font-weight:700;font-size:clamp(1.9rem,5vw,4rem);letter-spacing:-.05em;line-height:1.1;transform:translateY(40px);opacity:0;transition:color .3s,padding .45s var(--ease),opacity .6s var(--ease),transform .7s var(--ease)}
-.drawer.open .dl a{transform:none;opacity:1;transition-delay:0s,0s,calc(.25s + var(--i)*.06s),calc(.25s + var(--i)*.06s)}
-.dl a::before{content:"";flex:none;width:0;height:.45em;border-radius:50% 0 50% 0;background:var(--red);transition:width .45s var(--ease)}
+.dl a{display:flex;align-items:center;gap:20px;padding:4px 0;color:#7A7A7A;text-decoration:none;font-family:var(--d);font-weight:800;font-size:clamp(2.6rem,6.4vw,5.2rem);line-height:1.05;transform:translateY(40px);opacity:0;transition:color .3s,padding .45s var(--ease),opacity .6s var(--ease),transform .7s var(--ease)}
+.drawer.open .dl a{transform:none;opacity:1;transition-delay:0s,0s,calc(.25s + var(--i)*.05s),calc(.25s + var(--i)*.05s)}
+.dl a::before{content:"";flex:none;width:0;height:.4em;border-radius:50% 0 50% 0;background:var(--red);transition:width .45s var(--ease)}
 .dl:hover a{color:#4A4A4A}
-.dl a:hover{color:#fff;padding-left:6px}.dl a:hover::before{width:.45em}
-.dside{position:relative;z-index:1;display:grid;gap:14px;padding:30px;border:1px solid var(--line);border-radius:32px;background:rgba(27,27,27,.85);transform:translateY(30px);opacity:0;transition:opacity .6s var(--ease),transform .7s var(--ease)}
+.dl a:hover{color:#fff;padding-left:6px}.dl a:hover::before{width:.4em}
+.dside{position:relative;z-index:1;display:grid;gap:14px;padding:30px;border:1px solid var(--line);border-radius:30px;background:rgba(25,25,25,.9);transform:translateY(30px);opacity:0;transition:opacity .6s var(--ease),transform .7s var(--ease)}
 .drawer.open .dside{transform:none;opacity:1;transition-delay:.55s}
 .dside p{color:var(--mut);font-size:.98rem}
-.dside .ip{font-family:var(--d);font-weight:800;font-size:clamp(1.4rem,2.6vw,2rem);letter-spacing:-.05em;color:#fff}
-@media(max-width:900px){.drawer{grid-template-columns:1fr;gap:30px;align-content:start}.dside{padding:22px}.drawer::before{width:44vw}}
+.dside .ip{font-family:var(--d);font-weight:800;font-size:clamp(2rem,3.4vw,2.8rem);line-height:1;color:#fff}
 
 /* ---------- Hero ---------- */
-.hero{position:relative;min-height:100svh;display:grid;place-items:center;text-align:center;overflow:hidden;padding:130px 0 110px;
-  background:radial-gradient(ellipse at 50% 46%,rgba(18,18,18,.5),rgba(18,18,18,.93) 78%),linear-gradient(to bottom,rgba(18,18,18,.25),var(--ink) 100%),url('https://i.imgur.com/xr1vqMq.jpg') center top/cover}
-.hero-lg{position:absolute;z-index:0;left:50%;top:50%;width:min(80vw,780px);margin:0;translate:-50% -50%;opacity:.1;pointer-events:none;transition:translate .4s ease-out;will-change:translate}
-.hero-lg .hf{fill:#E6E6E6}
+.hero{position:relative;min-height:100svh;display:flex;align-items:center;overflow:hidden;padding:130px 0 150px;
+  background:linear-gradient(90deg,rgba(18,18,18,.94) 0%,rgba(18,18,18,.62) 48%,rgba(18,18,18,.12) 100%),linear-gradient(to bottom,rgba(18,18,18,.35) 0%,transparent 30%,transparent 60%,var(--ink) 100%),url('https://i.imgur.com/xr1vqMq.jpg') center top/cover}
 .hero-in{position:relative;z-index:2;width:100%}
-.hero h1{font-size:clamp(2.2rem,6.4vw,6rem);letter-spacing:-.055em;line-height:1.02}
-.hero h1 span{display:block;overflow:hidden;padding:.04em 0 .1em}
-.hero h1 span>b{display:block;font-weight:800}
+.hero-txt{max-width:780px}
+.hero h1{font-size:clamp(3.2rem,7.2vw,7.2rem);font-weight:900;line-height:.92}
+.hero h1 span{display:block;overflow:hidden;padding:.03em 0 .06em;white-space:nowrap;will-change:translate}
+.hero h1 span>b{display:block;font-weight:900}
 .hero h1 span:nth-child(2)>b{color:var(--red)}
-.hero p.s{margin:28px auto 0;max-width:50ch;font-size:1.15rem;color:#D8D8D8}
-.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
-.hero .cta{justify-content:center}
-.cta .btn{transition:background-color .2s,border-color .2s,color .2s,transform .35s var(--ease)}
-.status{position:absolute;z-index:3;left:0;right:0;bottom:30px;display:flex;align-items:center;justify-content:center;gap:12px;padding:0 20px;color:var(--mut);font-size:.95rem}
-.status i{flex:none;width:9px;height:9px;border-radius:50%;background:var(--red);box-shadow:0 0 0 0 rgba(225,6,0,.6);animation:ping 2.2s infinite}
-@keyframes ping{70%{box-shadow:0 0 0 10px rgba(225,6,0,0)}100%{box-shadow:0 0 0 0 rgba(225,6,0,0)}}
-.hero-art{display:block;width:min(100%,460px);margin:40px auto 0;filter:drop-shadow(0 26px 30px rgba(0,0,0,.6))}
-.art{position:relative;margin-top:44px;display:grid;place-items:center;padding:30px;border-radius:36px;border:1px solid var(--line);background:radial-gradient(closest-side,rgba(225,6,0,.3),transparent 80%),var(--ink2)}
-.art img{width:min(100%,420px);filter:drop-shadow(0 22px 24px rgba(0,0,0,.6))}
+.hero p.s{margin-top:26px;max-width:44ch;font-size:1.15rem;color:#E0E0E0}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.hero-r{position:absolute;z-index:1;right:max(1vw,calc((100vw - 1200px)/2 - 30px));bottom:76px;width:min(46vw,620px);pointer-events:none}
+.hero-r::before{content:"";position:absolute;inset:8% 6% 0;background:radial-gradient(closest-side,rgba(225,6,0,.5),transparent 75%)}
+.hero-r img{position:relative;width:100%;filter:drop-shadow(0 30px 40px rgba(0,0,0,.65));transition:translate .3s ease-out;animation:float 7s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-12px)}}
+.lobby{position:absolute;z-index:3;left:0;right:0;bottom:0;background:var(--ink);border-radius:34px 34px 0 0;border-top:1px solid #ffffff1f}
+.lobby .lw{display:flex;align-items:stretch}
+.lc{display:flex;align-items:center;gap:12px;padding:22px 30px 22px 0;margin-right:30px;border-right:1px solid var(--line);color:var(--mut);font-size:.95rem;white-space:nowrap}
+.lc b{font-family:var(--d);font-weight:800;font-size:1.75rem;line-height:1;color:#fff}
+.lc i{flex:none;width:9px;height:9px;border-radius:50%;background:var(--red);animation:ping 2.2s infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(225,6,0,.6)}70%{box-shadow:0 0 0 10px rgba(225,6,0,0)}100%{box-shadow:0 0 0 0 rgba(225,6,0,0)}}
+.lip{display:flex;align-items:center;gap:16px;margin-left:auto;padding:0 0 0 26px;border:0;border-left:1px solid var(--line);background:none;cursor:pointer;text-align:left;color:#fff}
+.lip small{display:block;font-size:.8rem;color:var(--mut);line-height:1.2}
+.lip strong{font-family:var(--d);font-weight:800;font-size:1.75rem;line-height:1.1}
+.lip .go-c{display:grid;place-items:center;width:46px;height:46px;border-radius:14px;background:var(--red);transition:background-color .2s,transform .3s var(--ease)}
+.lip:hover .go-c{background:var(--redh);transform:scale(1.08)}
 
-/* entrée du hero (le seul moment orchestré après l'intro) */
+/* entrée du hero, juste après l'intro */
 .js .h-in{opacity:0}
 .js .hero h1 span>b{transform:translateY(110%)}
 .go .h-in{animation:hin .9s var(--ease) both;animation-delay:calc(.35s + var(--i,0)*.1s)}
@@ -118,179 +148,240 @@ body.scrolled .mbar{height:68px;background:rgba(18,18,18,.82);backdrop-filter:bl
 @keyframes hin{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
 @keyframes up{from{transform:translateY(110%)}to{transform:none}}
 
+/* ---------- Bandeau géant lié au scroll ---------- */
+.band{padding-top:clamp(50px,6vw,80px);overflow:hidden;display:grid;pointer-events:none;user-select:none}
+.band div{white-space:nowrap;font-family:var(--d);font-weight:900;font-size:clamp(4.4rem,13vw,11rem);line-height:1;color:transparent;-webkit-text-stroke:1.5px #383838;will-change:translate}
+.band div:nth-child(2){-webkit-text-stroke-color:var(--red)}
 
-/* ---------- Atouts : le panneau reprend la forme du logo ---------- */
-.feat{--s:1100px;position:relative;border-radius:56px;overflow:hidden;color:var(--ink);padding:clamp(52px,7vw,96px) clamp(30px,6vw,88px);
-  background:
-   radial-gradient(circle at 0 0,var(--red) 0,var(--red) calc(170px*var(--k,1)),var(--ink) calc(170px*var(--k,1)),var(--ink) calc(204px*var(--k,1)),transparent calc(204px*var(--k,1))),
-   radial-gradient(circle at 100% 100%,var(--red) 0,var(--red) calc(170px*var(--k,1)),var(--ink) calc(170px*var(--k,1)),var(--ink) calc(204px*var(--k,1)),transparent calc(204px*var(--k,1))),
-   var(--gray)}
-.feat h2{color:var(--ink);max-width:16ch;margin-left:clamp(0px,9vw,150px)}
-.feat-grid{display:grid;grid-template-columns:1fr 1fr;margin-top:56px;border-top:2px solid var(--ink)}
-.feat-grid article{padding:34px 34px 38px 0;border-bottom:1px solid #00000026}
-.feat-grid article:nth-child(even){padding:34px 0 38px 34px;border-left:1px solid #00000026}
-.feat-grid article:nth-last-child(-n+2){border-bottom:0}
-.feat-grid h3{color:var(--ink);font-size:1.3rem;margin-bottom:12px}
-.feat-grid p{color:#3A3A3A;font-size:1rem;max-width:36ch}
+/* ---------- Comment se joue le Bedfight (section épinglée) ---------- */
+.how{position:relative;height:330vh;margin-top:var(--sec)}
+.how-pin{position:sticky;top:0;height:100svh;display:flex;align-items:center;padding:90px 0 30px;overflow:hidden}
+.how-grid{display:grid;grid-template-columns:minmax(280px,350px) 1fr;gap:48px;align-items:center;width:100%}
+.how h2{max-width:13ch;font-size:clamp(2.4rem,4vw,3.6rem)}
+.phases{position:relative;display:grid;gap:2px;margin-top:30px;padding-left:28px}
+.phases::before,.phases::after{content:"";position:absolute;left:0;top:8px;bottom:8px;width:3px;border-radius:3px}
+.phases::before{background:var(--line)}
+.phases::after{background:var(--red);transform-origin:50% 0;transform:scaleY(var(--hp,0))}
+.ph{padding:14px 0;opacity:.38;transition:opacity .5s}
+.ph.on{opacity:1}
+.ph b{display:flex;align-items:baseline;gap:12px;font-family:var(--d);font-weight:800;font-size:1.9rem;line-height:1;color:#fff}
+.ph b em{font-style:normal;color:var(--red)}
+.ph p{margin-top:8px;color:var(--soft);font-size:1rem;max-width:36ch}
+.stage-svg{position:relative}
+.stage-svg::before{content:"";position:absolute;left:10%;right:10%;top:30%;bottom:-10%;background:radial-gradient(closest-side,rgba(225,6,0,.16),transparent);pointer-events:none}
+#howsvg{position:relative;width:100%;height:auto;overflow:visible}
+#howsvg .blk{fill:#2E2E2E}#howsvg .blk.top{fill:#474747}
+#howsvg .bb{opacity:0;transform:translateY(-40px) scale(.6);transform-box:fill-box;transform-origin:50% 50%;transition:opacity .25s,transform .45s cubic-bezier(.2,1.4,.4,1)}
+#howsvg .bb.on{opacity:1;transform:none}
+#howsvg .bbA{fill:var(--bone)}#howsvg .bbB{fill:#7C7C7C}
+#howsvg .pos{transition:transform .35s var(--ease)}
+#howsvg .fig{transform-box:fill-box;transform-origin:50% 100%;transition:transform .7s cubic-bezier(.5,0,.75,0),opacity .7s}
+#howsvg .fall .fig{transform:translateY(260px) rotate(50deg);opacity:0}
+#howsvg .gone{opacity:0}
+#howsvg .spawn .fig{animation:spawn .5s var(--ease)}
+@keyframes spawn{from{opacity:0;transform:translateY(-20px)}}
+#howsvg .bedp{transform-box:fill-box;transform-origin:50% 50%;transition:transform .7s var(--ease),opacity .7s}
+#howsvg .broken .p1{transform:translate(-30px,40px) rotate(-35deg);opacity:0}
+#howsvg .broken .p2{transform:translate(30px,50px) rotate(40deg);opacity:0}
+#howsvg .pt{opacity:0;transform-box:fill-box;transform-origin:50% 50%}
+#howsvg .broken .pt{animation:burst .9s var(--ease) forwards}
+@keyframes burst{0%{opacity:1;transform:none}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(180deg)}}
+#howsvg .lbl{font-family:var(--b);font-size:17px;fill:var(--mut);text-anchor:middle}
+#howsvg .win{font-family:var(--d);font-weight:800;font-size:44px;fill:var(--red);text-anchor:middle;opacity:0;transform:translateY(12px);transform-box:fill-box;transition:opacity .5s,transform .6s var(--ease)}
+#howsvg .win.on{opacity:1;transform:none}
+.how-skip{display:inline-block;margin-top:26px;color:var(--mut);font-size:.92rem;text-decoration:underline;text-underline-offset:3px}
+.how-skip:hover{color:#fff}
+
+/* ---------- Atouts ---------- */
+.rows{border-top:1px solid var(--line)}
+.row2{position:relative;display:grid;grid-template-columns:.9fr 1.1fr;gap:40px;align-items:center;padding:36px 0;border-bottom:1px solid var(--line);transition:padding .5s var(--ease)}
+.row2::before{content:"";position:absolute;left:0;top:50%;width:0;height:28px;margin-top:-14px;border-radius:50% 0 50% 0;background:var(--red);transition:width .5s var(--ease)}
+.row2:hover{padding-left:46px}.row2:hover::before{width:28px}
+.row2 h3{font-size:clamp(2.2rem,4.4vw,3.6rem);line-height:1}
+.row2 p{color:var(--soft);max-width:44ch}
 
 /* ---------- Le jeu : onglets ---------- */
 .game{display:grid;grid-template-columns:.95fr 1.05fr;gap:72px;align-items:start}
-.game h2{max-width:18ch;margin-bottom:36px}
+.game h2{margin-bottom:36px}
 .tabs{display:grid;border-top:1px solid var(--line)}
-.tab{position:relative;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:26px 0;background:none;border:0;border-bottom:1px solid var(--line);text-align:left;cursor:pointer;font-family:var(--d);font-weight:700;font-size:clamp(1.3rem,2.6vw,2rem);letter-spacing:-.04em;color:var(--dim);transition:color .3s,padding .45s var(--ease)}
-.tab::before{content:"";position:absolute;left:0;top:50%;width:14px;height:14px;margin-top:-7px;border-radius:50% 0 50% 0;background:var(--red);transform:scale(0);transition:transform .4s var(--ease)}
+.tab{position:relative;display:flex;align-items:center;padding:20px 0;background:none;border:0;border-bottom:1px solid var(--line);text-align:left;cursor:pointer;font-family:var(--d);font-weight:800;font-size:clamp(1.9rem,3.4vw,2.7rem);line-height:1;color:var(--dim);transition:color .3s,padding .45s var(--ease)}
+.tab::before{content:"";position:absolute;left:0;top:50%;width:16px;height:16px;margin-top:-8px;border-radius:50% 0 50% 0;background:var(--red);transform:scale(0);transition:transform .4s var(--ease)}
 .tab:hover{color:#B8B8B8}
-.tab[aria-selected=true]{color:#fff;padding-left:34px}.tab[aria-selected=true]::before{transform:scale(1)}
-.pane{position:sticky;top:110px;padding:clamp(30px,4vw,52px);background:var(--ink2);border:1px solid var(--line);border-radius:36px;min-height:360px;animation:pane .6s var(--ease)}
-@keyframes pane{from{opacity:0;clip-path:inset(0 0 100% 0)}to{opacity:1;clip-path:inset(0 0 0 0)}}
+.tab[aria-selected=true]{color:#fff;padding-left:34px}
+.tab[aria-selected=true]::before{transform:scale(1)}
+.art{position:relative;margin-top:40px;display:grid;place-items:center;padding:28px;border-radius:32px;border:1px solid var(--line);background:radial-gradient(closest-side,rgba(225,6,0,.28),transparent 80%),var(--ink2)}
+.art img{width:min(100%,400px);filter:drop-shadow(0 22px 24px rgba(0,0,0,.6))}
+.pane{position:sticky;top:110px;padding:clamp(30px,4vw,50px);background:var(--ink2);border:1px solid var(--line);border-radius:32px;min-height:360px;animation:pane .6s var(--ease)}
+@keyframes pane{from{opacity:0;clip-path:inset(0 0 100% 0)}to{opacity:1;clip-path:inset(0)}}
 .pane[hidden]{display:none}
-.pane h3{font-size:1.5rem;margin-bottom:16px}
-.pane p{color:#C4C4C4;max-width:44ch}
-.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
-.chips span{padding:10px 18px;border-radius:12px;background:var(--ink3);border:1px solid #333;font-weight:500;font-size:.95rem;color:#fff}
-.chips b{font-family:var(--d);color:#FF5A52;font-weight:700;margin-right:6px}
-.pane .bignum{display:flex;align-items:baseline;flex-wrap:wrap;margin-top:34px;font-family:var(--d);font-weight:800;font-size:clamp(3.4rem,8vw,6rem);letter-spacing:-.06em;line-height:1;color:#fff}
-.pane .bignum small{white-space:nowrap;font-size:.3em;letter-spacing:-.02em;color:var(--mut);margin-left:8px;font-weight:500}
+.pane h3{font-size:2.3rem;margin-bottom:14px}
+.pane p{color:var(--soft);max-width:44ch}
+.bignum{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 12px;margin-top:30px;font-family:var(--d);font-weight:900;font-size:clamp(4.6rem,9vw,7.4rem);line-height:.9;color:#fff}
+.bignum small{font-family:var(--b);font-weight:500;font-size:1rem;color:var(--mut);white-space:nowrap}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.chips span{padding:10px 18px;border-radius:12px;background:var(--ink3);border:1px solid var(--line2);font-weight:500;font-size:.95rem;color:#fff}
+.chips b{color:#FF5A52;margin-right:6px}
 
-/* ---------- Maps : sélecteur + grande image ---------- */
+/* ---------- Maps ---------- */
 .maps{display:grid;grid-template-columns:.7fr 1.3fr;gap:56px;align-items:start}
 .mlist{display:grid;border-top:1px solid var(--line)}
-.mbtn{display:grid;gap:4px;padding:22px 0;background:none;border:0;border-bottom:1px solid var(--line);text-align:left;cursor:pointer;transition:padding .45s var(--ease)}
-.mbtn strong{font-family:var(--d);font-weight:700;font-size:clamp(1.4rem,2.8vw,2.2rem);letter-spacing:-.04em;color:var(--dim);transition:color .3s}
+.mbtn{display:grid;gap:4px;padding:20px 0;background:none;border:0;border-bottom:1px solid var(--line);text-align:left;cursor:pointer;transition:padding .45s var(--ease),box-shadow .3s}
+.mbtn strong{font-family:var(--d);font-weight:800;font-size:clamp(2.2rem,3.8vw,3rem);line-height:1;color:var(--dim);transition:color .3s}
 .mbtn span{font-size:.92rem;color:var(--dim);transition:color .3s}
 .mbtn:hover strong{color:#B8B8B8}
 .mbtn[aria-selected=true]{padding-left:22px;box-shadow:inset 5px 0 0 var(--red)}
 .mbtn[aria-selected=true] strong{color:#fff}.mbtn[aria-selected=true] span{color:var(--mut)}
-.mview{position:relative;aspect-ratio:16/11;border-radius:44px;overflow:hidden;background:var(--ink2)}
-.mview img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;clip-path:inset(0 0 0 100%);transform:scale(1.1);transition:clip-path .9s var(--ease),transform 1.4s var(--ease);z-index:0}
+.mview{position:relative;aspect-ratio:16/11;border-radius:36px;overflow:hidden;background:var(--ink2)}
+.mview img{position:absolute;left:0;right:0;top:-9%;width:100%;height:118%;object-fit:cover;clip-path:inset(0 0 0 100%);transform:scale(1.1);transition:clip-path .9s var(--ease),transform 1.4s var(--ease);will-change:translate}
 .mview img.on{clip-path:inset(0);transform:none;z-index:2}
 .mview img.prev{clip-path:inset(0);transform:none;z-index:1}
-.mcap{margin-top:22px;max-width:52ch;color:#C4C4C4;min-height:3.4em}
+.mcap{margin-top:20px;max-width:52ch;color:var(--soft);min-height:3.4em}
 
 /* ---------- Comment jouer ---------- */
-.steps{border-top:1px solid var(--line)}
-.step{display:grid;grid-template-columns:130px 1fr 1.1fr;gap:28px;align-items:baseline;padding:36px 0;border-bottom:1px solid var(--line)}
-.step .n{font-family:var(--d);font-weight:800;font-size:clamp(3.2rem,6vw,5rem);letter-spacing:-.06em;line-height:.9;color:var(--red)}
-.step h3{font-size:1.45rem}.step p{color:#C4C4C4;font-size:1rem}
-.ipbtn{position:relative;overflow:hidden;isolation:isolate;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;width:100%;margin-top:28px;padding:34px 40px;border:2px solid var(--line);border-radius:36px;background:var(--ink2);cursor:pointer;text-align:left}
+.steps{position:relative;--col:130px;border-top:1px solid var(--line)}
+.steps::before,.steps::after{content:"";position:absolute;left:calc(var(--col) - 14px);top:0;bottom:0;width:3px;border-radius:3px}
+.steps::before{background:var(--line)}
+.steps::after{background:var(--red);transform-origin:50% 0;transform:scaleY(var(--p,0))}
+.step{display:grid;grid-template-columns:var(--col) 1fr 1.1fr;gap:28px;align-items:baseline;padding:34px 0;border-bottom:1px solid var(--line)}
+.step .n{font-family:var(--d);font-weight:900;font-size:clamp(4rem,7vw,6rem);line-height:.85;color:#444;transition:color .5s,transform .6s var(--ease);transform-origin:0 100%}
+.step.lit .n{color:var(--red);transform:scale(1.06)}
+.step h3{font-size:clamp(1.9rem,3vw,2.4rem)}
+.step p{color:var(--soft);font-size:1rem}
+.ipbtn{position:relative;overflow:hidden;isolation:isolate;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;width:100%;margin-top:28px;padding:30px 40px;border:2px solid var(--line);border-radius:32px;background:var(--ink2);cursor:pointer;text-align:left}
 .ipbtn::before{content:"";position:absolute;z-index:-1;left:0;top:0;width:260%;aspect-ratio:1;border-radius:50%;background:var(--red);transform:translate(-50%,-50%) scale(0);transition:transform .8s var(--ease)}
 .ipbtn:hover::before,.ipbtn:focus-visible::before{transform:translate(-50%,-50%) scale(1)}
 .ipbtn small{display:block;font-size:.95rem;color:var(--mut);transition:color .3s}
-.ipbtn b{font-family:var(--d);font-weight:800;font-size:clamp(1.8rem,5.4vw,3.8rem);letter-spacing:-.05em;line-height:1.15;color:#fff}
+.ipbtn b{font-family:var(--d);font-weight:900;font-size:clamp(3rem,7vw,5.4rem);line-height:1;color:#fff}
 .ipbtn .go-c{display:inline-flex;align-items:center;gap:10px;font-weight:600;color:#fff;padding:14px 22px;border-radius:14px;background:var(--red);transition:background-color .3s,color .3s}
 .ipbtn:hover small{color:#fff}.ipbtn:hover .go-c{background:#fff;color:var(--red)}
 
 /* ---------- Actualités ---------- */
-.nl{display:grid;grid-template-columns:170px 1fr;gap:28px;padding:30px 0;border-top:1px solid var(--line);color:inherit;text-decoration:none}
+.nl{display:grid;grid-template-columns:170px 1fr;gap:28px;padding:28px 0;border-top:1px solid var(--line);color:inherit;text-decoration:none}
 .nl:last-child{border-bottom:1px solid var(--line)}
 .nl .dt{color:var(--mut);font-size:.95rem}
 .nl .dt b{display:block;width:max-content;margin-top:8px;padding:2px 12px;border-radius:8px;border:1.5px solid var(--red);color:#fff;font-weight:500;font-size:.82rem}
-.nl h3{font-size:1.35rem;transition:color .25s}.nl:hover h3{color:var(--red)}
-.nl p{margin-top:10px;color:#BDBDBD;font-size:1rem;max-width:62ch}
-.nempty{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;padding:36px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);color:var(--mut)}
-.nempty b{display:block;margin-bottom:6px;font-family:var(--d);font-weight:700;letter-spacing:-.03em;color:#fff;font-size:1.35rem}
-
-/* ---------- FAQ ---------- */
-.faq{max-width:860px;border-top:1px solid var(--line)}
-.qa{border-bottom:1px solid var(--line)}
-.qa>button{display:flex;width:100%;align-items:center;justify-content:space-between;gap:24px;padding:28px 0;background:none;border:0;text-align:left;cursor:pointer;color:#fff;font-family:var(--d);font-weight:500;font-size:1.05rem;line-height:1.4;letter-spacing:-.02em}
-.qa>button i{position:relative;flex:none;width:36px;height:36px;border-radius:12px;background:var(--ink3);transition:background-color .3s,transform .4s var(--ease)}
-.qa>button i::before,.qa>button i::after{content:"";position:absolute;left:50%;top:50%;background:#fff;width:14px;height:2px;margin:-1px 0 0 -7px;border-radius:2px;transition:transform .4s var(--ease)}
-.qa>button i::after{transform:rotate(90deg)}
-.qa.open>button i{background:var(--red)}.qa.open>button i::after{transform:rotate(0)}
-.qa-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s var(--ease)}.qa.open .qa-body{grid-template-rows:1fr}
-.qa-body>div{overflow:hidden}.qa-body p{padding:0 60px 30px 0;max-width:60ch;color:#C4C4C4}
-.qa code{background:var(--ink3);padding:2px 9px;border-radius:7px;color:#fff;font-size:.92em}
+.nl h3{font-size:2rem;transition:color .25s}.nl:hover h3{color:var(--red)}
+.nl p{margin-top:8px;color:var(--soft);font-size:1rem;max-width:62ch}
+.nempty{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;padding:34px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);color:var(--mut)}
+.nempty b{display:block;margin-bottom:6px;font-family:var(--d);font-weight:800;color:#fff;font-size:2rem;line-height:1}
 
 /* ---------- Boutique ---------- */
 .plans{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.plan{display:flex;flex-direction:column;padding:clamp(30px,4vw,48px);border-radius:44px;background:var(--ink2);border:1px solid var(--line)}
+.plan{display:flex;flex-direction:column;padding:clamp(30px,4vw,46px);border-radius:36px;background:var(--ink2);border:1px solid var(--line)}
 .plan.main{background:var(--red);border-color:var(--red);color:#fff}
 .plan .tp{display:flex;align-items:center;justify-content:space-between;min-height:30px;font-size:.95rem;color:var(--mut)}
 .plan.main .tp{color:#FFD9D6}
 .plan .tag{padding:3px 14px;border-radius:9px;background:var(--ink);color:#fff;font-weight:600;font-size:.82rem}
-.plan h3{margin-top:16px;font-size:clamp(1.7rem,3.2vw,2.3rem)}
-.plan>p{margin-top:12px;max-width:36ch;color:#C4C4C4}.plan.main>p{color:#fff}
-.perks{list-style:none;padding:0;margin:28px 0 32px;display:grid;gap:14px}
-.perks li{position:relative;padding-left:30px;font-size:1rem}
+.plan h3{margin-top:14px;font-size:clamp(2.4rem,4vw,3.2rem)}
+.plan>p{margin-top:12px;max-width:36ch;color:var(--soft)}.plan.main>p{color:#fff}
+.perks{list-style:none;padding:0;margin:26px 0 30px;display:grid;gap:13px}
+.perks li{position:relative;padding-left:28px}
 .perks li::before{content:"";position:absolute;left:0;top:.45em;width:12px;height:12px;border-radius:50% 0 50% 0;background:var(--red)}
 .plan.main .perks li::before{background:#fff}
-.price{margin-top:auto;font-family:var(--d);font-weight:800;font-size:clamp(2.8rem,5vw,4rem);letter-spacing:-.06em;line-height:1;color:#fff}
-.price small{font-family:var(--b);font-weight:500;font-size:1rem;letter-spacing:0;color:var(--mut)}.plan.main .price small{color:#FFD9D6}
+.price{margin-top:auto;font-family:var(--d);font-weight:900;font-size:clamp(4rem,7vw,5.6rem);line-height:.9;color:#fff}
+.price small{font-family:var(--b);font-weight:500;font-size:1rem;color:var(--mut)}.plan.main .price small{color:#FFD9D6}
 .plan .btn{margin-top:24px;width:100%}
-.plan.main .btn{background:#fff;color:var(--red)}.plan.main .btn:hover{background:var(--ink);color:#fff}
 
-/* ---------- Final ---------- */
-.final{position:relative;margin-top:clamp(72px,8vw,112px);padding:clamp(72px,9vw,112px) 0;text-align:center;overflow:hidden;border-top:1px solid var(--line)}
-.final-lg{width:clamp(130px,16vw,190px);margin:0 auto 34px}
-.final h2{font-size:clamp(1.9rem,4.6vw,3.8rem);max-width:15ch;margin:0 auto}
+/* ---------- FAQ ---------- */
+.faq{max-width:880px;border-top:1px solid var(--line)}
+.qa{border-bottom:1px solid var(--line)}
+.qa>button{display:flex;width:100%;align-items:center;justify-content:space-between;gap:24px;padding:24px 0;background:none;border:0;text-align:left;cursor:pointer;color:#fff;font-family:var(--d);font-weight:700;font-size:clamp(1.5rem,2.4vw,1.9rem);line-height:1.15}
+.qa>button i{position:relative;flex:none;width:38px;height:38px;border-radius:12px;background:var(--ink3);transition:background-color .3s}
+.qa>button i::before,.qa>button i::after{content:"";position:absolute;left:50%;top:50%;width:14px;height:2px;margin:-1px 0 0 -7px;border-radius:2px;background:#fff;transition:transform .4s var(--ease)}
+.qa>button i::after{transform:rotate(90deg)}
+.qa.open>button i{background:var(--red)}.qa.open>button i::after{transform:rotate(0)}
+.qa-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s var(--ease)}.qa.open .qa-body{grid-template-rows:1fr}
+.qa-body>div{overflow:hidden}.qa-body p{padding:0 60px 28px 0;max-width:60ch;color:var(--soft)}
+.qa code{background:var(--ink3);padding:2px 9px;border-radius:7px;color:#fff;font-size:.92em}
+
+/* ---------- Fin de page ---------- */
+.final{position:relative;margin-top:var(--sec);padding:clamp(80px,10vw,130px) 0;text-align:center;overflow:hidden;border-top:1px solid var(--line)}
+.final-lg{width:clamp(120px,14vw,170px);margin:0 auto 32px}
+.final h2{font-size:clamp(3.2rem,8vw,7rem);max-width:14ch;margin:0 auto}
 .final p{margin:20px auto 0;max-width:44ch;color:var(--mut)}
 .final .cta{justify-content:center}
 .foot{padding:30px 0 42px;border-top:1px solid var(--line)}
 .foot .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 30px;color:var(--mut);font-size:.88rem}
 .foot .fl{display:flex;align-items:center;gap:14px;max-width:62ch}.foot .fl .lg{width:30px;flex:none}
-.foot-l{display:flex;flex-wrap:wrap;gap:8px 24px}.foot-l button{background:none;border:0;padding:0;color:inherit;cursor:pointer;font-size:inherit}.foot-l button:hover{color:#fff}
+.foot-l{display:flex;flex-wrap:wrap;gap:8px 24px}
+.foot-l button{background:none;border:0;padding:0;color:inherit;cursor:pointer;font-size:inherit}.foot-l button:hover{color:#fff}
 
-/* ---------- Fenêtres ---------- */
+/* ---------- Titres révélés au scroll ---------- */
+.js .sec h2,.js .final h2{clip-path:inset(0 0 100% 0);transform:translateY(26px);transition:clip-path .9s var(--ease),transform .9s var(--ease)}
+.js h2.in{clip-path:inset(-10% -5% -25% -5%)!important;transform:none!important}
+
+/* ---------- Fenêtres, toast, cookies ---------- */
 .overlay{position:fixed;inset:0;z-index:300;display:none;place-items:center;padding:20px;background:rgba(0,0,0,.8)}.overlay.open{display:grid}
-.panel{width:100%;max-width:480px;max-height:86vh;display:flex;flex-direction:column;background:var(--ink2);border:1px solid var(--line);border-radius:32px;padding:32px}
-.panel-wide{max-width:640px}.overlay.open .panel{animation:pop2 .3s var(--ease)}@keyframes pop2{from{opacity:0;transform:translateY(14px) scale(.98)}}
+.panel{width:100%;max-width:480px;max-height:86vh;display:flex;flex-direction:column;background:var(--ink2);border:1px solid var(--line);border-radius:30px;padding:32px}
+.panel-wide{max-width:640px}.overlay.open .panel{animation:pop2 .3s var(--ease)}
+@keyframes pop2{from{opacity:0;transform:translateY(14px) scale(.98)}}
 .panel-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding-bottom:16px}
-.panel-head h3{font-size:1.45rem}
-.close{background:none;border:2px solid #444;width:42px;height:42px;flex:none;display:grid;place-items:center;border-radius:13px;cursor:pointer}.close:hover{border-color:#fff}
+.panel-head h3{font-size:2.2rem}
+.close{background:none;border:2px solid var(--line2);width:42px;height:42px;flex:none;display:grid;place-items:center;border-radius:13px;cursor:pointer}.close:hover{border-color:#fff}
 .panel-body{overflow-y:auto}
-.panel-price{font-family:var(--d);font-weight:800;font-size:2rem;letter-spacing:-.05em;color:var(--red);margin-bottom:14px}
-.panel-body ul{list-style:none;padding:0;margin:0 0 24px}.panel-body li{padding:13px 0;border-top:1px solid var(--line);color:#D4D4D4}.panel-body li:last-child{border-bottom:1px solid var(--line)}
+.panel-price{font-family:var(--d);font-weight:900;font-size:3rem;line-height:1;color:var(--red);margin-bottom:16px}
+.panel-body ul{list-style:none;padding:0;margin:0 0 24px}
+.panel-body li{padding:13px 0;border-top:1px solid var(--line);color:var(--soft)}.panel-body li:last-child{border-bottom:1px solid var(--line)}
 .panel .btn{width:100%}
-.note{padding:18px 0;border-top:1px solid var(--line)}.note-meta{display:flex;justify-content:space-between;gap:12px;font-size:.88rem;color:var(--mut)}.note-meta b{color:var(--red);font-weight:600}
-.note h4{font-family:var(--d);font-weight:700;letter-spacing:-.03em;font-size:1.1rem;color:#fff;margin:8px 0 6px}
-.note p,.legal p{color:#C4C4C4;font-size:1rem}
-.legal h4{font-family:var(--d);font-weight:700;letter-spacing:-.03em;font-size:1.05rem;color:#fff;margin-top:20px}.legal h4:first-child{margin-top:0}
+.note{padding:18px 0;border-top:1px solid var(--line)}
+.note-meta{display:flex;justify-content:space-between;gap:12px;font-size:.88rem;color:var(--mut)}.note-meta b{color:var(--red);font-weight:600}
+.note h4{font-family:var(--d);font-weight:800;font-size:1.6rem;line-height:1.05;color:#fff;margin:8px 0 6px}
+.note p,.legal p{color:var(--soft);font-size:1rem}
+.legal h4{font-family:var(--d);font-weight:800;font-size:1.5rem;color:#fff;margin-top:20px}.legal h4:first-child{margin-top:0}
 .skeleton{height:72px;margin-bottom:12px;background:var(--ink3);border-radius:16px}
 .toast{position:fixed;left:20px;bottom:20px;z-index:1100;background:#fff;color:var(--ink);padding:14px 22px;font-weight:600;border-radius:14px;border-left:6px solid var(--red);transform:translateY(160%);transition:transform .35s var(--ease)}.toast.show{transform:none}
-.cookie{position:fixed;left:16px;right:16px;bottom:16px;z-index:310;max-width:780px;margin:0 auto;background:var(--ink3);border:1px solid #3A3A3A;border-radius:24px;transform:translateY(140%);transition:transform .45s var(--ease)}.cookie.show{transform:none}
+.cookie{position:fixed;left:16px;right:16px;bottom:16px;z-index:310;max-width:780px;margin:0 auto;background:var(--ink3);border:1px solid var(--line2);border-radius:24px;transform:translateY(140%);transition:transform .45s var(--ease)}.cookie.show{transform:none}
 .cookie .in2{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding:18px 24px}
-.cookie p{max-width:50ch;font-size:.93rem;line-height:1.5;color:#D4D4D4}.cookie p b{display:block;color:#fff;font-family:var(--d);font-weight:700;letter-spacing:-.03em;font-size:1rem;margin-bottom:2px}
-.cookie p button{background:none;border:0;padding:0;text-decoration:underline;cursor:pointer;color:#fff}.cookie-actions{display:flex;gap:10px}
+.cookie p{max-width:50ch;font-size:.93rem;line-height:1.5;color:var(--soft)}
+.cookie p b{display:block;color:#fff;font-family:var(--d);font-weight:800;font-size:1.4rem;line-height:1.1;margin-bottom:2px}
+.cookie p button{background:none;border:0;padding:0;text-decoration:underline;cursor:pointer;color:#fff}
+.cookie-actions{display:flex;gap:10px}
 
-/* ---------- Tablette / mobile ---------- */
+/* ---------- Tablette ---------- */
 @media(max-width:1020px){
-  
-    .game,.maps{grid-template-columns:1fr;gap:36px}.pane{position:static}
-  .step{grid-template-columns:70px 1fr;gap:6px 18px}.step p{grid-column:2}
+  .mbar-r .dcb{display:none}
+  .hero{display:block;padding:112px 0 0}
+  .hero-r{position:relative;right:auto;bottom:auto;width:min(92%,460px);margin:10px auto -20px}
+  .lobby{position:relative;border-radius:28px 28px 0 0}
+  .lobby .lw{flex-wrap:wrap;padding-top:6px}
+  .lc{padding:14px 20px 14px 0;margin-right:20px;border-right:0}
+  .lip{width:100%;margin:6px 0 0;padding:16px 0 18px;border-left:0;border-top:1px solid var(--line);justify-content:space-between}
+  .how{height:300vh}
+  .how-pin{align-items:flex-start;padding-top:96px}
+  .how-grid{grid-template-columns:1fr;gap:18px}
+  .how h2{max-width:none;font-size:clamp(2.4rem,9vw,3.4rem)}
+  .phases{margin-top:16px;min-height:9.5em}
+  .ph{position:absolute;left:28px;right:0;top:0;padding:4px 0;opacity:0;transform:translateY(10px);transition:opacity .4s,transform .5s var(--ease)}
+  .ph.on{opacity:1;transform:none}
+  .how-pin{align-items:center}
+  .how-skip{display:none}
+  .row2{grid-template-columns:1fr;gap:10px;padding:28px 0}.row2:hover{padding-left:0}.row2::before{display:none}
+  .game,.maps{grid-template-columns:1fr;gap:34px}.pane{position:static}
+  .steps{--col:70px}.step{gap:6px 18px}.step p{grid-column:2}
   .plans{grid-template-columns:1fr}
-  .feat{border-radius:40px;background:
-   radial-gradient(circle at 0 0,var(--red) 0,var(--red) calc(110px*var(--k,1)),var(--ink) calc(110px*var(--k,1)),var(--ink) calc(132px*var(--k,1)),transparent calc(132px*var(--k,1))),
-   radial-gradient(circle at 100% 100%,var(--red) 0,var(--red) calc(110px*var(--k,1)),var(--ink) calc(110px*var(--k,1)),var(--ink) calc(132px*var(--k,1)),transparent calc(132px*var(--k,1))),var(--gray)}
-  .feat h2{margin-left:0;padding-top:50px}
   .nl{grid-template-columns:1fr;gap:8px}
+  .drawer{grid-template-columns:1fr;gap:30px;align-content:start}.dside{padding:22px}.drawer::before{width:44vw}
 }
+@media(min-width:1021px){.how .phases{min-height:0}}
+/* ---------- Mobile ---------- */
 @media(max-width:620px){
   body{font-size:16px}.wrap{padding:0 20px}
+  .hero h1 span{white-space:normal}
   .cta .btn{flex:1}
-  .feat-grid{grid-template-columns:1fr}.feat-grid article,.feat-grid article:nth-child(even){padding:26px 0;border-left:0}.feat-grid article:nth-last-child(2){border-bottom:1px solid #00000026}
-  .status>div{padding:16px 22px 16px 0;margin-right:10px}
-  .mview{border-radius:30px}.ipbtn{padding:26px 24px;border-radius:28px}.ipbtn .go-c{width:100%;justify-content:center}
-  .plan{border-radius:32px}.cookie-actions{width:100%}.cookie-actions .btn{flex:1}
-  .tab[aria-selected=true]{padding-left:30px}
+  .mview{border-radius:26px}.ipbtn{padding:24px;border-radius:26px}.ipbtn .go-c{width:100%;justify-content:center}
+  .plan{border-radius:28px}
+  .qa-body p{padding-right:0}
+  .cookie-actions{width:100%}.cookie-actions .btn{flex:1}
+  .menubtn{padding-left:16px}
 }
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-delay:0s!important;transition-duration:.001ms!important}.js .h-in{opacity:1;transform:none}.js .hero h1 span>b{transform:none}}
-
-/* ---------- Effets liés au scroll ---------- */
-.band{padding-top:clamp(40px,5vw,70px);overflow:hidden;display:grid;gap:6px;pointer-events:none;user-select:none}
-.band div{white-space:nowrap;font-family:var(--d);font-weight:800;font-size:clamp(3rem,9vw,7.5rem);letter-spacing:-.06em;line-height:1.2;color:transparent;-webkit-text-stroke:1.5px #3A3A3A;will-change:translate}
-.band div:nth-child(2){-webkit-text-stroke-color:var(--red)}
-.js h2{clip-path:inset(0 0 100% 0);transform:translateY(26px);transition:clip-path .9s var(--ease),transform .9s var(--ease)}
-.js h2.in{clip-path:inset(-10% -5% -25% -5%);transform:none}
-.steps{position:relative;--col:130px}
-.steps::before,.steps::after{content:"";position:absolute;left:calc(var(--col) - 14px);top:0;bottom:0;width:3px;border-radius:3px}
-.steps::before{background:var(--line)}
-.steps::after{background:var(--red);transform-origin:50% 0;transform:scaleY(var(--p,0))}
-.step .n{color:#444;transition:color .5s,transform .6s var(--ease);transform-origin:0 100%}
-.step.lit .n{color:var(--red);transform:scale(1.08)}
-.mview img{top:-9%;height:118%;inset:auto 0 auto 0;will-change:translate}
-@media(max-width:1020px){.steps{--col:70px}}
-@media(prefers-reduced-motion:reduce){.js h2{clip-path:none;transform:none}.step .n{color:var(--red)}}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-delay:0s!important;transition-duration:.001ms!important}
+  .js .h-in{opacity:1}.js .hero h1 span>b{transform:none}
+  .js .sec h2,.js .final h2{clip-path:none;transform:none}
+  .how{height:auto}.how-pin{position:relative;height:auto;padding:0}
+  .ph{opacity:1;position:static;transform:none}.phases::after{transform:none}.phases{min-height:0}
+  .step .n{color:var(--red)}
+}
 </style></head>
 <body class="lock">
 
@@ -304,61 +395,84 @@ body.scrolled .mbar{height:68px;background:rgba(18,18,18,.82);backdrop-filter:bl
     <symbol id="i-copy" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
     <symbol id="i-discord" viewBox="0 -28.5 256 256"><path fill="currentColor" stroke="none" d="M216.856339,16.5966031 C200.285002,8.84328665 182.566144,3.2084988 164.041564,0 C161.766523,4.11318106 159.108624,9.64549908 157.276099,14.0464379 C137.583995,11.0849896 118.072967,11.0849896 98.7430163,14.0464379 C96.9108417,9.64549908 94.1925838,4.11318106 91.8971895,0 C73.3526068,3.2084988 55.6133949,8.86399117 39.0420583,16.6376612 C5.61752293,67.146514 -3.4433191,116.400813 1.08711069,164.955721 C23.2560196,181.510915 44.7403634,191.567697 65.8621325,198.148576 C71.0772151,190.971126 75.7283628,183.341335 79.7352139,175.300261 C72.104019,172.400575 64.7949724,168.822202 57.8887866,164.667963 C59.7209612,163.310589 61.5131304,161.891452 63.2445898,160.431257 C105.36741,180.133187 151.134928,180.133187 192.754523,160.431257 C194.506336,161.891452 196.298154,163.310589 198.110326,164.667963 C191.183787,168.842556 183.854737,172.420929 176.223542,175.320965 C180.230393,183.341335 184.861538,190.991831 190.096624,198.16893 C211.238746,191.588051 232.743023,181.531619 254.911949,164.955721 C260.227747,108.668201 245.831087,59.8662432 216.856339,16.5966031 Z M85.4738752,135.09489 C72.8290281,135.09489 62.4592217,123.290155 62.4592217,108.914901 C62.4592217,94.5396472 72.607595,82.7145587 85.4738752,82.7145587 C98.3405064,82.7145587 108.709962,94.5189427 108.488529,108.914901 C108.508531,123.290155 98.3405064,135.09489 85.4738752,135.09489 Z M170.525237,135.09489 C157.88039,135.09489 147.510584,123.290155 147.510584,108.914901 C147.510584,94.5396472 157.658606,82.7145587 170.525237,82.7145587 C183.391518,82.7145587 193.761324,94.5189427 193.539891,108.914901 C193.539891,123.290155 183.391518,135.09489 170.525237,135.09489 Z"/></symbol>
   </svg>
-<header class="mbar"><a href="#top" class="logo" aria-label="Hevenly, accueil"><svg viewBox="0 0 667 670" class="lg " aria-hidden="true"><defs><clipPath id="hc"><path d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z"/></clipPath><mask id="hm"><path d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="#fff"/><circle class="ring tl" cx="115" cy="115" r="137" fill="#000"/><circle class="ring br" cx="555" cy="555" r="137" fill="#000"/></mask></defs><path class="hs" d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="none" stroke="#E6E6E6" stroke-width="4" pathLength="1"/><path class="hf" d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="#E6E6E6" mask="url(#hm)"/><g clip-path="url(#hc)"><circle class="leaf tl" cx="115" cy="115" r="115" fill="#E10600"/><circle class="leaf br" cx="555" cy="555" r="115" fill="#E10600"/></g></svg><span>Hevenly</span></a>
-<button class="menubtn" id="burger" aria-expanded="false" aria-controls="drawer"><span id="menutxt">Menu</span><i class="ic"><span></span></i></button></header>
+<header class="mbar">
+  <a href="#top" class="logo" aria-label="Hevenly, accueil"><svg viewBox="0 0 667 670" class="lg " aria-hidden="true"><defs><clipPath id="hc"><path d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z"/></clipPath><mask id="hm"><path d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="#fff"/><circle class="ring tl" cx="115" cy="115" r="137" fill="#000"/><circle class="ring br" cx="555" cy="555" r="137" fill="#000"/></mask></defs><path class="hs" d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="none" stroke="#E6E6E6" stroke-width="4" pathLength="1"/><path class="hf" d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="#E6E6E6" mask="url(#hm)"/><g clip-path="url(#hc)"><circle class="leaf tl" cx="115" cy="115" r="115" fill="#E10600"/><circle class="leaf br" cx="555" cy="555" r="115" fill="#E10600"/></g></svg><span>Hevenly</span></a>
+  <div class="mbar-r">
+    <a href="https://discord.gg" target="_blank" rel="noopener" class="btn btn-red btn-sm dcb"><svg class="ico fill"><use href="#i-discord"/></svg>Discord</a>
+    <button class="menubtn" id="burger" aria-expanded="false" aria-controls="drawer"><span id="menutxt">Menu</span><i class="ic"><span></span></i></button>
+  </div>
+</header>
 <div class="drawer" id="drawer" role="dialog" aria-label="Menu">
-  <nav class="dl" aria-label="Navigation principale"><a href="#features" style="--i:0">Atouts</a><a href="#concept" style="--i:1">Le jeu</a><a href="#maps" style="--i:2">Maps</a><a href="#how-to-play" style="--i:3">Jouer</a><a href="#news" style="--i:4">Actualités</a><a href="#faq" style="--i:5">FAQ</a><a href="#shop" style="--i:6">Boutique</a></nav>
-  <div class="dside"><p>Adresse du serveur, en Minecraft 1.8.9</p><div class="ip">hevenly.games</div><button class="btn btn-red" onclick="copyIP()"><svg class="ico"><use href="#i-copy"/></svg>Copier l'IP</button><a href="https://discord.gg" target="_blank" rel="noopener" class="btn btn-line"><svg class="ico" style="fill:currentColor;stroke:none"><use href="#i-discord"/></svg>Rejoindre le Discord</a></div>
+  <nav class="dl" aria-label="Navigation principale"><a href="#bedfight" style="--i:0">Le Bedfight</a><a href="#features" style="--i:1">Atouts</a><a href="#concept" style="--i:2">Le jeu</a><a href="#maps" style="--i:3">Maps</a><a href="#how-to-play" style="--i:4">Jouer</a><a href="#news" style="--i:5">Actualités</a><a href="#shop" style="--i:6">Boutique</a><a href="#faq" style="--i:7">FAQ</a></nav>
+  <div class="dside"><p>Adresse du serveur, en Minecraft 1.8.9</p><div class="ip">hevenly.games</div><button class="btn btn-red" onclick="copyIP()"><svg class="ico"><use href="#i-copy"/></svg>Copier l'IP</button><a href="https://discord.gg" target="_blank" rel="noopener" class="btn btn-line"><svg class="ico fill"><use href="#i-discord"/></svg>Rejoindre le Discord</a></div>
 </div>
 
 <main id="top">
-<section class="hero" id="hero"><svg viewBox="0 0 667 670" class="lg hero-lg" aria-hidden="true"><defs><clipPath id="xc"><path d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z"/></clipPath><mask id="xm"><path d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="#fff"/><circle class="ring tl" cx="115" cy="115" r="137" fill="#000"/><circle class="ring br" cx="555" cy="555" r="137" fill="#000"/></mask></defs><path class="hs" d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="none" stroke="#E6E6E6" stroke-width="4" pathLength="1"/><path class="hf" d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="#E6E6E6" mask="url(#xm)"/><g clip-path="url(#xc)"><circle class="leaf tl" cx="115" cy="115" r="115" fill="#E10600"/><circle class="leaf br" cx="555" cy="555" r="115" fill="#E10600"/></g></svg>
-<div class="hero-in wrap">
-  <h1><span><b style="--i:0">Protège ton lit.</b></span><span><b style="--i:1">Détruis le sien.</b></span></h1>
-  <p class="s h-in" style="--i:2">Hevenly propose un système compétitif complet axé sur le Bedfight, développé sur mesure pour vous faire progresser dans les meilleures conditions.</p>
-  <div class="cta h-in" style="--i:3"><a href="https://discord.gg" target="_blank" rel="noopener" class="btn btn-red"><svg class="ico" style="fill:currentColor;stroke:none"><use href="#i-discord"/></svg>Rejoindre le Discord</a><button class="btn btn-line" onclick="copyIP()"><svg class="ico"><use href="#i-copy"/></svg>Copier l'IP</button></div>
-</div>
-<p class="status h-in" style="--i:4"><i></i><span><span id="players-online">Serveur en ligne</span>, Minecraft 1.8.9, saison 0</span></p>
+<section class="hero" id="hero">
+  <div class="hero-in wrap"><div class="hero-txt">
+    <h1><span><b style="--i:0">Protège ton lit.</b></span><span><b style="--i:1">Détruis le sien.</b></span></h1>
+    <p class="s h-in" style="--i:2">Hevenly propose un système compétitif complet axé sur le Bedfight, développé sur mesure pour vous faire progresser dans les meilleures conditions.</p>
+    <div class="cta h-in" style="--i:3"><a href="https://discord.gg" target="_blank" rel="noopener" class="btn btn-red"><svg class="ico fill"><use href="#i-discord"/></svg>Rejoindre le Discord</a><a href="#bedfight" class="btn btn-line">Comment ça se joue</a></div>
+  </div></div>
+  <div class="hero-r h-in" style="--i:2"><img id="render" src="https://i.imgur.com/r8sDBMt.png" alt="Rendu Minecraft Bedfight"></div>
+  <div class="lobby h-in" style="--i:4"><div class="wrap lw">
+    <div class="lc"><i></i><span id="players-online">Serveur en ligne</span></div>
+    <div class="lc"><b>1.8.9</b><span>Version du jeu</span></div>
+    <div class="lc"><b>24/7</b><span>Serveur ouvert</span></div>
+    <div class="lc"><b>Saison 0</b><span>En cours</span></div>
+    <button class="lip" onclick="copyIP()" aria-label="Copier l'adresse du serveur hevenly.games"><span><small>Adresse du serveur</small><strong>hevenly.games</strong></span><span class="go-c"><svg class="ico"><use href="#i-copy"/></svg></span></button>
+  </div></div>
 </section>
 
 <div class="band" aria-hidden="true"><div>Ranked Bedfight Ranked Bedfight Ranked Bedfight</div><div>Protège ton lit Détruis le sien Protège ton lit</div></div>
 
-<section class="sec" id="features"><div class="wrap">
-  <div class="feat">
-    <h2>Pensé pour la compétition.</h2>
-    <div class="feat-grid">
-      <article><h3>Anti-cheat intransigeant</h3><p>Mise à jour en continu : triche détectée équivaut à un ban définitif et une blacklist totale.</p></article>
-      <article><h3>Arènes inédites</h3><p>Des terrains de jeu compétitifs, testés et peaufinés en direct par les joueurs exigeants.</p></article>
-      <article><h3>Statistiques avancées</h3><p>Analysez vos stats en temps réel, suivez votre progression et grimpez au sommet en ranked.</p></article>
-      <article><h3>PvP ultra-fluide</h3><p>Un gameplay sans latence propulsé directement par un Spigot maison optimisé pour le 1.8.9.</p></article>
+<section class="how" id="bedfight"><div class="how-pin"><div class="wrap how-grid">
+  <div>
+    <h2>Comment se joue le Bedfight</h2>
+    <div class="phases" id="phases">
+      <div class="ph on"><b><em>1</em>Chacun son île</b><p>Deux joueurs, deux îles. Chacun apparaît à côté de son lit, et tant que ce lit tient, il réapparaît après chaque mort.</p></div>
+      <div class="ph"><b><em>2</em>Construis et affronte</b><p>Les deux joueurs posent des blocs pour relier les îles. Le combat se joue sur ce pont, au moindre faux pas.</p></div>
+      <div class="ph"><b><em>3</em>Casse son lit</b><p>Une fois son lit détruit, ton adversaire ne réapparaît plus. Élimine-le une dernière fois pour gagner.</p></div>
     </div>
+    <a class="how-skip" href="#features">Passer l'animation</a>
+  </div>
+  <div class="stage-svg"><svg id="howsvg" viewBox="60 150 1080 340" role="img" aria-label="Schéma d'une partie : deux îles avec un lit chacune, un pont construit entre les deux, puis un lit détruit."></svg></div>
+</div></div></section>
+
+<section class="sec" id="features"><div class="wrap">
+  <div class="head"><h2>Pensé pour la compétition.</h2></div>
+  <div class="rows">
+    <article class="row2"><h3>Anti-cheat intransigeant</h3><p>Mise à jour en continu : triche détectée équivaut à un ban définitif et une blacklist totale.</p></article>
+    <article class="row2"><h3>Arènes inédites</h3><p>Des terrains de jeu compétitifs, testés et peaufinés en direct par les joueurs exigeants.</p></article>
+    <article class="row2"><h3>Statistiques avancées</h3><p>Analysez vos stats en temps réel, suivez votre progression et grimpez au sommet en ranked.</p></article>
+    <article class="row2"><h3>PvP ultra-fluide</h3><p>Un gameplay sans latence propulsé directement par un Spigot maison optimisé pour le 1.8.9.</p></article>
   </div>
 </div></section>
 
 <section class="sec" id="concept"><div class="wrap game">
   <div>
-    <h2>Le Bedfight en France, le digne remplaçant du rush.</h2>
+    <h2>Le digne remplaçant du rush.</h2>
     <div class="tabs" role="tablist" aria-label="Le jeu">
       <button class="tab" role="tab" id="t0" aria-selected="true" aria-controls="p0">Le concept</button>
-      <button class="tab" role="tab" id="t1" aria-selected="false" aria-controls="p1">Shop et économie</button>
-      <button class="tab" role="tab" id="t2" aria-selected="false" aria-controls="p2">Ranked et ELO</button>
+      <button class="tab" role="tab" id="t1" aria-selected="false" aria-controls="p1" tabindex="-1">Shop et économie</button>
+      <button class="tab" role="tab" id="t2" aria-selected="false" aria-controls="p2" tabindex="-1">Ranked et ELO</button>
     </div>
     <div class="art"><img src="https://i.imgur.com/r8sDBMt.png" alt="Rendu Minecraft Bedfight" loading="lazy"></div>
   </div>
   <div>
-    <div class="pane" role="tabpanel" id="p0" aria-labelledby="t0"><h3>Le concept</h3><p>Conçu pour les joueurs exigeants, notre infrastructure garantit des hits réguliers, une détection précise et des combos fluides pour chaque fight sans aucun compromis.</p><span class="bignum">&lt;20<small>ms de latence</small></span><div class="chips"><span><b>100 %</b>knockback optimisé</span><span>Spigot maison 1.8.9</span></div></div>
-    <div class="pane" role="tabpanel" id="p1" aria-labelledby="t1" hidden><h3>Shop et économie</h3><p>Une économie de jeu repensée et équilibrée pour favoriser le skill et l'agressivité. Récupérez vos ressources au middle et menez l'offensive.</p><div class="chips"><span>Génération équilibrée</span><span>Achat instantané</span><span>Ressources au middle</span></div></div>
+    <div class="pane" role="tabpanel" id="p0" aria-labelledby="t0"><h3>Le concept</h3><p>Conçu pour les joueurs exigeants, notre infrastructure garantit des hits réguliers, une détection précise et des combos fluides pour chaque fight sans aucun compromis.</p><div class="bignum">&lt;20 ms<small>de latence serveur</small></div><div class="chips"><span><b>100 %</b>knockback optimisé</span><span>Spigot maison 1.8.9</span></div></div>
+    <div class="pane" role="tabpanel" id="p1" aria-labelledby="t1" hidden><h3>Shop et économie</h3><p>Une économie de jeu repensée et équilibrée pour favoriser le skill et l'agressivité. Récupérez vos ressources et menez l'offensive.</p><div class="chips"><span>Génération équilibrée</span><span>Achat instantané</span></div></div>
     <div class="pane" role="tabpanel" id="p2" aria-labelledby="t2" hidden><h3>Ranked et ELO</h3><p>Affrontez des adversaires à votre hauteur grâce à notre matchmaking basé sur l'ELO. Grimpez les divisions au fil des saisons.</p><div class="chips"><span>Saison 0 active</span><span>Matchmaking équilibré</span><span>Récompenses de saison</span></div></div>
   </div>
 </div></section>
 
 <section class="sec" id="maps"><div class="wrap">
-  <div class="head"><h2>Découvrez nos maps compétitives</h2><p class="lead">Des terrains de jeu conçus sur mesure pour le Ranked, équilibrés et optimisés pour le clean build-fight.</p></div>
+  <div class="head"><h2>Les maps</h2><p class="lead">Des terrains de jeu conçus sur mesure pour le Ranked, équilibrés et optimisés pour le clean build-fight.</p></div>
   <div class="maps">
     <div class="mlist" role="tablist" aria-label="Maps">
-      <button class="mbtn" role="tab" aria-selected="true" data-i="0"><strong>Plains</strong><span>1v1 et 2v2</span></button>
-      <button class="mbtn" role="tab" aria-selected="false" data-i="1"><strong>Celestial</strong><span>Ranked standard</span></button>
-      <button class="mbtn" role="tab" aria-selected="false" data-i="2"><strong>Frostbite</strong><span>Compétitif S0</span></button>
+      <button class="mbtn" role="tab" aria-selected="true"><strong>Plains</strong><span>1v1 et 2v2</span></button>
+      <button class="mbtn" role="tab" aria-selected="false"><strong>Celestial</strong><span>Ranked standard</span></button>
+      <button class="mbtn" role="tab" aria-selected="false"><strong>Frostbite</strong><span>Compétitif S0</span></button>
     </div>
     <div>
       <div class="mview" id="mview">
@@ -372,7 +486,7 @@ body.scrolled .mbar{height:68px;background:rgba(18,18,18,.82);backdrop-filter:bl
 </div></section>
 
 <section class="sec" id="how-to-play"><div class="wrap">
-  <div class="head"><h2>Comment jouer sur le serveur ?</h2><p class="lead">Rejoins le serveur, entre en file et affronte les meilleurs joueurs pour grimper dans le classement.</p></div>
+  <div class="head"><h2>Rejoindre une partie</h2><p class="lead">Rejoins le serveur, entre en file et affronte les meilleurs joueurs pour grimper dans le classement.</p></div>
   <div class="steps">
     <div class="step"><span class="n">1</span><h3>Connexion en 1.8.9</h3><p>Lance ton jeu en version 1.8.9 (recommandé avec Badlion ou Lunar Client), ajoute l'adresse IP et connecte-toi.</p></div>
     <div class="step"><span class="n">2</span><h3>Matchmaking rapide</h3><p>Utilise le menu pour entrer en file d'attente Ranked Bedfight. Un adversaire de ton niveau te sera assigné.</p></div>
@@ -382,18 +496,8 @@ body.scrolled .mbar{height:68px;background:rgba(18,18,18,.82);backdrop-filter:bl
 </div></section>
 
 <section class="sec" id="news"><div class="wrap">
-  <div class="head" style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px"><h2>Les dernières actualités</h2><button class="btn btn-line btn-sm" onclick="openNewsModal()">Tout voir</button></div>
+  <div class="head head-row"><h2>Actualités</h2><button class="btn btn-line btn-sm" onclick="openNewsModal()">Tout voir</button></div>
   <div id="nlist"></div>
-</div></section>
-
-<section class="sec" id="faq"><div class="wrap">
-  <div class="head"><h2>Tout ce que vous devez savoir</h2><p class="lead">Les réponses aux questions les plus courantes concernant le serveur et le mode Ranked.</p></div>
-  <div class="faq">
-    <div class="qa"><button aria-expanded="false"><span>Quelles versions de Minecraft sont acceptées pour se connecter ?</span><i></i></button><div class="qa-body"><div><p>Le serveur est optimisé exclusivement pour la version <strong>1.8.9</strong>, offrant le meilleur PvP. Nous conseillons Badlion Client ou Lunar Client.</p></div></div></div>
-    <div class="qa"><button aria-expanded="false"><span>Comment fonctionne le système de classement ELO et les saisons ?</span><i></i></button><div class="qa-body"><div><p>Chaque victoire en Ranked rapporte de l'ELO selon le niveau adverse. Les meilleures places de chaque saison reçoivent des récompenses exclusives.</p></div></div></div>
-    <div class="qa"><button aria-expanded="false"><span>Comment lier mon compte Discord au serveur ?</span><i></i></button><div class="qa-body"><div><p>Tapez la commande <code>/discord link</code> dans le chat du jeu pour associer votre profil.</p></div></div></div>
-    <div class="qa"><button aria-expanded="false"><span>Que faire si je rencontre un cheater ou un bug majeur ?</span><i></i></button><div class="qa-body"><div><p>Vous pouvez ouvrir un ticket de report sur notre serveur Discord officiel en fournissant les preuves vidéo nécessaires.</p></div></div></div>
-  </div>
 </div></section>
 
 <section class="sec" id="shop"><div class="wrap">
@@ -402,19 +506,29 @@ body.scrolled .mbar{height:68px;background:rgba(18,18,18,.82);backdrop-filter:bl
     <article class="plan"><div class="tp"><span>Abonnement mensuel</span></div><h3>Hevenly Plus</h3><p>Le grade idéal pour profiter de l'expérience compétitive avec priorité et cosmétiques.</p>
       <ul class="perks"><li>Préfixe [+] distinctif</li><li>Priorité de file d'attente</li><li>Effets de victoire / mort exclusifs</li><li>Rôle Discord + salon restreint</li></ul>
       <div class="price">2.99€ <small>/ mois</small></div>
-      <button class="btn btn-line" onclick="openModal('HEVENLY PLUS', '2.99€', ['Préfixe [+] distinctif', 'Priorité de file d\'attente', 'Effets de victoire / mort exclusifs', 'Rôle Discord + salon restreint'])">Voir les détails</button></article>
+      <button class="btn btn-line" onclick="openModal('Hevenly Plus', '2.99€', ['Préfixe [+] distinctif', 'Priorité de file d\'attente', 'Effets de victoire / mort exclusifs', 'Rôle Discord + salon restreint'])">Voir les détails</button></article>
     <article class="plan main"><div class="tp"><span>Abonnement mensuel</span><span class="tag">Populaire</span></div><h3>Hevenly Premium</h3><p>Le statut suprême débloquant la priorité absolue, toutes les customisations et l'accès bêta.</p>
       <ul class="perks"><li>Préfixe [✦] exclusif</li><li>Avantages du + inclus</li><li>Permet d'héberger un événement</li><li>Accès bêta aux nouvelles cartes et modes</li></ul>
       <div class="price">6.99€ <small>/ mois</small></div>
-      <button class="btn" onclick="openModal('HEVENLY PREMIUM', '6.99€', ['Préfixe [✦] exclusif', 'Avantages du + inclus', 'Permet d\'héberger un événement', 'Accès bêta aux nouvelles cartes et modes'])">Voir les détails</button></article>
+      <button class="btn btn-white" onclick="openModal('Hevenly Premium', '6.99€', ['Préfixe [✦] exclusif', 'Avantages du + inclus', 'Permet d\'héberger un événement', 'Accès bêta aux nouvelles cartes et modes'])">Voir les détails</button></article>
+  </div>
+</div></section>
+
+<section class="sec" id="faq"><div class="wrap">
+  <div class="head"><h2>Questions fréquentes</h2></div>
+  <div class="faq">
+    <div class="qa"><button aria-expanded="false"><span>Quelles versions de Minecraft sont acceptées ?</span><i></i></button><div class="qa-body"><div><p>Le serveur est optimisé exclusivement pour la version <strong>1.8.9</strong>, offrant le meilleur PvP. Nous conseillons Badlion Client ou Lunar Client.</p></div></div></div>
+    <div class="qa"><button aria-expanded="false"><span>Comment fonctionnent l'ELO et les saisons ?</span><i></i></button><div class="qa-body"><div><p>Chaque victoire en Ranked rapporte de l'ELO selon le niveau adverse. Les meilleures places de chaque saison reçoivent des récompenses exclusives.</p></div></div></div>
+    <div class="qa"><button aria-expanded="false"><span>Comment lier mon compte Discord au serveur ?</span><i></i></button><div class="qa-body"><div><p>Tapez la commande <code>/discord link</code> dans le chat du jeu pour associer votre profil.</p></div></div></div>
+    <div class="qa"><button aria-expanded="false"><span>Que faire si je rencontre un cheater ou un bug ?</span><i></i></button><div class="qa-body"><div><p>Vous pouvez ouvrir un ticket de report sur notre serveur Discord officiel en fournissant les preuves vidéo nécessaires.</p></div></div></div>
   </div>
 </div></section>
 
 <section class="final" id="join"><div class="wrap">
   <svg viewBox="0 0 667 670" class="lg anim final-lg" aria-hidden="true"><defs><clipPath id="fc"><path d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z"/></clipPath><mask id="fm"><path d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="#fff"/><circle class="ring tl" cx="115" cy="115" r="137" fill="#000"/><circle class="ring br" cx="555" cy="555" r="137" fill="#000"/></mask></defs><path class="hs" d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="none" stroke="#E6E6E6" stroke-width="4" pathLength="1"/><path class="hf" d="M205 115H274V300H345A50 50 0 0 0 395 250V115H465A90 90 0 0 1 555 205V465A90 90 0 0 1 465 555H395V370H325A50 50 0 0 0 274 420V555H205A90 90 0 0 1 115 465V205A90 90 0 0 1 205 115Z" fill="#E6E6E6" mask="url(#fm)"/><g clip-path="url(#fc)"><circle class="leaf tl" cx="115" cy="115" r="115" fill="#E10600"/><circle class="leaf br" cx="555" cy="555" r="115" fill="#E10600"/></g></svg>
-  <h2>Ton lit t'attend. Celui de l'autre aussi.</h2>
+  <h2>Ton lit t'attend.</h2>
   <p>La saison 0 est en cours. Copie l'adresse, rejoins le Discord et lance ta première partie classée.</p>
-  <div class="cta"><a href="https://discord.gg" target="_blank" rel="noopener" class="btn btn-red">Rejoindre le Discord</a><button class="btn btn-line" onclick="copyIP()">Copier l'IP</button></div>
+  <div class="cta"><a href="https://discord.gg" target="_blank" rel="noopener" class="btn btn-red"><svg class="ico fill"><use href="#i-discord"/></svg>Rejoindre le Discord</a><button class="btn btn-line" onclick="copyIP()"><svg class="ico"><use href="#i-copy"/></svg>Copier l'IP</button></div>
 </div></section>
 </main>
 
@@ -424,9 +538,9 @@ body.scrolled .mbar{height:68px;background:rgba(18,18,18,.82);backdrop-filter:bl
 </div></footer>
 
 <div class="overlay" id="modal-backdrop" onclick="closeModalOnBackdrop(event)" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="panel"><div class="panel-head"><h3 id="modal-title">Grade</h3><button class="close" onclick="closeModal()" aria-label="Fermer"><svg class="ico"><use href="#i-x"/></svg></button></div><div class="panel-body"><div class="panel-price" id="modal-price">0.00€</div><ul id="modal-list"></ul><a href="https://discord.gg" target="_blank" rel="noopener" class="btn btn-red">Acheter sur la boutique</a></div></div></div>
-<div class="overlay" id="news-modal-backdrop" onclick="closeNewsModalOnBackdrop(event)" role="dialog" aria-modal="true" aria-labelledby="news-title"><div class="panel panel-wide"><div class="panel-head"><h3 id="news-title">Dernières informations</h3><button class="close" onclick="closeNewsModal()" aria-label="Fermer"><svg class="ico"><use href="#i-x"/></svg></button></div><div class="panel-body" id="dynamic-news-container"></div></div></div>
+<div class="overlay" id="news-modal-backdrop" onclick="closeNewsModalOnBackdrop(event)" role="dialog" aria-modal="true" aria-labelledby="news-title"><div class="panel panel-wide"><div class="panel-head"><h3 id="news-title">Toutes les actualités</h3><button class="close" onclick="closeNewsModal()" aria-label="Fermer"><svg class="ico"><use href="#i-x"/></svg></button></div><div class="panel-body" id="dynamic-news-container"></div></div></div>
 <div class="overlay" id="legal-modal-backdrop" onclick="closeLegalModalOnBackdrop(event)" role="dialog" aria-modal="true" aria-labelledby="legal-modal-title"><div class="panel panel-wide"><div class="panel-head"><h3 id="legal-modal-title">Document légal</h3><button class="close" onclick="closeLegalModal()" aria-label="Fermer"><svg class="ico"><use href="#i-x"/></svg></button></div><div class="panel-body legal" id="legal-modal-body"></div></div></div>
-<div class="toast" id="toast" role="status">Adresse IP copiée dans le presse-papier !</div>
+<div class="toast" id="toast" role="status">Adresse IP copiée : hevenly.games</div>
 <div class="cookie" id="cookie-banner"><div class="in2"><p><b>Cookies et confidentialité</b>Nous utilisons des outils d'analyse pour mesurer l'audience et améliorer l'expérience. Détails dans notre <button onclick="openLegalModal('privacy')">politique de confidentialité</button>.</p><div class="cookie-actions"><button class="btn btn-line btn-sm" onclick="acceptCookies(false)">Refuser</button><button class="btn btn-red btn-sm" onclick="acceptCookies(true)">Tout accepter</button></div></div></div>
 
 <script>const SUPABASE_URL = "https://tawnbphpaaxjzkydeubq.supabase.co";
@@ -469,93 +583,128 @@ body.scrolled .mbar{height:68px;background:rgba(18,18,18,.82);backdrop-filter:bl
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      initUI(); initNav(); initScroll(); initMagnet(); initFaq(); initMenu(); initTabs(); initMaps();
+      buildHow();
+      initHeader(); initMenu(); initScroll(); initTabs(); initMaps(); initFaq(); initFinalLogo(); initPointer();
       loadNews(); loadPlayerCount(); runIntro();
-      if (!localStorage.getItem('hevenly_cookie_consent')) { const show = () => { $('#cookie-banner').classList.add('show'); removeEventListener('scroll', onFirst); }; const onFirst = () => { if (scrollY > innerHeight * .6) setTimeout(show, 800); }; addEventListener('scroll', onFirst, { passive: true }); setTimeout(show, 20000); }
+      if (!localStorage.getItem('hevenly_cookie_consent')) {
+        const show = () => { $('#cookie-banner').classList.add('show'); removeEventListener('scroll', onFirst); };
+        const onFirst = () => { if (scrollY > innerHeight * .6) setTimeout(show, 800); };
+        addEventListener('scroll', onFirst, { passive: true }); setTimeout(show, 20000);
+      }
     });
 
-    function initUI() {
-      const onScroll = () => { document.body.classList.toggle('scrolled', scrollY > 40); const h = document.documentElement.scrollHeight - innerHeight; document.body.style.setProperty('--sp', h > 0 ? clamp(scrollY / h, 0, 1).toFixed(4) : 0); };
-      addEventListener('scroll', onScroll, { passive: true }); onScroll();
-      /* à la fin de la page, le logo se redessine */
-      const fl = $('.final-lg');
-      if (fl) { if (reduce) fl.classList.remove('anim'); else new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { fl.classList.add('play'); o.disconnect(); } }), { threshold: .6 }).observe(fl); }
-      /* le grand logo du hero glisse doucement à l'opposé de la souris */
-      const hero = $('#hero'), lg = $('.hero-lg'); if (!hero || !lg || reduce || !matchMedia('(hover: hover)').matches) return;
-      hero.addEventListener('pointermove', e => { const b = hero.getBoundingClientRect(), x = (e.clientX - b.left) / b.width - .5, y = (e.clientY - b.top) / b.height - .5; lg.style.translate = `calc(-50% + ${(-x * 40).toFixed(1)}px) calc(-50% + ${(-y * 28).toFixed(1)}px)`; });
+    function initHeader() {
+      const f = () => document.body.classList.toggle('scrolled', scrollY > 40);
+      addEventListener('scroll', f, { passive: true }); f();
     }
+    function initMenu() {
+      const btn = $('#burger'), d = $('#drawer'), tx = $('#menutxt');
+      const set = o => { d.classList.toggle('open', o); btn.setAttribute('aria-expanded', o); tx.textContent = o ? 'Fermer' : 'Menu'; document.body.style.overflow = o ? 'hidden' : ''; if (o) setTimeout(() => $('.dl a', d).focus({ preventScroll: true }), 300); };
+      btn.addEventListener('click', () => set(!d.classList.contains('open')));
+      $$('.dl a, .dside .btn', d).forEach(a => a.addEventListener('click', () => set(false)));
+      addEventListener('keydown', e => { if (e.key === 'Escape' && d.classList.contains('open')) { set(false); btn.focus(); } });
+    }
+    function initPointer() {
+      const hero = $('#hero'), img = $('#render');
+      if (!hero || !img || reduce || !matchMedia('(hover: hover)').matches) return;
+      hero.addEventListener('pointermove', e => { const b = hero.getBoundingClientRect(), x = (e.clientX - b.left) / b.width - .5, y = (e.clientY - b.top) / b.height - .5; img.style.translate = `${(-x * 30).toFixed(1)}px ${(-y * 18).toFixed(1)}px`; });
+      hero.addEventListener('pointerleave', () => { img.style.translate = ''; });
+    }
+    function initFinalLogo() {
+      const fl = $('.final-lg'); if (!fl) return;
+      if (reduce) { fl.classList.remove('anim'); return; }
+      new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { fl.classList.add('play'); o.disconnect(); } }), { threshold: .6 }).observe(fl);
+    }
+
+    /* ---------- Schéma « Comment se joue le Bedfight » ---------- */
+    const NS = 'http://www.w3.org/2000/svg';
+    const el = (tag, attrs, parent) => { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); if (parent) parent.appendChild(n); return n; };
+    const how = {};
+    function buildHow() {
+      const svg = $('#howsvg'); if (!svg) return;
+      const S = 40, TOP = 320; svg.setAttribute('viewBox', '60 150 1080 340');
+      /* îles : 6 blocs en haut, puis 4, puis 2 */
+      const island = x0 => { [[0, 6], [1, 4], [2, 2]].forEach(([r, n]) => { const off = (6 - n) / 2; for (let i = 0; i < n; i++) el('rect', { class: 'blk' + (r ? '' : ' top'), x: x0 + (off + i) * S + 1, y: TOP + r * S + 1, width: S - 2, height: S - 2, rx: 5 }, svg); }); };
+      island(80); island(880);
+      el('text', { class: 'lbl', x: 200, y: 470 }, svg).textContent = 'Ton île';
+      el('text', { class: 'lbl', x: 1000, y: 470 }, svg).textContent = 'Île adverse';
+      /* pont : 7 blocs posés par chaque joueur */
+      how.bA = []; how.bB = [];
+      for (let i = 0; i < 7; i++) {
+        how.bA.push(el('rect', { class: 'bb bbA', x: 320 + i * S + 1, y: TOP + 1, width: S - 2, height: S - 2, rx: 5 }, svg));
+        how.bB.push(el('rect', { class: 'bb bbB', x: 840 - i * S + 1, y: TOP + 1, width: S - 2, height: S - 2, rx: 5 }, svg));
+      }
+      /* lits */
+      const bed = (x, id) => { const g = el('g', { id }, svg); el('rect', { class: 'bedp p1', x, y: TOP - 22, width: 34, height: 22, rx: 4, fill: '#E10600' }, g); el('rect', { class: 'bedp p2', x: x + 34, y: TOP - 22, width: 34, height: 22, rx: 4, fill: '#E10600' }, g); el('rect', { class: 'bedp p1', x: x + 5, y: TOP - 17, width: 18, height: 11, rx: 3, fill: '#E6E6E6' }, g); return g; };
+      how.bedA = bed(116, 'bedA'); how.bedB = bed(1016, 'bedB');
+      for (let i = 0; i < 10; i++) { const a = i / 10 * Math.PI * 2, r = 70 + (i % 3) * 25; const p = el('rect', { class: 'pt', x: 1046, y: TOP - 16, width: 10, height: 10, rx: 2, fill: i % 2 ? '#E10600' : '#E6E6E6' }, how.bedB); p.style.setProperty('--dx', (Math.cos(a) * r).toFixed(0) + 'px'); p.style.setProperty('--dy', (Math.sin(a) * r - 30).toFixed(0) + 'px'); }
+      /* joueurs */
+      const player = (fill, id) => { const pos = el('g', { class: 'pos', id }, svg), fig = el('g', { class: 'fig' }, pos); el('rect', { x: -9, y: -48, width: 18, height: 18, rx: 4, fill }, fig); el('rect', { x: -11, y: -28, width: 22, height: 28, rx: 5, fill }, fig); return pos; };
+      how.pA = player('#E6E6E6', 'pA'); how.pB = player('#7C7C7C', 'pB');
+      how.win = el('text', { class: 'win', x: 1000, y: 222 }, svg); how.win.textContent = 'Victoire';
+      how.phases = $$('#phases .ph'); how.box = $('#phases'); how.sec = $('#bedfight');
+      renderHow(reduce ? .7 : 0);
+    }
+    function renderHow(p) {
+      if (!how.sec) return;
+      const n = Math.round(clamp((p - .12) / .44, 0, 1) * 7);
+      how.bA.forEach((b, i) => b.classList.toggle('on', i < n));
+      how.bB.forEach((b, i) => b.classList.toggle('on', i < n));
+      let xA = 300 + n * 40, xB = 900 - n * 40;
+      if (p >= .64) xA = 580 + clamp((p - .64) / .16, 0, 1) * 410;
+      const fallB = (p >= .58 && p < .68) || p >= .9, back = p >= .68;
+      if (back) xB = 1110;
+      how.pA.style.transform = `translate(${xA}px, 320px)`;
+      how.pB.style.transform = `translate(${fallB && !back ? 620 : xB}px, 320px)`;
+      how.pB.classList.toggle('fall', fallB);
+      how.bedB.classList.toggle('broken', p >= .82);
+      how.win.classList.toggle('on', p >= .94);
+      const ph = p < .12 ? 0 : p < .58 ? 1 : 2;
+      how.phases.forEach((e, i) => e.classList.toggle('on', i === ph));
+      how.box.style.setProperty('--hp', clamp(p / .95, 0, 1).toFixed(3));
+    }
+
+    /* ---------- Effets liés au scroll ---------- */
     function initScroll() {
-      const hs = $$('.hero h1 span'), duel = null, status = $('.status'), feat = $('.feat'), steps = $('.steps'), stepEls = $$('.step');
-      const band = $$('.band div'), bandBox = $('.band'), mimgs = $$('#mview img'), mview = $('#mview');
-      const heads = $$('h2');
+      const heads = $$('.sec h2, .final h2');
       if (reduce) { heads.forEach(h => h.classList.add('in')); return; }
       const io = new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); o.unobserve(e.target); } }), { threshold: .2 });
       heads.forEach(h => io.observe(h));
+      const hs = $$('.hero h1 span'), band = $$('.band div'), bandBox = $('.band'), steps = $('.steps'), stepEls = $$('.step'), mview = $('#mview'), mimgs = $$('#mview img');
       let tick = false;
       const frame = () => {
         tick = false;
         const y = scrollY, vh = innerHeight;
-        if (y < vh * 1.2) {
-          hs.forEach((s, i) => { s.style.translate = `${(i ? 1 : -1) * y * .22}px 0`; });
-          if (duel) { duel.style.translate = `0 ${y * .12}px`; duel.style.rotate = `${y * .012}deg`; }
-          if (status) status.style.opacity = clamp(1 - y / (vh * .5), 0, 1);
-        }
-        if (feat) { const r = feat.getBoundingClientRect(), p = clamp((vh * .92 - r.top) / (vh * .62), 0, 1); feat.style.setProperty('--k', p.toFixed(3)); feat.style.scale = (.94 + .06 * p).toFixed(3); }
-        if (bandBox) { const r = bandBox.getBoundingClientRect(), t = (r.top + r.height / 2 - vh / 2) / vh; band.forEach((b, i) => { b.style.translate = `${(i ? 1 : -1) * t * 520 - (i ? 0 : 200)}px 0`; }); }
+        if (y < vh * 1.2) hs.forEach((s, i) => { s.style.translate = `${(i ? 1 : -1) * y * .2}px 0`; });
+        if (bandBox) { const r = bandBox.getBoundingClientRect(); if (r.bottom > -200 && r.top < vh + 200) { const t = (r.top + r.height / 2 - vh / 2) / vh; band.forEach((b, i) => { b.style.translate = `${((i ? 1 : -1) * t * 520 - (i ? 0 : 200)).toFixed(1)}px 0`; }); } }
+        if (how.sec) { const r = how.sec.getBoundingClientRect(), total = r.height - vh; renderHow(clamp(-r.top / total, 0, 1)); }
         if (steps) { const r = steps.getBoundingClientRect(); steps.style.setProperty('--p', clamp((vh * .62 - r.top) / r.height, 0, 1).toFixed(3)); stepEls.forEach(s => { const q = s.getBoundingClientRect(); s.classList.toggle('lit', q.top + q.height / 2 < vh * .62); }); }
         if (mview) { const r = mview.getBoundingClientRect(), p = clamp((vh - r.top) / (vh + r.height), 0, 1); mimgs.forEach(im => { im.style.translate = `0 ${((p - .5) * -9).toFixed(2)}%`; }); }
       };
       addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(frame); } }, { passive: true });
       addEventListener('resize', frame); frame();
     }
-    /* Rail latéral : le repère suit la section visible, la ligne rouge se remplit jusqu'à elle */
-    function initNav() {
-      const links = $$('#rl a'), fill = $('#rl .track i');
-      if (!links.length) return;
-      const secs = links.map(a => $(a.getAttribute('href')));
-      let cur = -1;
-      const spy = () => {
-        let k = -1;
-        secs.forEach((s, i) => { if (s && s.getBoundingClientRect().top <= innerHeight * .4) k = i; });
-        if (k === cur) return; cur = k;
-        links.forEach((a, i) => { a.classList.toggle('on', i === k); a.classList.toggle('done', i < k); });
-        fill.parentElement.style.setProperty('--f', k < 0 ? 0 : (k / (links.length - 1)).toFixed(3));
-      };
-      addEventListener('scroll', spy, { passive: true }); spy();
-    }
-    /* Les boutons du hero se rapprochent légèrement du curseur */
-    function initMagnet() {
-      if (reduce || !matchMedia('(hover: hover)').matches) return;
-      $$('.hero .cta .btn').forEach(b => {
-        b.addEventListener('pointermove', e => { const r = b.getBoundingClientRect(); b.style.transform = `translate(${((e.clientX - r.left) / r.width - .5) * 12}px, ${((e.clientY - r.top) / r.height - .5) * 10}px)`; });
-        b.addEventListener('pointerleave', () => { b.style.transform = ''; });
-      });
-    }
+
     function initTabs() {
       const tabs = $$('.tab'), panes = $$('.pane');
-      const sel = i => tabs.forEach((t, k) => { t.setAttribute('aria-selected', k === i); panes[k].hidden = k !== i; });
-      tabs.forEach((t, i) => { t.addEventListener('click', () => sel(i)); t.addEventListener('keydown', e => { if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { sel((i + 1) % tabs.length); tabs[(i + 1) % tabs.length].focus(); } if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') { sel((i + tabs.length - 1) % tabs.length); tabs[(i + tabs.length - 1) % tabs.length].focus(); } }); });
+      const sel = (i, focus) => { tabs.forEach((t, k) => { t.setAttribute('aria-selected', k === i); t.tabIndex = k === i ? 0 : -1; panes[k].hidden = k !== i; }); if (focus) tabs[i].focus(); };
+      tabs.forEach((t, i) => {
+        t.addEventListener('click', () => sel(i));
+        t.addEventListener('keydown', e => { const n = tabs.length; if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { e.preventDefault(); sel((i + 1) % n, true); } if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') { e.preventDefault(); sel((i + n - 1) % n, true); } });
+      });
     }
     function initMaps() {
       const btns = $$('.mbtn'), imgs = $$('#mview img'), cap = $('#mcap');
-      const txt = ["Une arène aux tons ténébreux, parfaite pour des duels intenses et des rushes ultra-rapides.", "Inspirée des grands classiques, une map lumineuse axée sur le contrôle stratégique du middle.", "Un décor givré et épuré, pensé pour offrir une visibilité maximale et zéro latence visuelle."];
+      const txt = ["Une arène aux tons ténébreux, parfaite pour des duels intenses et des rushes ultra-rapides.", "Inspirée des grands classiques, une map lumineuse axée sur le contrôle stratégique du pont.", "Un décor givré et épuré, pensé pour offrir une visibilité maximale et zéro latence visuelle."];
       let cur = 0;
       btns.forEach((b, i) => b.addEventListener('click', () => {
         if (i === cur) return;
         imgs.forEach(im => im.classList.remove('prev'));
-        imgs[cur].classList.remove('on'); imgs[cur].classList.add('prev');
-        imgs[i].classList.add('on');
+        imgs[cur].classList.remove('on'); imgs[cur].classList.add('prev'); imgs[i].classList.add('on');
         btns.forEach((x, k) => x.setAttribute('aria-selected', k === i)); cap.textContent = txt[i]; cur = i;
       }));
     }
     function initFaq() { $$('.qa > button').forEach(b => b.addEventListener('click', () => { const qa = b.parentElement, open = !qa.classList.contains('open'); qa.classList.toggle('open', open); b.setAttribute('aria-expanded', open); })); }
-    function initMenu() {
-      const btn = $('#burger'), d = $('#drawer'), tx = $('#menutxt');
-      const set = o => { d.classList.toggle('open', o); btn.setAttribute('aria-expanded', o); tx.textContent = o ? 'Fermer' : 'Menu'; document.body.style.overflow = o ? 'hidden' : ''; };
-      btn.addEventListener('click', () => set(!d.classList.contains('open')));
-      $$('.dl a, .dside .btn', d).forEach(a => a.addEventListener('click', () => set(false)));
-      addEventListener('keydown', e => { if (e.key === 'Escape') set(false); });
-    }
 
     async function loadPlayerCount() {
       const el = $('#players-online');
